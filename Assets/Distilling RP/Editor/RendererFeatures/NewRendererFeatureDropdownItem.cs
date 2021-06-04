@@ -1,12 +1,12 @@
-using UnityEditor.Rendering.Universal.Internal;
+using UnityEditor.Rendering.Distilling.Internal;
 
-namespace UnityEditor.Rendering.Universal
+namespace UnityEditor.Rendering.Distilling
 {
     internal static class NewRendererFeatureDropdownItem
     {
         static readonly string defaultNewClassName = "CustomRenderPassFeature.cs";
 
-        [MenuItem("Assets/Create/Rendering/Universal Render Pipeline/Renderer Feature", priority = EditorUtils.lwrpAssetCreateMenuPriorityGroup2)]
+        [MenuItem("Assets/Create/Rendering/Distilling Render Pipeline/Renderer Feature", priority = EditorUtils.lwrpAssetCreateMenuPriorityGroup2)]
         internal static void CreateNewRendererFeature()
         {
             string templatePath = AssetDatabase.GUIDToAssetPath(ResourceGuid.rendererTemplate);

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
 
-namespace UnityEditor.Rendering.Universal
+namespace UnityEditor.Rendering.Distilling
 {
     [CustomPropertyDrawer(typeof(StencilStateData), true)]
     internal class StencilStateDataDrawer : PropertyDrawer

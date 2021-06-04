@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEditor.Rendering.Universal;
+using UnityEditor.Rendering.Distilling;
 
 namespace UnityEditor
 {

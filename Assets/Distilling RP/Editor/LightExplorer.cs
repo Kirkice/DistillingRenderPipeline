@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
 using UnityEngine.Scripting.APIUpdating;
 
 namespace UnityEditor
 {
-	[LightingExplorerExtensionAttribute(typeof(UniversalRenderPipelineAsset))]
+	[LightingExplorerExtensionAttribute(typeof(DistillingRenderPipelineAsset))]
 	[MovedFrom("UnityEditor.Rendering.LWRP")] public class LightExplorer : DefaultLightingExplorerExtension
 	{
 		private static class Styles

@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.Rendering.Universal.Path2D;
+using UnityEditor.Experimental.Rendering.Distilling.Path2D;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.Experimental.Rendering.Distilling;
 
-namespace UnityEditor.Experimental.Rendering.Universal
+namespace UnityEditor.Experimental.Rendering.Distilling
 {
     class ShadowCaster2DShapeTool : PathEditorTool<ScriptablePath>
     {

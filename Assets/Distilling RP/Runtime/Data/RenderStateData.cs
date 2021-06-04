@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Scripting.APIUpdating;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     [System.Serializable]
     [MovedFrom("UnityEngine.Rendering.LWRP")] public class StencilStateData

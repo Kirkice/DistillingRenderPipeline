@@ -4,7 +4,7 @@ using UnityEditor.ProjectWindowCallback;
 #endif
 using System;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     [Serializable]
     public class PostProcessData : ScriptableObject
@@ -17,12 +17,12 @@ namespace UnityEngine.Rendering.Universal
             {
                 var instance = CreateInstance<PostProcessData>();
                 AssetDatabase.CreateAsset(instance, pathName);
-                ResourceReloader.ReloadAllNullIn(instance, UniversalRenderPipelineAsset.packagePath);
+                ResourceReloader.ReloadAllNullIn(instance, DistillingRenderPipelineAsset.packagePath);
                 Selection.activeObject = instance;
             }
         }
 
-        [MenuItem("Assets/Create/Rendering/Universal Render Pipeline/Post-process Data", priority = CoreUtils.assetCreateMenuPriority3)]
+        [MenuItem("Assets/Create/Rendering/Distilling Render Pipeline/Post-process Data", priority = CoreUtils.assetCreateMenuPriority3)]
         static void CreatePostProcessData()
         {
             ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, CreateInstance<CreatePostProcessDataAsset>(), "CustomPostProcessData.asset", null, null);

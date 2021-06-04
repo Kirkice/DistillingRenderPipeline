@@ -5,13 +5,13 @@ using System.Linq;
 using UnityEditor;
 #endif
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling 
 {
     /// <summary>
     /// Class <c>ScriptableRendererData</c> contains resources for a <c>ScriptableRenderer</c>.
     /// <seealso cref="ScriptableRenderer"/>
     /// </summary>
-    [MovedFrom("UnityEngine.Rendering.LWRP")] public abstract class ScriptableRendererData : ScriptableObject
+    [MovedFrom("UnityEngine.Rendering.DistillingRP")] public abstract class ScriptableRendererData : ScriptableObject
     {
         internal bool isInvalidated { get; set; }
 
@@ -122,7 +122,7 @@ namespace UnityEngine.Rendering.Universal
                 }
                 debugOutput += m_RendererFeatures[i] != null ? $"-{i}:Linked\n" : $"-{i}:Missing\n";
             }
-            if(UniversalRenderPipeline.asset.debugLevel != PipelineDebugLevel.Disabled)
+            if(DistillingRenderPipeline.asset.debugLevel != PipelineDebugLevel.Disabled)
                 Debug.LogWarning(debugOutput);
 
             UpdateMap();

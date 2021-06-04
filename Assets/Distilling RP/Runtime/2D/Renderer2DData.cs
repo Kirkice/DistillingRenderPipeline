@@ -1,18 +1,19 @@
 using System;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.ProjectWindowCallback;
+
 #endif
 
-namespace UnityEngine.Experimental.Rendering.Universal
+namespace UnityEngine.Experimental.Rendering.Distilling
 {
     [Serializable, ReloadGroup, ExcludeFromPreset]
-    [MovedFrom("UnityEngine.Experimental.Rendering.LWRP")]
+    [MovedFrom("UnityEngine.Experimental.Rendering.DistillingRP")]
     public class Renderer2DData : ScriptableRendererData
     {
         public enum Renderer2DDefaultMaterialType
@@ -95,8 +96,8 @@ namespace UnityEngine.Experimental.Rendering.Universal
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
-                ResourceReloader.TryReloadAllNullIn(this, UniversalRenderPipelineAsset.packagePath);
-                ResourceReloader.TryReloadAllNullIn(m_PostProcessData, UniversalRenderPipelineAsset.packagePath);
+                ResourceReloader.TryReloadAllNullIn(this, DistillingRenderPipelineAsset.packagePath);
+                ResourceReloader.TryReloadAllNullIn(m_PostProcessData, DistillingRenderPipelineAsset.packagePath);
             }
 #endif
             return new Renderer2D(this);
@@ -164,8 +165,8 @@ namespace UnityEngine.Experimental.Rendering.Universal
                 EditorPrefs.SetString(suggestedNamesKey, suggestedNamesPrefs);
             }
 
-            ResourceReloader.TryReloadAllNullIn(this, UniversalRenderPipelineAsset.packagePath);
-            ResourceReloader.TryReloadAllNullIn(m_PostProcessData, UniversalRenderPipelineAsset.packagePath);
+            ResourceReloader.TryReloadAllNullIn(this, DistillingRenderPipelineAsset.packagePath);
+            ResourceReloader.TryReloadAllNullIn(m_PostProcessData, DistillingRenderPipelineAsset.packagePath);
         }
 
         internal override Material GetDefaultMaterial(DefaultMaterialType materialType)

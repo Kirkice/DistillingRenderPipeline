@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnityEditor.Rendering.Universal
+namespace UnityEditor.Rendering.Distilling
 {
     // TODO: Should be cleaned up and put into CoreRP/Editor
     sealed class TrackballUIDrawer

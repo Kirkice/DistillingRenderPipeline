@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace UnityEngine.Rendering.Universal.Internal
+namespace UnityEngine.Rendering.Distilling.Internal
 {
     /// <summary>
     /// Draw  objects into the given color and depth target

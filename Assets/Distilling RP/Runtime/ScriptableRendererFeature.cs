@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.Scripting.APIUpdating;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     /// <summary>
     /// You can add a <c>ScriptableRendererFeature</c> to the <c>ScriptableRenderer</c>. Use this scriptable renderer feature to inject render passes into the renderer.
@@ -9,7 +9,7 @@ namespace UnityEngine.Rendering.Universal
     /// <seealso cref="ScriptableRenderer"/>
     /// <seealso cref="ScriptableRenderPass"/>
     [ExcludeFromPreset]
-    [MovedFrom("UnityEngine.Rendering.LWRP")] public abstract class ScriptableRendererFeature : ScriptableObject
+    [MovedFrom("UnityEngine.Rendering.DistillingRP")] public abstract class ScriptableRendererFeature : ScriptableObject
     {
         [SerializeField, HideInInspector] private bool m_Active = true;
         /// <summary>

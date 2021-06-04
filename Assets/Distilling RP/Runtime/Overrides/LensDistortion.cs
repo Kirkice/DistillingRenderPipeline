@@ -1,6 +1,6 @@
 using System;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     [Serializable, VolumeComponentMenu("Post-processing/Lens Distortion")]
     public sealed class LensDistortion : VolumeComponent, IPostProcessComponent

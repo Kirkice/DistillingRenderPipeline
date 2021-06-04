@@ -1,4 +1,4 @@
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     internal class PostProcessPassCompat : ScriptableRenderPass
     {

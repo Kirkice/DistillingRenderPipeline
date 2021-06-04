@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.Experimental.Rendering;
 
-namespace UnityEngine.Rendering.Universal.Internal
+namespace UnityEngine.Rendering.Distilling.Internal
 {
     /// <summary>
     /// Resolves shadows in a screen space texture.

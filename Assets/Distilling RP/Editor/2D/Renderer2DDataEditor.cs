@@ -1,7 +1,7 @@
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.Experimental.Rendering.Distilling;
 
-namespace UnityEditor.Experimental.Rendering.Universal
+namespace UnityEditor.Experimental.Rendering.Distilling
 {
     [CustomEditor(typeof(Renderer2DData), true)]
     internal class Renderer2DDataEditor : Editor

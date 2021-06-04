@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnityEditor.Rendering.Universal.ShaderGUI
+namespace UnityEditor.Rendering.Distilling.ShaderGUI
 {
     internal class UnlitShader : BaseShaderGUI
     {

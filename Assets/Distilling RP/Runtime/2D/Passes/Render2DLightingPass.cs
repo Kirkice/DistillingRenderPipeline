@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine.Rendering;
 using UnityEngine.Profiling;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
 
-namespace UnityEngine.Experimental.Rendering.Universal
+namespace UnityEngine.Experimental.Rendering.Distilling
 {
     internal class Render2DLightingPass : ScriptableRenderPass
     {

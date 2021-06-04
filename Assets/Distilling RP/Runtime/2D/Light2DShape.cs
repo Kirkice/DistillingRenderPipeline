@@ -1,4 +1,4 @@
-namespace UnityEngine.Experimental.Rendering.Universal
+namespace UnityEngine.Experimental.Rendering.Distilling
 {
     sealed public partial class Light2D : MonoBehaviour
     {

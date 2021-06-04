@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 
-namespace UnityEditor.Rendering.Universal
+namespace UnityEditor.Rendering.Distilling
 {
     internal static class SceneViewDrawMode
     {

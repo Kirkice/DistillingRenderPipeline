@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEditor.Rendering.Universal;
 
-namespace UnityEditor.Rendering.Universal.ShaderGUI
+namespace UnityEditor.Rendering.Distilling.ShaderGUI
 {
     internal class BakedLitShader : BaseShaderGUI
     {

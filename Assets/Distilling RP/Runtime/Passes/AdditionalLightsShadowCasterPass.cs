@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.Collections;
 
-namespace UnityEngine.Rendering.Universal.Internal
+namespace UnityEngine.Rendering.Distilling.Internal
 {
     /// <summary>
     /// Renders a shadow map atlas for additional shadow-casting Lights.
@@ -67,7 +67,7 @@ namespace UnityEngine.Rendering.Universal.Internal
             if (!m_UseStructuredBuffer)
             {
                 // Preallocated a fixed size. CommandBuffer.SetGlobal* does allow this data to grow.
-                int maxLights = UniversalRenderPipeline.maxVisibleAdditionalLights;
+                int maxLights = DistillingRenderPipeline.maxVisibleAdditionalLights;
                 m_AdditionalLightsWorldToShadow = new Matrix4x4[maxLights];
                 m_AdditionalLightsShadowParams = new Vector4[maxLights];
             }

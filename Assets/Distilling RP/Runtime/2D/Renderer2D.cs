@@ -1,8 +1,9 @@
+using UnityEngine.Experimental.Rendering.Distilling;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.Rendering.Universal.Internal;
+using UnityEngine.Rendering.Distilling;
+using UnityEngine.Rendering.Distilling.Internal;
 
-namespace UnityEngine.Experimental.Rendering.Universal
+namespace UnityEngine.Experimental.Rendering.Distilling
 {
     internal class Renderer2D : ScriptableRenderer
     {
@@ -138,7 +139,7 @@ namespace UnityEngine.Experimental.Rendering.Universal
             bool stackHasPostProcess = renderingData.postProcessingEnabled;
             bool lastCameraInStack = cameraData.resolveFinalTarget;
             var colorTextureFilterMode = FilterMode.Bilinear;
-            bool usingPPV2 = UniversalRenderPipeline.asset.postProcessingFeatureSet == PostProcessingFeatureSet.PostProcessingV2;
+            bool usingPPV2 = DistillingRenderPipeline.asset.postProcessingFeatureSet == PostProcessingFeatureSet.PostProcessingV2;
 
             PixelPerfectCamera ppc = null;
             bool ppcUsesOffscreenRT = false;

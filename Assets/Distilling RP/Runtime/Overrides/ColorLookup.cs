@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.Experimental.Rendering;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     [Serializable, VolumeComponentMenu("Post-processing/Color Lookup")]
     public sealed class ColorLookup : VolumeComponent, IPostProcessComponent
@@ -18,7 +18,7 @@ namespace UnityEngine.Rendering.Universal
 
         public bool ValidateLUT()
         {
-            var asset = UniversalRenderPipeline.asset;
+            var asset = DistillingRenderPipeline.asset;
             if (asset == null || texture.value == null)
                 return false;
 

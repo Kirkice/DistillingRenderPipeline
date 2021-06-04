@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Scripting.APIUpdating;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     // Note: Spaced built-in events so we can add events in between them
     // We need to leave room as we sort render passes based on event.
@@ -10,7 +10,7 @@ namespace UnityEngine.Rendering.Universal
     /// <summary>
     /// Controls when the render pass executes.
     /// </summary>
-    [MovedFrom("UnityEngine.Rendering.LWRP")] public enum RenderPassEvent
+    [MovedFrom("UnityEngine.Rendering.DistillingRP")] public enum RenderPassEvent
     {
         /// <summary>
         /// Executes a <c>ScriptableRenderPass</c> before rendering any other passes in the pipeline.
@@ -92,7 +92,7 @@ namespace UnityEngine.Rendering.Universal
     /// <summary>
     /// <c>ScriptableRenderPass</c> implements a logical rendering pass that can be used to extend Universal RP renderer.
     /// </summary>
-    [MovedFrom("UnityEngine.Rendering.LWRP")] public abstract class ScriptableRenderPass
+    [MovedFrom("UnityEngine.Rendering.DistillingRP")] public abstract class ScriptableRenderPass
     {
         public RenderPassEvent renderPassEvent { get; set; }
 

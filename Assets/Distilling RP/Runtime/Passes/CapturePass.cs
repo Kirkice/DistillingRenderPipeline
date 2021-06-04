@@ -1,4 +1,4 @@
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     /// <summary>
     /// Let customizable actions inject commands to capture the camera output.

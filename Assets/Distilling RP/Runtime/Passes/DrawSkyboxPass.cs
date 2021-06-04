@@ -1,6 +1,6 @@
 using UnityEngine.Scripting.APIUpdating;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     /// <summary>
     /// Draw the skybox into the given color buffer using the given depth buffer for depth testing.

@@ -1,12 +1,12 @@
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Experimental.Rendering.Distilling;
+using UnityEngine.Rendering.Distilling;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEditor.ProjectWindowCallback;
 using UnityEngine.Rendering;
 
-namespace UnityEditor.Experimental.Rendering.Universal
+namespace UnityEditor.Experimental.Rendering.Distilling
 {
     static class Renderer2DMenus
     {
@@ -133,7 +133,7 @@ namespace UnityEditor.Experimental.Rendering.Universal
             return CreateLightValidation();
         }
 
-        [MenuItem("Assets/Create/Rendering/Universal Render Pipeline/2D Renderer (Experimental)", priority = CoreUtils.assetCreateMenuPriority2 + 1)]
+        [MenuItem("Assets/Create/Rendering/Distilling Render Pipeline/2D Renderer (Experimental)", priority = CoreUtils.assetCreateMenuPriority2 + 1)]
         static void Create2DRendererData()
         {
             Renderer2DData.Create2DRendererData((instance) =>

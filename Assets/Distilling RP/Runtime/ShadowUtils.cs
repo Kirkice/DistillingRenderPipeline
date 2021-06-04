@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.Scripting.APIUpdating;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     [MovedFrom("UnityEngine.Rendering.LWRP")] public struct ShadowSliceData
     {

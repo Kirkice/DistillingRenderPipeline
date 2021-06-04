@@ -1,6 +1,6 @@
 using System;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     [Serializable, VolumeComponentMenu("Post-processing/Chromatic Aberration")]
     public sealed class ChromaticAberration : VolumeComponent, IPostProcessComponent

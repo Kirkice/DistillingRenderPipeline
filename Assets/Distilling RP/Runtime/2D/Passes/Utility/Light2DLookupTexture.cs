@@ -1,8 +1,8 @@
 using UnityEditor;
 using System.IO;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
 
-namespace UnityEngine.Experimental.Rendering.Universal
+namespace UnityEngine.Experimental.Rendering.Distilling
 {
     internal static class Light2DLookupTexture
     {

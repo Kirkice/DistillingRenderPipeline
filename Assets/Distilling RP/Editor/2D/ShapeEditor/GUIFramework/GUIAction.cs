@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnityEditor.Experimental.Rendering.Universal.Path2D.GUIFramework
+namespace UnityEditor.Experimental.Rendering.Distilling.Path2D.GUIFramework
 {
     internal abstract class GUIAction
     {

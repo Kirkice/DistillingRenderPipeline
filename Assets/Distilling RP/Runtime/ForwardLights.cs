@@ -1,7 +1,7 @@
 using UnityEngine.Experimental.GlobalIllumination;
 using Unity.Collections;
 
-namespace UnityEngine.Rendering.Universal.Internal
+namespace UnityEngine.Rendering.Distilling.Internal
 {
     /// <summary>
     /// Computes and submits lighting data to the GPU.
@@ -68,7 +68,7 @@ namespace UnityEngine.Rendering.Universal.Internal
 	            LightConstantBuffer._AdditionalLightsSpotDir = Shader.PropertyToID("_AdditionalLightsSpotDir");
 	            LightConstantBuffer._AdditionalLightOcclusionProbeChannel = Shader.PropertyToID("_AdditionalLightsOcclusionProbes");
 
-	            int maxLights = UniversalRenderPipeline.maxVisibleAdditionalLights;
+	            int maxLights = DistillingRenderPipeline.maxVisibleAdditionalLights;
 	            m_AdditionalLightPositions = new Vector4[maxLights];
 	            m_AdditionalLightColors = new Vector4[maxLights];
 	            m_AdditionalLightAttenuations = new Vector4[maxLights];
@@ -225,7 +225,7 @@ namespace UnityEngine.Rendering.Universal.Internal
             ref LightData lightData = ref renderingData.lightData;
             var cullResults = renderingData.cullResults;
             var lights = lightData.visibleLights;
-            int maxAdditionalLightsCount = UniversalRenderPipeline.maxVisibleAdditionalLights;
+            int maxAdditionalLightsCount = DistillingRenderPipeline.maxVisibleAdditionalLights;
             int additionalLightsCount = SetupPerObjectLightIndices(cullResults, ref lightData);
             if (additionalLightsCount > 0)
             {
@@ -303,7 +303,7 @@ namespace UnityEngine.Rendering.Universal.Internal
             // Pipeline handles main light globally and there's no support for additional directional lights atm.
             for (int i = 0; i < visibleLights.Length; ++i)
             {
-                if (additionalLightsCount >= UniversalRenderPipeline.maxVisibleAdditionalLights)
+                if (additionalLightsCount >= DistillingRenderPipeline.maxVisibleAdditionalLights)
                     break;
 
                 VisibleLight light = visibleLights[i];

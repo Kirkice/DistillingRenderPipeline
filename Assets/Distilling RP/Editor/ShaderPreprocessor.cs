@@ -5,10 +5,10 @@ using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 using UnityEngine.Profiling;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
 using UnityEngine.Rendering;
 
-namespace UnityEditor.Rendering.Universal
+namespace UnityEditor.Rendering.Distilling
 {
     [Flags]
     enum ShaderFeatures
@@ -190,7 +190,7 @@ namespace UnityEditor.Rendering.Universal
 #if PROFILE_BUILD
             Profiler.BeginSample(k_ProcessShaderTag);
 #endif
-            UniversalRenderPipelineAsset urpAsset = GraphicsSettings.renderPipelineAsset as UniversalRenderPipelineAsset;
+            DistillingRenderPipelineAsset urpAsset = GraphicsSettings.renderPipelineAsset as DistillingRenderPipelineAsset;
             if (urpAsset == null || compilerDataList == null || compilerDataList.Count == 0)
                 return;
 
@@ -263,13 +263,13 @@ namespace UnityEditor.Rendering.Universal
 
         private static void FetchAllSupportedFeatures()
         {
-            List<UniversalRenderPipelineAsset> urps = new List<UniversalRenderPipelineAsset>();
-            urps.Add(GraphicsSettings.defaultRenderPipeline as UniversalRenderPipelineAsset);
+            List<DistillingRenderPipelineAsset> urps = new List<DistillingRenderPipelineAsset>();
+            urps.Add(GraphicsSettings.defaultRenderPipeline as DistillingRenderPipelineAsset);
             for (int i = 0; i < QualitySettings.names.Length; i++)
             {
-                urps.Add(QualitySettings.GetRenderPipelineAssetAt(i) as UniversalRenderPipelineAsset);
+                urps.Add(QualitySettings.GetRenderPipelineAssetAt(i) as DistillingRenderPipelineAsset);
             }
-            foreach (UniversalRenderPipelineAsset urp in urps)
+            foreach (DistillingRenderPipelineAsset urp in urps)
             {
                 if (urp != null)
                 {
@@ -278,7 +278,7 @@ namespace UnityEditor.Rendering.Universal
             }
         }
 
-        private static ShaderFeatures GetSupportedShaderFeatures(UniversalRenderPipelineAsset pipelineAsset)
+        private static ShaderFeatures GetSupportedShaderFeatures(DistillingRenderPipelineAsset pipelineAsset)
         {
             ShaderFeatures shaderFeatures;
             shaderFeatures = ShaderFeatures.MainLight;

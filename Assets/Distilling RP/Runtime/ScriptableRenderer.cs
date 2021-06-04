@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine.Scripting.APIUpdating;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     /// <summary>
     ///  Class <c>ScriptableRenderer</c> implements a rendering strategy. It describes how culling and lighting works and
@@ -19,7 +19,7 @@ namespace UnityEngine.Rendering.Universal
     /// <seealso cref="ScriptableRendererFeature"/>
     /// <seealso cref="ScriptableRenderPass"/>
     /// </summary>
-    [MovedFrom("UnityEngine.Rendering.LWRP")] public abstract class ScriptableRenderer : IDisposable
+    [MovedFrom("UnityEngine.Rendering.DistillingRP")] public abstract class ScriptableRenderer : IDisposable
     {
         /// <summary>
         /// Configures the supported features for this renderer. When creating custom renderers
@@ -163,11 +163,11 @@ namespace UnityEngine.Rendering.Universal
             Vector4 deltaTimeVector = new Vector4(deltaTime, 1f / deltaTime, smoothDeltaTime, 1f / smoothDeltaTime);
             Vector4 timeParametersVector = new Vector4(time, Mathf.Sin(time), Mathf.Cos(time), 0.0f);
 
-            cmd.SetGlobalVector(UniversalRenderPipeline.PerFrameBuffer._Time, timeVector);
-            cmd.SetGlobalVector(UniversalRenderPipeline.PerFrameBuffer._SinTime, sinTimeVector);
-            cmd.SetGlobalVector(UniversalRenderPipeline.PerFrameBuffer._CosTime, cosTimeVector);
-            cmd.SetGlobalVector(UniversalRenderPipeline.PerFrameBuffer.unity_DeltaTime, deltaTimeVector);
-            cmd.SetGlobalVector(UniversalRenderPipeline.PerFrameBuffer._TimeParameters, timeParametersVector);
+            cmd.SetGlobalVector(DistillingRenderPipeline.PerFrameBuffer._Time, timeVector);
+            cmd.SetGlobalVector(DistillingRenderPipeline.PerFrameBuffer._SinTime, sinTimeVector);
+            cmd.SetGlobalVector(DistillingRenderPipeline.PerFrameBuffer._CosTime, cosTimeVector);
+            cmd.SetGlobalVector(DistillingRenderPipeline.PerFrameBuffer.unity_DeltaTime, deltaTimeVector);
+            cmd.SetGlobalVector(DistillingRenderPipeline.PerFrameBuffer._TimeParameters, timeParametersVector);
         }
 
         public RenderTargetIdentifier cameraColorTarget

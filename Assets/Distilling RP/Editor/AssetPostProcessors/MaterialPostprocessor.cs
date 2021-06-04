@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Rendering.Universal.ShaderGUI;
+using UnityEditor.Rendering.Distilling.ShaderGUI;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
 
-namespace UnityEditor.Rendering.Universal
+namespace UnityEditor.Rendering.Distilling
 {
     class MaterialModificationProcessor : AssetModificationProcessor
     {
@@ -54,12 +54,12 @@ namespace UnityEditor.Rendering.Universal
                     // We check the file existence only once to avoid IO operations every frame.
                     if (s_NeedToCheckProjSettingExistence)
                     {
-                        fileExist = System.IO.File.Exists(UniversalProjectSettings.filePath);
+                        fileExist = System.IO.File.Exists(DistillinglProjectSettings.filePath);
                         s_NeedToCheckProjSettingExistence = false;
                     }
 
                     //This method is called at opening and when URP package change (update of manifest.json)
-                    var curUpgradeVersion = UniversalProjectSettings.materialVersionForUpgrade;
+                    var curUpgradeVersion = DistillinglProjectSettings.materialVersionForUpgrade;
 
                     if (curUpgradeVersion != MaterialPostprocessor.k_Upgraders.Length)
                     {
@@ -99,7 +99,7 @@ namespace UnityEditor.Rendering.Universal
             {
                 // Need to update material version to prevent infinite loop in the upgrader
                 // when running tests.
-                UniversalProjectSettings.materialVersionForUpgrade = k_Upgraders.Length;
+                DistillinglProjectSettings.materialVersionForUpgrade = k_Upgraders.Length;
                 return;
             }
 
@@ -110,8 +110,8 @@ namespace UnityEditor.Rendering.Universal
 
             AssetDatabase.SaveAssets();
             //to prevent data loss, only update the saved version if user applied change and assets are written to
-            UniversalProjectSettings.materialVersionForUpgrade = k_Upgraders.Length;
-            UniversalProjectSettings.Save();
+            DistillinglProjectSettings.materialVersionForUpgrade = k_Upgraders.Length;
+            DistillinglProjectSettings.Save();
 
             s_ImportedAssetThatNeedSaving.Clear();
             s_NeedsSavingAssets = false;

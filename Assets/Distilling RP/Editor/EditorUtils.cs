@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace UnityEditor.Rendering.Universal.Internal
+namespace UnityEditor.Rendering.Distilling.Internal
 {
     /// <summary>
     /// Contains a database of built-in resource GUIds. These are used to load built-in resource files.
@@ -16,7 +16,7 @@ namespace UnityEditor.Rendering.Universal.Internal
     }
 }
 
-namespace UnityEditor.Rendering.Universal
+namespace UnityEditor.Rendering.Distilling
 {
     static class EditorUtils
     {

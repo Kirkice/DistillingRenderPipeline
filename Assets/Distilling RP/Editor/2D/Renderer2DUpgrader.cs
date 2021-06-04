@@ -1,9 +1,9 @@
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
+using UnityEngine.Experimental.Rendering.Distilling;
 
-namespace UnityEditor.Experimental.Rendering.Universal
+namespace UnityEditor.Experimental.Rendering.Distilling
 {
     static class Renderer2DUpgrader
     {

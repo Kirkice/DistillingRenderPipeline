@@ -1,6 +1,6 @@
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
 
-namespace UnityEditor.Rendering.Universal
+namespace UnityEditor.Rendering.Distilling
 {
     [VolumeComponentEditor(typeof(MotionBlur))]
     sealed class MotionBlurEditor : VolumeComponentEditor
@@ -22,9 +22,9 @@ namespace UnityEditor.Rendering.Universal
 
         public override void OnInspectorGUI()
         {
-            if (UniversalRenderPipeline.asset?.postProcessingFeatureSet == PostProcessingFeatureSet.PostProcessingV2)
+            if (DistillingRenderPipeline.asset?.postProcessingFeatureSet == PostProcessingFeatureSet.PostProcessingV2)
             {
-                EditorGUILayout.HelpBox(UniversalRenderPipelineAssetEditor.Styles.postProcessingGlobalWarning, MessageType.Warning);
+                EditorGUILayout.HelpBox(DistillingRenderPipelineAssetEditor.Styles.postProcessingGlobalWarning, MessageType.Warning);
                 return;
             }
 

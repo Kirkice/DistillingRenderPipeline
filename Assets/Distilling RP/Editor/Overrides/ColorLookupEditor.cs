@@ -1,6 +1,6 @@
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
 
-namespace UnityEditor.Rendering.Universal
+namespace UnityEditor.Rendering.Distilling
 {
     [VolumeComponentEditor(typeof(ColorLookup))]
     sealed class ColorLookupEditor : VolumeComponentEditor
@@ -18,9 +18,9 @@ namespace UnityEditor.Rendering.Universal
 
         public override void OnInspectorGUI()
         {
-            if (UniversalRenderPipeline.asset?.postProcessingFeatureSet == PostProcessingFeatureSet.PostProcessingV2)
+            if (DistillingRenderPipeline.asset?.postProcessingFeatureSet == PostProcessingFeatureSet.PostProcessingV2)
             {
-                EditorGUILayout.HelpBox(UniversalRenderPipelineAssetEditor.Styles.postProcessingGlobalWarning, MessageType.Warning);
+                EditorGUILayout.HelpBox(DistillingRenderPipelineAssetEditor.Styles.postProcessingGlobalWarning, MessageType.Warning);
                 return;
             }
 
@@ -32,7 +32,7 @@ namespace UnityEditor.Rendering.Universal
 
             PropertyField(m_Contribution, EditorGUIUtility.TrTextContent("Contribution"));
 
-            var asset = UniversalRenderPipeline.asset;
+            var asset = DistillingRenderPipeline.asset;
             if (asset != null)
             {
                 if (asset.supportsHDR && asset.colorGradingMode == ColorGradingMode.HighDynamicRange)

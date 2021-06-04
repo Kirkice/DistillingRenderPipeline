@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
 using UnityEngine.Rendering;
 using UnityEngine.Scripting.APIUpdating;
 
-namespace UnityEngine.Experimental.Rendering.Universal
+namespace UnityEngine.Experimental.Rendering.Distilling
 {
     [MovedFrom("UnityEngine.Experimental.Rendering.LWRP")] public class RenderObjectsPass : ScriptableRenderPass
     {

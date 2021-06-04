@@ -1,6 +1,6 @@
 using System;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     [Serializable, VolumeComponentMenu("Post-processing/Panini Projection")]
     public sealed class PaniniProjection : VolumeComponent, IPostProcessComponent

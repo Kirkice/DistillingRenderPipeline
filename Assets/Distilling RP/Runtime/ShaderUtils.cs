@@ -3,9 +3,9 @@ using System.Linq;
 using System.ComponentModel;
 using UnityEngine.Scripting.APIUpdating;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
-    [MovedFrom("UnityEngine.Rendering.LWRP")] public enum ShaderPathID
+    [MovedFrom("UnityEngine.Rendering.DistillingRP")] public enum ShaderPathID
     {
         Lit,
         SimpleLit,
@@ -21,7 +21,7 @@ namespace UnityEngine.Rendering.Universal
         SpeedTree8,
     }
 
-    [MovedFrom("UnityEngine.Rendering.LWRP")] public static class ShaderUtils
+    [MovedFrom("UnityEngine.Rendering.DistillingRP")] public static class ShaderUtils
     {
         static readonly string[] s_ShaderPaths  =
         {

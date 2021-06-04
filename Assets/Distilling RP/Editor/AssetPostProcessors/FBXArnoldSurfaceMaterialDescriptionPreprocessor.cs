@@ -2,9 +2,9 @@ using System.IO;
 using UnityEditor.AssetImporters;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
 
-namespace UnityEditor.Rendering.Universal
+namespace UnityEditor.Rendering.Distilling
 {
     class FBXArnoldSurfaceMaterialDescriptionPreprocessor : AssetPostprocessor
     {
@@ -44,7 +44,7 @@ namespace UnityEditor.Rendering.Universal
             AnimationClip[] clips)
         {
             var pipelineAsset = GraphicsSettings.currentRenderPipeline;
-            if (!pipelineAsset || pipelineAsset.GetType() != typeof(UniversalRenderPipelineAsset))
+            if (!pipelineAsset || pipelineAsset.GetType() != typeof(DistillingRenderPipelineAsset))
                 return;
 
             var lowerCasePath = Path.GetExtension(assetPath).ToLower();

@@ -1,6 +1,6 @@
 using UnityEngine.Scripting.APIUpdating;
 
-namespace UnityEditor.Rendering.Universal
+namespace UnityEditor.Rendering.Distilling
 {
     [MovedFrom("UnityEditor.Rendering.LWRP")] public enum UpgradeSurfaceType
     {

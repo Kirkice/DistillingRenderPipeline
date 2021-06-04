@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.EditorTools;
-using UnityEditor.Experimental.Rendering.Universal.Path2D;
+using UnityEditor.Experimental.Rendering.Distilling.Path2D;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Experimental.Rendering.Distilling;
+using UnityEngine.Rendering.Distilling;
 
-namespace UnityEditor.Experimental.Rendering.Universal
+namespace UnityEditor.Experimental.Rendering.Distilling
 {
     [CustomEditor(typeof(Light2D))]
     [CanEditMultipleObjects]
@@ -541,7 +541,7 @@ namespace UnityEditor.Experimental.Rendering.Universal
 
         public override void OnInspectorGUI()
         {
-            UniversalRenderPipelineAsset asset = UniversalRenderPipeline.asset;
+            DistillingRenderPipelineAsset asset = DistillingRenderPipeline.asset;
 
             if (asset != null)
             {

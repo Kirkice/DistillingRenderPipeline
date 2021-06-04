@@ -5,10 +5,10 @@ using UnityEditor.ProjectWindowCallback;
 using System;
 using UnityEngine.Scripting.APIUpdating;
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     [Serializable, ReloadGroup, ExcludeFromPreset]
-    [MovedFrom("UnityEngine.Rendering.LWRP")]
+    [MovedFrom("UnityEngine.Rendering.DistillingRP")]
     public class ForwardRendererData : ScriptableRendererData
     {
 #if UNITY_EDITOR
@@ -19,12 +19,12 @@ namespace UnityEngine.Rendering.Universal
             {
                 var instance = CreateInstance<ForwardRendererData>();
                 AssetDatabase.CreateAsset(instance, pathName);
-                ResourceReloader.ReloadAllNullIn(instance, UniversalRenderPipelineAsset.packagePath);
+                ResourceReloader.ReloadAllNullIn(instance, DistillingRenderPipelineAsset.packagePath);
                 Selection.activeObject = instance;
             }
         }
 
-        [MenuItem("Assets/Create/Rendering/Universal Render Pipeline/Forward Renderer", priority = CoreUtils.assetCreateMenuPriority2)]
+        [MenuItem("Assets/Create/Rendering/Distilling Render Pipeline/Forward Renderer", priority = CoreUtils.assetCreateMenuPriority2)]
         static void CreateForwardRendererData()
         {
             ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, CreateInstance<CreateForwardRendererAsset>(), "CustomForwardRendererData.asset", null, null);
@@ -133,8 +133,8 @@ namespace UnityEngine.Rendering.Universal
                 return;
 
 #if UNITY_EDITOR
-            ResourceReloader.TryReloadAllNullIn(this, UniversalRenderPipelineAsset.packagePath);
-            ResourceReloader.TryReloadAllNullIn(postProcessData, UniversalRenderPipelineAsset.packagePath);
+            ResourceReloader.TryReloadAllNullIn(this, DistillingRenderPipelineAsset.packagePath);
+            ResourceReloader.TryReloadAllNullIn(postProcessData, DistillingRenderPipelineAsset.packagePath);
 #endif
         }
     }

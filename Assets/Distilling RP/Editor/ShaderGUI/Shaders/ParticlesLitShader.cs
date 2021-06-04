@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityEditor.Rendering.Universal.ShaderGUI
+namespace UnityEditor.Rendering.Distilling.ShaderGUI
 {
     internal class ParticlesLitShader : BaseShaderGUI
     {

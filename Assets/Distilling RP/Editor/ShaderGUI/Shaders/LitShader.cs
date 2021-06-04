@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEditor.Rendering.Universal;
+using UnityEditor.Rendering.Distilling;
 
-namespace UnityEditor.Rendering.Universal.ShaderGUI
+namespace UnityEditor.Rendering.Distilling.ShaderGUI
 {
     internal class LitShader : BaseShaderGUI
     {

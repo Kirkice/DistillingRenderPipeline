@@ -1,7 +1,7 @@
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Distilling;
 
-namespace UnityEditor.Rendering.Universal
+namespace UnityEditor.Rendering.Distilling
 {
     [CustomEditor(typeof(ScriptableRendererFeature), true)]
     public class ScriptableRendererFeatureEditor : Editor

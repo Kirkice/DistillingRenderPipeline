@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.Rendering;
 using UnityEngine.Scripting.APIUpdating;
 
-namespace UnityEditor.Rendering.Universal.ShaderGUI
+namespace UnityEditor.Rendering.Distilling.ShaderGUI
 {
     [MovedFrom("UnityEditor.Rendering.LWRP.ShaderGUI")] public static class ParticleGUI
     {

@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.Analytics;
-using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.Experimental.Rendering.Distilling;
 
-namespace UnityEditor.Experimental.Rendering.Universal.Analytics
+namespace UnityEditor.Experimental.Rendering.Distilling.Analytics
 {
     struct AnalyticsDataTypes
     {

@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 using UnityEditor.Experimental.SceneManagement;
 #endif
 
-namespace UnityEngine.Experimental.Rendering.Universal
+namespace UnityEngine.Experimental.Rendering.Distilling
 {
     class Light2DManager : IDisposable
     {

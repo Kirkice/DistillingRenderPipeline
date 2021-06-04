@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Experimental.Rendering.Distilling;
+using UnityEngine.Rendering.Distilling;
 
-namespace UnityEditor.Experimental.Rendering.Universal
+namespace UnityEditor.Experimental.Rendering.Distilling
 {
     [CustomEditor(typeof(PixelPerfectCamera))]
     class PixelPerfectCameraEditor : Editor
@@ -63,7 +63,7 @@ namespace UnityEditor.Experimental.Rendering.Universal
             m_CameraStacking = false;
 
             PixelPerfectCamera obj = target as PixelPerfectCamera;
-            UniversalAdditionalCameraData cameraData = null;
+            DistillingAdditionalCameraData cameraData = null;
             obj?.TryGetComponent(out cameraData);
 
             if (cameraData == null)

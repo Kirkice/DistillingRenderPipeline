@@ -8,7 +8,7 @@ using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.Rendering.PostProcessing;
 #endif
 
-namespace UnityEngine.Rendering.Universal
+namespace UnityEngine.Rendering.Distilling
 {
     /// <summary>
     /// Contains properties and helper functions that you can use when rendering.

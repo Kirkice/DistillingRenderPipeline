@@ -1,4 +1,4 @@
-namespace UnityEngine.Rendering.Universal.Internal
+namespace UnityEngine.Rendering.Distilling.Internal
 {
     /// <summary>
     /// Copy the given color target to the current camera target
