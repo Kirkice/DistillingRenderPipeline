@@ -57,7 +57,7 @@ Get Shadow Mask Texture
 </p>
 
 # Dependencies
-- Egine : Unity 2019.4.26f
+- Engine : Unity 2019.4.26f
 - URP Version : Universal RenderPipeline 7.6.0
 
 # Community
