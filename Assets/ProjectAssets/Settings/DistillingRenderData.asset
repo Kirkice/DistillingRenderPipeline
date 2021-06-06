@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8391872715349847858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306a260ccee95294bbb1ae19f5797701, type: 3}
+  m_Name: CopyNormalW
+  m_EditorClassIdentifier: 
+  m_Active: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21,6 +34,7 @@ MonoBehaviour:
     screenSpaceShadowPS: {fileID: 4800000, guid: 0f854b35a0cf61a429bd5dcfea30eddd,
       type: 3}
     samplingPS: {fileID: 4800000, guid: 04c410c9937594faa893a11dceb85f7e, type: 3}
+    copyNormalWS: {fileID: 4800000, guid: db70fb11810950345a0edbb3a69b7cff, type: 3}
     stencilDeferredPS: {fileID: 4800000, guid: 54af1f16afe287f4f94fc681cc594dd7, type: 3}
     fallbackErrorPS: {fileID: 4800000, guid: e6e9a19c3678ded42a3bc431ebef7dbd, type: 3}
   m_OpaqueLayerMask:
@@ -37,6 +51,19 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 1
-  m_AccurateGbufferNormals: 0
+  m_RenderingMode: 0
+  m_AccurateGbufferNormals: 1
   m_TiledDeferredShading: 0
+--- !u!114 &4354169060432308613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058a34acaa4e60944aa77e2708ac9f1d, type: 3}
+  m_Name: NewCelHairShadow
+  m_EditorClassIdentifier: 
+  m_Active: 1
