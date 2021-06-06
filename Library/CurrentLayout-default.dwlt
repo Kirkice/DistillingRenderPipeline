@@ -43,8 +43,8 @@ MonoBehaviour:
     y: 0
     width: 206
     height: 676
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -71,10 +71,10 @@ MonoBehaviour:
     y: 0
     width: 1482
     height: 676
-  m_MinSize: {x: 302, y: 200}
-  m_MaxSize: {x: 8002, y: 4021}
+  m_MinSize: {x: 303, y: 221}
+  m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 35
+  controlID: 57
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -190,10 +190,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 578, y: 471}
+  m_MinSize: {x: 579, y: 492}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 33
+  controlID: 122
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -215,10 +215,10 @@ MonoBehaviour:
     y: 0
     width: 1482
     height: 947
-  m_MinSize: {x: 302, y: 471}
+  m_MinSize: {x: 303, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 34
+  controlID: 56
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -446,23 +446,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 60c2f9ffa839fbffdc74fcffd47ffdff66fbffffa08b0000
+      m_SelectedIDs: 52390000
+      m_LastClickedID: 14674
+      m_ExpandedIDs: 66fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: CrytekSponza
-        m_OriginalName: CrytekSponza
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -312922
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 2}
       m_SearchString: 
@@ -558,11 +558,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.0014680173, y: 0.5997943, z: -0.001057382, w: 0.8002158}
     speed: 2
-    m_Value: {x: 0.00026776656, y: 0.5997647, z: -0.00015756422, w: 0.8001764}
+    m_Value: {x: 0.0014680173, y: 0.5997943, z: -0.001057382, w: 0.8002158}
   m_Size:
     m_Target: 0.09189391
     speed: 2
-    m_Value: 0.39189392
+    m_Value: 0.09189391
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -626,34 +626,34 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Core RP Library
   m_ViewMode: 1
   m_StartGridSize: 56
   m_LastFolders:
-  - Assets
+  - Assets/Core RP Library
   m_LastFoldersGridSize: 56
   m_LastProjectPath: E:\DistillingRenderPipeline
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: c6390000
-    m_LastClickedID: 14790
-    m_ExpandedIDs: 00000000c6390000c8390000ca390000cc390000ce390000d0390000d2390000d4390000d6390000da39000000ca9a3b
+    m_SelectedIDs: 66490000
+    m_LastClickedID: 18790
+    m_ExpandedIDs: 00000000e6480000e8480000ea480000ec480000ee480000f0480000f2480000f4480000f6480000f84800006a490000e24c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Resources
-      m_OriginalName: Resources
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 35082
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_SearchString: 
@@ -667,7 +667,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 18560000
     m_LastClickedID: 22040
-    m_ExpandedIDs: 00000000c6390000c8390000ca390000cc390000ce390000d0390000d2390000d4390000d6390000d8390000da390000dc390000
+    m_ExpandedIDs: 00000000e6480000e8480000ea480000ec480000ee480000f0480000f2480000f4480000f6480000f8480000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
