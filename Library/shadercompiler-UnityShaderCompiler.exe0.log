@@ -1,35 +1,53 @@
 Base path: 'D:/Unity2019.4.26/Unity/Editor/Data', plugins path 'D:/Unity2019.4.26/Unity/Editor/Data/PlaybackEngines'
 Cmd: initializeCompiler
-Cmd: compileSnippet
-  api=4 type=0 insize=2318 outsize=1686 kw=_MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=2318 outsize=3698 kw=_MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=1
 Cmd: preprocess
-  insize=18775 outsize=5564 ok=1
-Cmd: preprocess
-  insize=18769 outsize=5563 ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=2318 outsize=1686 kw=_ADDITIONAL_LIGHTS pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=2318 outsize=4154 kw=_ADDITIONAL_LIGHTS pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=1
+  insize=1169 outsize=420 ok=1
 Cmd: preprocess
   insize=5500 outsize=1964 ok=1
 Cmd: preprocess
+  insize=4191 outsize=440 ok=1
+Cmd: preprocess
+  insize=2103 outsize=353 ok=1
+Cmd: preprocess
+  insize=1664 outsize=613 ok=1
+Cmd: preprocess
+  insize=7179 outsize=1440 ok=1
+Cmd: preprocess
+  insize=1676 outsize=1080 ok=1
+Cmd: preprocess
   insize=12819 outsize=5201 ok=1
+Cmd: preprocess
+  insize=4766 outsize=846 ok=1
+Cmd: preprocess
+  insize=5195 outsize=488 ok=1
+Cmd: preprocess
+  insize=2277 outsize=468 ok=1
 Cmd: preprocess
   insize=4719 outsize=3341 ok=1
 Cmd: preprocess
   insize=18769 outsize=5563 ok=1
 Cmd: preprocess
+  insize=5453 outsize=353 ok=1
+Cmd: preprocess
   insize=5353 outsize=1946 ok=1
+Cmd: preprocess
+  insize=6456 outsize=361 ok=1
 Cmd: preprocess
   insize=6797 outsize=4307 ok=1
 Cmd: preprocess
   insize=3055 outsize=996 ok=1
 Cmd: preprocess
+  insize=717 outsize=346 ok=1
+Cmd: preprocess
   insize=6657 outsize=880 ok=1
 Cmd: preprocess
   insize=6448 outsize=4090 ok=1
+Cmd: preprocess
+  insize=5571 outsize=340 ok=1
+Cmd: preprocess
+  insize=3720 outsize=487 ok=1
+Cmd: preprocess
+  insize=9261 outsize=351 ok=1
 Cmd: preprocess
   insize=3081 outsize=1015 ok=1
 Cmd: preprocess
@@ -39,101 +57,27 @@ Cmd: preprocess
 Cmd: preprocess
   insize=4306 outsize=2602 ok=1
 Cmd: preprocess
-  insize=8011 outsize=2052 ok=1
-Cmd: preprocess
-  insize=7869 outsize=3650 ok=1
-Cmd: preprocess
-  insize=2895 outsize=1294 ok=1
-Cmd: preprocess
-  insize=4427 outsize=1759 ok=1
-Cmd: preprocess
-  insize=8982 outsize=2407 ok=1
-Cmd: compileSnippet
-  error: 2 plat 4 at RP/ShaderLibrary/Lighting.hlsl(4): failed to open source file: 'Assets/Distilling RP/ShaderLibrary/Common.hlsl'\nCompiling Vertex program with _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
-Platform defines: UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR
-  api=4 type=0 insize=2318 outsize=0 kw=_MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at RP/ShaderLibrary/Lighting.hlsl(4): failed to open source file: 'Assets/Distilling RP/ShaderLibrary/Common.hlsl'\nCompiling Fragment program with _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
-Platform defines: UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR
-  api=4 type=1 insize=2318 outsize=0 kw=_MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=0
-Cmd: preprocess
-  insize=5500 outsize=1964 ok=1
-Cmd: preprocess
-  insize=12819 outsize=5201 ok=1
-Cmd: preprocess
-  insize=4719 outsize=3341 ok=1
-Cmd: preprocess
-  insize=18769 outsize=5563 ok=1
-Cmd: preprocess
-  insize=5353 outsize=1946 ok=1
-Cmd: preprocess
-  insize=6797 outsize=4307 ok=1
-Cmd: preprocess
-  insize=3055 outsize=996 ok=1
-Cmd: preprocess
-  insize=6657 outsize=880 ok=1
-Cmd: preprocess
-  insize=6448 outsize=4090 ok=1
-Cmd: preprocess
-  insize=3081 outsize=1015 ok=1
-Cmd: preprocess
-  insize=7339 outsize=3821 ok=1
-Cmd: preprocess
-  insize=5860 outsize=2426 ok=1
-Cmd: preprocess
-  insize=4306 outsize=2602 ok=1
+  insize=12551 outsize=1879 ok=1
 Cmd: preprocess
   insize=8011 outsize=2052 ok=1
 Cmd: preprocess
-  insize=7869 outsize=3650 ok=1
-Cmd: preprocess
-  insize=2895 outsize=1294 ok=1
-Cmd: preprocess
-  insize=4427 outsize=1759 ok=1
-Cmd: preprocess
-  insize=8982 outsize=2407 ok=1
-Cmd: compileSnippet
-  error: 2 plat 4 at RP/ShaderLibrary/Lighting.hlsl(320): undeclared identifier 'kDieletricSpec'\nCompiling Vertex program with _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
-Platform defines: UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR
-  api=4 type=0 insize=2318 outsize=0 kw=_MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at RP/ShaderLibrary/Lighting.hlsl(320): undeclared identifier 'kDieletricSpec'\nCompiling Fragment program with _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
-Platform defines: UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR
-  api=4 type=1 insize=2318 outsize=0 kw=_MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=0
-Cmd: preprocess
-  insize=5500 outsize=1964 ok=1
-Cmd: preprocess
-  insize=12819 outsize=5201 ok=1
-Cmd: preprocess
-  insize=4719 outsize=3341 ok=1
-Cmd: preprocess
-  insize=18769 outsize=5563 ok=1
-Cmd: preprocess
-  insize=5353 outsize=1946 ok=1
-Cmd: preprocess
-  insize=6797 outsize=4307 ok=1
-Cmd: preprocess
-  insize=3055 outsize=996 ok=1
-Cmd: preprocess
-  insize=6657 outsize=880 ok=1
-Cmd: preprocess
-  insize=6448 outsize=4090 ok=1
-Cmd: preprocess
-  insize=3081 outsize=1015 ok=1
-Cmd: preprocess
-  insize=7339 outsize=3821 ok=1
-Cmd: preprocess
-  insize=5860 outsize=2426 ok=1
-Cmd: preprocess
-  insize=4306 outsize=2602 ok=1
-Cmd: preprocess
-  insize=8011 outsize=2052 ok=1
+  insize=8362 outsize=360 ok=1
 Cmd: preprocess
   insize=7869 outsize=3650 ok=1
 Cmd: preprocess
+  insize=4934 outsize=745 ok=1
+Cmd: preprocess
+  insize=8601 outsize=1017 ok=1
+Cmd: preprocess
   insize=2895 outsize=1294 ok=1
 Cmd: preprocess
+  insize=2941 outsize=341 ok=1
+Cmd: preprocess
   insize=4427 outsize=1759 ok=1
+Cmd: preprocess
+  insize=3395 outsize=386 ok=1
+Cmd: preprocess
+  insize=7088 outsize=814 ok=1
 Cmd: preprocess
   insize=8982 outsize=2407 ok=1
 Cmd: shutdown
