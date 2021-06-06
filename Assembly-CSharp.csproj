@@ -50,51 +50,39 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Distilling RP\Runtime\2D\CinemachineUniversalPixelPerfect.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\CompositeShadowCaster2D.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Light2D.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Light2DBlendStyle.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Light2DPoint.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Light2DShape.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Light2DStub.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\LightUtility.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Passes\Render2DLightingPass.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Passes\Utility\Light2DLookupTexture.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Passes\Utility\RendererLighting.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\PixelPerfectCamera.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\PixelPerfectCameraInternal.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Renderer2D.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Renderer2DData.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\ShadowCaster2D.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Shadows\ShadowCasterGroup2D.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Shadows\ShadowCasterGroup2DManager.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\2D\Shadows\ShadowUtility.cs" />
+     <Compile Include="Assets\NewBehaviourScript.cs" />
  <Reference Include="Unity.Timeline.Editor">
- <HintPath>G:/project/Unity/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VSCode.Editor">
- <HintPath>G:/project/Unity/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>G:/project/Unity/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>G:/project/Unity/DistillingRenderPipeline/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
- <HintPath>G:/project/Unity/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>G:/project/Unity/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+ <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
- <HintPath>G:/project/Unity/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Mathematics">
+ <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Mathematics.Editor">
+ <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>G:/project/Unity/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>G:/project/Unity/DistillingRenderPipeline/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine">
  <HintPath>D:/Unity2019.4.26/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -626,25 +614,33 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.csproj">
+      <Project>{8ad71e3a-889f-f3d5-ae9f-37d9a6c32143}</Project>
+      <Name>Unity.RenderPipeline.Universal.ShaderLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Universal.Shaders.csproj">
       <Project>{b1cdbf79-afec-afcf-9846-58f8f52da15d}</Project>
       <Name>Unity.RenderPipelines.Universal.Shaders</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.csproj">
-      <Project>{e2629ed3-80be-ee35-82bb-47e3d2c402f9}</Project>
-      <Name>Unity.RenderPipelines.Core.Runtime</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Core.Editor.csproj">
       <Project>{448226c2-7e82-014e-abe4-9c7b7ecd9daa}</Project>
       <Name>Unity.RenderPipelines.Core.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.csproj">
+      <Project>{e2629ed3-80be-ee35-82bb-47e3d2c402f9}</Project>
+      <Name>Unity.RenderPipelines.Core.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Universal.Runtime.csproj">
+      <Project>{7a0cc208-5f39-17a7-c22b-cd9662594663}</Project>
+      <Name>Unity.RenderPipelines.Universal.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Universal.Editor.csproj">
+      <Project>{9c28c9ca-5aa7-bb8d-4f77-38426dfb281b}</Project>
+      <Name>Unity.RenderPipelines.Universal.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Core.ShaderLibrary.csproj">
       <Project>{eb34dfde-3846-e20d-8f0f-6cd46e557f84}</Project>
       <Name>Unity.RenderPipelines.Core.ShaderLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.csproj">
-      <Project>{8ad71e3a-889f-f3d5-ae9f-37d9a6c32143}</Project>
-      <Name>Unity.RenderPipeline.Universal.ShaderLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
