@@ -103,6 +103,14 @@ namespace UnityEngine.Rendering.Distilling
         public bool requiresDepthTexture;
         public bool requiresOpaqueTexture;
 
+        public bool requiresNormalWSTexture;
+        public bool requiresPosWSTexture;
+        public bool requiresTangentWSTexture;
+        public bool requiresObjectIDTexture;
+        public bool requiresTransparentColor;
+        public bool requiresShadowMaskTexture;
+        
+
         /// <summary>
         /// True if the camera rendering is for the scene window in the editor
         /// </summary>

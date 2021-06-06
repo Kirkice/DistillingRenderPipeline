@@ -14,6 +14,7 @@ namespace UnityEditor.Rendering.Distilling
             // Groups
             public static GUIContent generalSettingsText = EditorGUIUtility.TrTextContent("General");
             public static GUIContent qualitySettingsText = EditorGUIUtility.TrTextContent("Quality");
+            public static GUIContent texturesSettingsText = EditorGUIUtility.TrTextContent("Distilling RenderPipeline Textures");
             public static GUIContent lightingSettingsText = EditorGUIUtility.TrTextContent("Lighting");
             public static GUIContent shadowSettingsText = EditorGUIUtility.TrTextContent("Shadows");
             public static GUIContent postProcessingSettingsText = EditorGUIUtility.TrTextContent("Post-processing");
@@ -29,6 +30,14 @@ namespace UnityEditor.Rendering.Distilling
             public static GUIContent rendererDefaultMissingText = EditorGUIUtility.TrIconContent("console.erroricon.sml", "Default renderer missing. Click this to select a new renderer.");
             public static GUIContent requireDepthTextureText = EditorGUIUtility.TrTextContent("Depth Texture", "If enabled the pipeline will generate camera's depth that can be bound in shaders as _CameraDepthTexture.");
             public static GUIContent requireOpaqueTextureText = EditorGUIUtility.TrTextContent("Opaque Texture", "If enabled the pipeline will copy the screen to texture after opaque objects are drawn. For transparent objects this can be bound in shaders as _CameraOpaqueTexture.");
+            
+            public static GUIContent requireNormalWSTextureText = EditorGUIUtility.TrTextContent("NormalWS Texture", "Get World Space Normal.");
+            public static GUIContent requirePosWSTextureText = EditorGUIUtility.TrTextContent("PosWS Texture", "Get World Space Position.");
+            public static GUIContent requireTangentWSTextureText = EditorGUIUtility.TrTextContent("TangentWS Texture", "Get World Space Tangent.");
+            public static GUIContent requireObjectIDTextureText = EditorGUIUtility.TrTextContent("ObjectID Texture", "Get ObjectID Texture.");
+            public static GUIContent requireTransparentColorText = EditorGUIUtility.TrTextContent("Transparent Texture", "Get Transparent Texture.");
+            public static GUIContent requireShadowMaskTextureText = EditorGUIUtility.TrTextContent("ShadowMask Texture", "Get ShadowMask Texture.");
+            
             public static GUIContent opaqueDownsamplingText = EditorGUIUtility.TrTextContent("Opaque Downsampling", "The downsampling method that is used for the opaque texture");
             public static GUIContent supportsTerrainHolesText = EditorGUIUtility.TrTextContent("Terrain Holes", "When disabled, Universal Rendering Pipeline removes all Terrain hole Shader variants when you build for the Unity Player. This decreases build time.");
 
@@ -91,6 +100,7 @@ namespace UnityEditor.Rendering.Distilling
             public static string[] opaqueDownsamplingOptions = {"None", "2x (Bilinear)", "4x (Box)", "4x (Bilinear)"};
         }
 
+        SavedBool m_TexturesSettingsFoldout;
         SavedBool m_GeneralSettingsFoldout;
         SavedBool m_QualitySettingsFoldout;
         SavedBool m_LightingSettingsFoldout;
@@ -105,6 +115,14 @@ namespace UnityEditor.Rendering.Distilling
 
         SerializedProperty m_RequireDepthTextureProp;
         SerializedProperty m_RequireOpaqueTextureProp;
+        
+        SerializedProperty m_RequireNormalWSTextureProp;
+        SerializedProperty m_RequirePosWSTextureProp;
+        SerializedProperty m_RequireTangentWSTextureProp;
+        SerializedProperty m_RequireObjectIDTextureProp;
+        SerializedProperty m_RequireTransparentColorProp;
+        SerializedProperty m_RequireShadowMaskTextureProp;
+
         SerializedProperty m_OpaqueDownsamplingProp;
         SerializedProperty m_SupportsTerrainHolesProp;
 
@@ -149,6 +167,7 @@ namespace UnityEditor.Rendering.Distilling
             serializedObject.Update();
 
             DrawGeneralSettings();
+            DrawTexturesSettings();
             DrawQualitySettings();
             DrawLightingSettings();
             DrawShadowSettings();
@@ -165,6 +184,7 @@ namespace UnityEditor.Rendering.Distilling
         {
             m_GeneralSettingsFoldout = new SavedBool($"{target.GetType()}.GeneralSettingsFoldout", false);
             m_QualitySettingsFoldout = new SavedBool($"{target.GetType()}.QualitySettingsFoldout", false);
+            m_TexturesSettingsFoldout = new SavedBool($"{target.GetType()}.TexturesSettingsFoldout", false);
             m_LightingSettingsFoldout = new SavedBool($"{target.GetType()}.LightingSettingsFoldout", false);
             m_ShadowSettingsFoldout = new SavedBool($"{target.GetType()}.ShadowSettingsFoldout", false);
             m_PostProcessingSettingsFoldout = new SavedBool($"{target.GetType()}.PostProcessingSettingsFoldout", false);
@@ -179,6 +199,14 @@ namespace UnityEditor.Rendering.Distilling
 
             m_RequireDepthTextureProp = serializedObject.FindProperty("m_RequireDepthTexture");
             m_RequireOpaqueTextureProp = serializedObject.FindProperty("m_RequireOpaqueTexture");
+            
+            m_RequireNormalWSTextureProp = serializedObject.FindProperty("m_RequireNormalWSTexture");
+            m_RequirePosWSTextureProp = serializedObject.FindProperty("m_RequirePosWSTexture");
+            m_RequireTangentWSTextureProp = serializedObject.FindProperty("m_RequireTangentWSTexture");
+            m_RequireObjectIDTextureProp = serializedObject.FindProperty("m_RequireObjectIDTexture");
+            m_RequireTransparentColorProp = serializedObject.FindProperty("m_RequireTransparentColor");
+            m_RequireShadowMaskTextureProp = serializedObject.FindProperty("m_RequireShadowMaskTexture");
+            
             m_OpaqueDownsamplingProp = serializedObject.FindProperty("m_OpaqueDownsampling");
             m_SupportsTerrainHolesProp = serializedObject.FindProperty("m_SupportsTerrainHoles");
 
@@ -237,9 +265,29 @@ namespace UnityEditor.Rendering.Distilling
                     EditorGUILayout.HelpBox(Styles.rendererMissingDefaultMessage.text, MessageType.Error, true);
                 else if (!asset.ValidateRendererDataList(true))
                     EditorGUILayout.HelpBox(Styles.rendererMissingMessage.text, MessageType.Warning, true);
+            }
 
+            EditorGUILayout.EndFoldoutHeaderGroup();
+        }
+
+        void DrawTexturesSettings()
+        {
+            m_TexturesSettingsFoldout.value = EditorGUILayout.BeginFoldoutHeaderGroup(m_TexturesSettingsFoldout.value, Styles.texturesSettingsText);
+            if (m_TexturesSettingsFoldout.value)
+            {
+                EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(m_RequireDepthTextureProp, Styles.requireDepthTextureText);
                 EditorGUILayout.PropertyField(m_RequireOpaqueTextureProp, Styles.requireOpaqueTextureText);
+                
+                EditorGUILayout.PropertyField(m_RequireNormalWSTextureProp, Styles.requireNormalWSTextureText);
+                EditorGUILayout.PropertyField(m_RequirePosWSTextureProp, Styles.requirePosWSTextureText);
+                
+                EditorGUILayout.PropertyField(m_RequireTangentWSTextureProp, Styles.requireTangentWSTextureText);
+                EditorGUILayout.PropertyField(m_RequireObjectIDTextureProp, Styles.requireObjectIDTextureText);
+                
+                EditorGUILayout.PropertyField(m_RequireTransparentColorProp, Styles.requireTransparentColorText);
+                EditorGUILayout.PropertyField(m_RequireShadowMaskTextureProp, Styles.requireShadowMaskTextureText);
+                
                 EditorGUI.indentLevel++;
                 EditorGUI.BeginDisabledGroup(!m_RequireOpaqueTextureProp.boolValue);
                 EditorGUILayout.PropertyField(m_OpaqueDownsamplingProp, Styles.opaqueDownsamplingText);
@@ -249,11 +297,10 @@ namespace UnityEditor.Rendering.Distilling
                 EditorGUI.indentLevel--;
                 EditorGUILayout.Space();
                 EditorGUILayout.Space();
+                
             }
-
             EditorGUILayout.EndFoldoutHeaderGroup();
         }
-
         void DrawQualitySettings()
         {
             m_QualitySettingsFoldout.value = EditorGUILayout.BeginFoldoutHeaderGroup(m_QualitySettingsFoldout.value, Styles.qualitySettingsText);

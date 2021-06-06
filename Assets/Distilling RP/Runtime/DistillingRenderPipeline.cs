@@ -661,6 +661,14 @@ namespace UnityEngine.Rendering.Distilling
                 cameraData.postProcessEnabled = CoreUtils.ArePostProcessesEnabled(camera);
                 cameraData.requiresDepthTexture = settings.supportsCameraDepthTexture;
                 cameraData.requiresOpaqueTexture = settings.supportsCameraOpaqueTexture;
+                
+                cameraData.requiresNormalWSTexture = settings.supportsNormalWSTexture;
+                cameraData.requiresPosWSTexture = settings.supportsPosWSTexture;
+                cameraData.requiresTangentWSTexture = settings.supportsTangentWSTexture;
+                cameraData.requiresObjectIDTexture = settings.supportsObjectIDTexture;
+                cameraData.requiresTransparentColor = settings.supportsTransparentColor;
+                cameraData.requiresShadowMaskTexture = settings.supportsShadowMaskTexture;
+                
                 cameraData.renderer = asset.scriptableRenderer;
             }
             else if (additionalCameraData != null)
@@ -671,6 +679,12 @@ namespace UnityEngine.Rendering.Distilling
                 cameraData.maxShadowDistance = (additionalCameraData.renderShadows) ? cameraData.maxShadowDistance : 0.0f;
                 cameraData.requiresDepthTexture = additionalCameraData.requiresDepthTexture;
                 cameraData.requiresOpaqueTexture = additionalCameraData.requiresColorTexture;
+                cameraData.requiresNormalWSTexture = additionalCameraData.requiresNormalWSTexture;
+                cameraData.requiresPosWSTexture = additionalCameraData.requiresPosWSTexture;
+                cameraData.requiresTangentWSTexture = additionalCameraData.requiresTangentWSTexture;
+                cameraData.requiresObjectIDTexture = additionalCameraData.requiresObjectIDTexture;
+                cameraData.requiresTransparentColor = additionalCameraData.requiresTransparentColor;
+                cameraData.requiresShadowMaskTexture = additionalCameraData.requiresShadowMaskTexture;
                 cameraData.renderer = additionalCameraData.scriptableRenderer;
             }
             else
@@ -680,6 +694,12 @@ namespace UnityEngine.Rendering.Distilling
                 cameraData.postProcessEnabled = false;
                 cameraData.requiresDepthTexture = settings.supportsCameraDepthTexture;
                 cameraData.requiresOpaqueTexture = settings.supportsCameraOpaqueTexture;
+                cameraData.requiresNormalWSTexture = settings.supportsNormalWSTexture;
+                cameraData.requiresPosWSTexture = settings.supportsPosWSTexture;
+                cameraData.requiresTangentWSTexture = settings.supportsTangentWSTexture;
+                cameraData.requiresObjectIDTexture = settings.supportsObjectIDTexture;
+                cameraData.requiresTransparentColor = settings.supportsTransparentColor;
+                cameraData.requiresShadowMaskTexture = settings.supportsShadowMaskTexture;
                 cameraData.renderer = asset.scriptableRenderer;
             }
 

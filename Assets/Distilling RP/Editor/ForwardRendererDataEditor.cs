@@ -12,15 +12,15 @@ namespace UnityEditor.Rendering.Distilling
         {
             public static readonly GUIContent RendererTitle = new GUIContent("Postprocessing Settings", "Custom Forward Renderer for Universal RP.");
             public static readonly GUIContent PostProcessLabel = new GUIContent("Post Process Data", "The asset containing references to shaders and Textures that the Renderer uses for post-processing.");
-            public static readonly GUIContent FilteringLabel = new GUIContent("Filtering", "Controls filter rendering settings for this renderer.");
+            public static readonly GUIContent FilteringLabel = new GUIContent("Filtering Settings", "Controls filter rendering settings for this renderer.");
             public static readonly GUIContent OpaqueMask = new GUIContent("Opaque Layer Mask", "Controls which opaque layers this renderer draws.");
             public static readonly GUIContent TransparentMask = new GUIContent("Transparent Layer Mask", "Controls which transparent layers this renderer draws.");
             public static readonly GUIContent defaultStencilStateLabel = EditorGUIUtility.TrTextContent("Default Stencil State", "Configure stencil state for the opaque and transparent render passes.");
             public static readonly GUIContent shadowTransparentReceiveLabel = EditorGUIUtility.TrTextContent("Transparent Receive Shadows", "When disabled, none of the transparent objects will receive shadows.");
             public static readonly GUIContent LightingLabel = new GUIContent("Rendering Settings", "Settings related to lighting and rendering paths.");
             public static readonly GUIContent RenderingModeLabel = new GUIContent("Rendering Mode", "Select a rendering path.");
-            public static readonly GUIContent accurateGbufferNormalsLabel = EditorGUIUtility.TrTextContent("Accurate G-buffer normals", "Normals in G-buffer use octahedron encoding/decoding. This improves visual quality but might reduce performance.");
-            public static readonly GUIContent tiledDeferredShadingLabel = EditorGUIUtility.TrTextContent("Tiled Deferred Shading (Experimental)", "Allows Tiled Deferred Shading on appropriate lights");
+            public static readonly GUIContent accurateGbufferNormalsLabel = EditorGUIUtility.TrTextContent("G-buffer Depth Normals", "Normals in G-buffer use octahedron encoding/decoding. This improves visual quality but might reduce performance.");
+            // public static readonly GUIContent tiledDeferredShadingLabel = EditorGUIUtility.TrTextContent("Tiled Deferred Shading (Experimental)", "Allows Tiled Deferred Shading on appropriate lights");
         }
 
         SerializedProperty m_OpaqueLayerMask;
@@ -64,7 +64,7 @@ namespace UnityEditor.Rendering.Distilling
             {
                 EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(m_AccurateGbufferNormals, Styles.accurateGbufferNormalsLabel, true);
-                EditorGUILayout.PropertyField(m_TiledDeferredShading, Styles.tiledDeferredShadingLabel, true);
+                // EditorGUILayout.PropertyField(m_TiledDeferredShading, Styles.tiledDeferredShadingLabel, true);
                 EditorGUI.indentLevel--;
             }
             EditorGUI.indentLevel--;
@@ -77,13 +77,13 @@ namespace UnityEditor.Rendering.Distilling
             EditorGUI.indentLevel--;
             EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField("Shadows", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Shadows Settings", EditorStyles.boldLabel);
             EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(m_ShadowTransparentReceiveProp, Styles.shadowTransparentReceiveLabel);
             EditorGUI.indentLevel--;
             EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField("Overrides", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Overrides Settings", EditorStyles.boldLabel);
             EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(m_DefaultStencilState, Styles.defaultStencilStateLabel, true);
             EditorGUI.indentLevel--;

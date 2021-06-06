@@ -168,6 +168,14 @@ namespace UnityEngine.Rendering.Distilling
         //深度和
         [SerializeField] bool m_RequireDepthTexture = false;
         [SerializeField] bool m_RequireOpaqueTexture = false;
+        
+        [SerializeField] bool m_RequireNormalWSTexture = false;
+        [SerializeField] bool m_RequirePosWSTexture  = false;
+        [SerializeField] bool m_RequireTangentWSTexture = false;
+        [SerializeField] bool m_RequireObjectIDTexture  = false;
+        [SerializeField] bool m_RequireTransparentColor = false;
+        [SerializeField] bool m_RequireShadowMaskTexture  = false;
+        
         [SerializeField] Downsampling m_OpaqueDownsampling = Downsampling._2xBilinear;
         [SerializeField] bool m_SupportsTerrainHoles = true;
         
@@ -548,6 +556,42 @@ namespace UnityEngine.Rendering.Distilling
             set { m_RequireOpaqueTexture = value; }
         }
 
+        public bool supportsNormalWSTexture
+        {
+            get { return m_RequireNormalWSTexture; }
+            set { m_RequireNormalWSTexture = value; }
+        }
+        
+        public bool supportsPosWSTexture
+        {
+            get { return m_RequirePosWSTexture; }
+            set { m_RequirePosWSTexture = value; }
+        }
+        
+        public bool supportsTangentWSTexture
+        {
+            get { return m_RequireTangentWSTexture; }
+            set { m_RequireTangentWSTexture = value; }
+        }
+        
+        public bool supportsObjectIDTexture
+        {
+            get { return m_RequireObjectIDTexture; }
+            set { m_RequireObjectIDTexture = value; }
+        }
+        
+        public bool supportsTransparentColor
+        {
+            get { return m_RequireTransparentColor; }
+            set { m_RequireTransparentColor = value; }
+        }
+        
+        public bool supportsShadowMaskTexture
+        {
+            get { return m_RequireShadowMaskTexture; }
+            set { m_RequireShadowMaskTexture = value; }
+        }
+        
         public Downsampling opaqueDownsampling
         {
             get { return m_OpaqueDownsampling; }

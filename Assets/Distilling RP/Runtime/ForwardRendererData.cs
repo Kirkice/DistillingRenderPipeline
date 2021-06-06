@@ -46,6 +46,9 @@ namespace UnityEngine.Rendering.Distilling
             [Reload("Shaders/Utils/Sampling.shader")]
             public Shader samplingPS;
 
+            [Reload("Shaders/Utils/CopyNormalWS.shader")]
+            public Shader copyNormalWS;
+            
             [Reload("Shaders/Utils/StencilDeferred.shader")]
             public Shader stencilDeferredPS;
             

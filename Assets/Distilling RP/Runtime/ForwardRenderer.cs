@@ -52,8 +52,11 @@ namespace UnityEngine.Rendering.Distilling
         DrawObjectsPass m_RenderTransparentForwardPass;
         InvokeOnRenderObjectCallbackPass m_OnRenderObjectCallbackPass;
         FinalBlitPass m_FinalBlitPass;
-        
 
+        CopyNormalWFeature m_CopyNormalWPass;
+        CopyPosWFeature m_CopyPosWPass;
+        CopyTangentFeature m_CopyTangentPass;
+        CopyShadowMaskFeature m_CopyShadowMaskPass;
 #if POST_PROCESSING_STACK_2_0_0_OR_NEWER
         PostProcessPassCompat m_OpaquePostProcessPassCompat;
         PostProcessPassCompat m_PostProcessPassCompat;
@@ -69,6 +72,7 @@ namespace UnityEngine.Rendering.Distilling
         RenderTargetHandle m_CameraDepthAttachment;
         RenderTargetHandle m_DepthTexture;
         RenderTargetHandle m_NormalsTexture;
+
         RenderTargetHandle[] m_GBufferHandles;
         RenderTargetHandle m_OpaqueColor;
         RenderTargetHandle m_DepthInfoTexture;
@@ -150,6 +154,11 @@ namespace UnityEngine.Rendering.Distilling
             m_CopyDepthPass = new CopyDepthPass(RenderPassEvent.AfterRenderingSkybox, m_CopyDepthMaterial);
             m_DrawSkyboxPass = new DrawSkyboxPass(RenderPassEvent.BeforeRenderingSkybox);
             m_CopyColorPass = new CopyColorPass(RenderPassEvent.AfterRenderingSkybox, m_SamplingMaterial);
+            
+            m_CopyNormalWPass = new CopyNormalWFeature();
+            m_CopyPosWPass = new CopyPosWFeature();
+            m_CopyTangentPass = new CopyTangentFeature();
+            m_CopyShadowMaskPass = new CopyShadowMaskFeature();
 #if ADAPTIVE_PERFORMANCE_2_1_0_OR_NEWER
             if (!DistillingRenderPipeline.asset.useAdaptivePerformance || AdaptivePerformance.AdaptivePerformanceRenderSettings.SkipTransparentObjects == false)
 #endif
@@ -179,6 +188,7 @@ namespace UnityEngine.Rendering.Distilling
             m_CameraDepthAttachment.Init("_CameraDepthAttachment");
             m_DepthTexture.Init("_CameraDepthTexture");
             m_NormalsTexture.Init("_CameraNormalsTexture");
+
             if (this.renderingMode == RenderingMode.Deferred)
             {
                 m_GBufferHandles = new RenderTargetHandle[(int)DeferredLights.GBufferHandles.Count];
@@ -292,6 +302,13 @@ namespace UnityEngine.Rendering.Distilling
             bool additionalLightShadows = m_AdditionalLightsShadowCasterPass.Setup(ref renderingData);
             bool transparentsNeedSettingsPass = m_TransparentSettingsPass.Setup(ref renderingData);
 
+            bool requireNormalWSTexture = cameraData.requiresNormalWSTexture;
+            bool requiresPosWSTexture = cameraData.requiresPosWSTexture;
+            bool requiresTangentWSTexture = cameraData.requiresTangentWSTexture;
+            bool requiresObjectIDTexture = cameraData.requiresObjectIDTexture;
+            bool requiresTransparentColor = cameraData.requiresTransparentColor;
+            bool requiresShadowMaskTexture = cameraData.requiresShadowMaskTexture;
+            
             // Depth prepass is generated in the following cases:
             // - If game or offscreen camera requires it we check if we can copy the depth from the rendering opaques pass and use that instead.
             // - Scene or preview cameras always require a depth texture. We do a depth pre-pass to simplify it and it shouldn't matter much for editor.
@@ -390,6 +407,26 @@ namespace UnityEngine.Rendering.Distilling
             {
                 m_DepthNormalPrepass.Setup(cameraTargetDescriptor, m_DepthTexture, m_NormalsTexture);
                 EnqueuePass(m_DepthNormalPrepass);
+            }
+
+            if (requireNormalWSTexture)
+            {
+                m_CopyNormalWPass.AddRenderPasses(this, ref renderingData);
+            }
+
+            if (requiresPosWSTexture)
+            {
+                m_CopyPosWPass.AddRenderPasses(this,ref renderingData);
+            }
+
+            if (requiresTangentWSTexture)
+            {
+                m_CopyTangentPass.AddRenderPasses(this,ref renderingData);
+            }
+
+            if (requiresShadowMaskTexture)
+            {
+                m_CopyShadowMaskPass.AddRenderPasses(this,ref renderingData);
             }
             if (generateColorGradingLUT)
             {

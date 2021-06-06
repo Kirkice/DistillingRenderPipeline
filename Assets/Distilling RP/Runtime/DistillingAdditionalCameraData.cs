@@ -133,6 +133,29 @@ namespace UnityEngine.Rendering.Distilling
         [SerializeField]
         CameraOverrideOption m_RequiresOpaqueTextureOption = CameraOverrideOption.UsePipelineSettings;
 
+        [Tooltip("If enabled opaque color texture will render for this camera and bound as _CameraOpaqueTexture.")]
+        [SerializeField]
+        CameraOverrideOption m_RequiresNormalWSTextureOption = CameraOverrideOption.UsePipelineSettings;
+        
+        [Tooltip("If enabled opaque color texture will render for this camera and bound as _CameraOpaqueTexture.")]
+        [SerializeField]
+        CameraOverrideOption m_RequiresPosWSTextureOption = CameraOverrideOption.UsePipelineSettings;
+        
+        [Tooltip("If enabled opaque color texture will render for this camera and bound as _CameraOpaqueTexture.")]
+        [SerializeField]
+        CameraOverrideOption m_RequiresTangentWSTextureOption = CameraOverrideOption.UsePipelineSettings;
+        
+        [Tooltip("If enabled opaque color texture will render for this camera and bound as _CameraOpaqueTexture.")]
+        [SerializeField]
+        CameraOverrideOption m_RequiresObjectIDTextureOption = CameraOverrideOption.UsePipelineSettings;
+        
+        [Tooltip("If enabled opaque color texture will render for this camera and bound as _CameraOpaqueTexture.")]
+        [SerializeField]
+        CameraOverrideOption m_RequiresTransparentColorOption = CameraOverrideOption.UsePipelineSettings;
+        
+        [Tooltip("If enabled opaque color texture will render for this camera and bound as _CameraOpaqueTexture.")]
+        [SerializeField]
+        CameraOverrideOption m_RequiresShadowMaskTextureOption = CameraOverrideOption.UsePipelineSettings;
         [SerializeField] CameraRenderType m_CameraType = CameraRenderType.Base;
 		[SerializeField] List<Camera> m_Cameras = new List<Camera>();
 		[SerializeField] int m_RendererIndex = -1;
@@ -194,12 +217,42 @@ namespace UnityEngine.Rendering.Distilling
         /// Controls if a camera should copy the color contents of a camera after rendering opaques.
         /// The color texture is available to be bound in shaders as _CameraOpaqueTexture.
         /// </summary>
-        public CameraOverrideOption requiresColorOption
+        public CameraOverrideOption requiresNormalWSTextureOption
         {
-            get => m_RequiresOpaqueTextureOption;
-            set => m_RequiresOpaqueTextureOption = value;
+            get => m_RequiresNormalWSTextureOption;
+            set => m_RequiresNormalWSTextureOption = value;
         }
 
+        public CameraOverrideOption requiresPosWSTextureOption
+        {
+            get => m_RequiresPosWSTextureOption;
+            set => m_RequiresPosWSTextureOption = value;
+        }
+        
+        public CameraOverrideOption requiresTangentWSTextureOption
+        {
+            get => m_RequiresTangentWSTextureOption;
+            set => m_RequiresTangentWSTextureOption = value;
+        }
+        
+        public CameraOverrideOption requiresObjectIDTextureOption
+        {
+            get => m_RequiresObjectIDTextureOption;
+            set => m_RequiresObjectIDTextureOption = value;
+        }
+        
+        public CameraOverrideOption requiresTransparentColorOption
+        {
+            get => m_RequiresTransparentColorOption;
+            set => m_RequiresTransparentColorOption = value;
+        }
+        
+        public CameraOverrideOption requiresShadowMaskOption
+        {
+            get => m_RequiresShadowMaskTextureOption;
+            set => m_RequiresShadowMaskTextureOption = value;
+        }
+        
         /// <summary>
         /// Returns the camera renderType.
         /// <see cref="CameraRenderType"/>.
@@ -334,6 +387,102 @@ namespace UnityEngine.Rendering.Distilling
             set { m_RequiresOpaqueTextureOption = (value) ? CameraOverrideOption.On : CameraOverrideOption.Off; }
         }
 
+        public bool requiresNormalWSTexture
+        {
+            get
+            {
+                if (m_RequiresNormalWSTextureOption == CameraOverrideOption.UsePipelineSettings)
+                {
+                    return DistillingRenderPipeline.asset.supportsNormalWSTexture;
+                }
+                else
+                {
+                    return m_RequiresNormalWSTextureOption == CameraOverrideOption.On;
+                }
+            }
+            set { m_RequiresNormalWSTextureOption = (value) ? CameraOverrideOption.On : CameraOverrideOption.Off; }
+        }
+        
+        public bool requiresPosWSTexture
+        {
+            get
+            {
+                if (m_RequiresPosWSTextureOption == CameraOverrideOption.UsePipelineSettings)
+                {
+                    return DistillingRenderPipeline.asset.supportsPosWSTexture;
+                }
+                else
+                {
+                    return m_RequiresPosWSTextureOption == CameraOverrideOption.On;
+                }
+            }
+            set { m_RequiresPosWSTextureOption = (value) ? CameraOverrideOption.On : CameraOverrideOption.Off; }
+        }
+        
+        public bool requiresTangentWSTexture
+        {
+            get
+            {
+                if (m_RequiresTangentWSTextureOption == CameraOverrideOption.UsePipelineSettings)
+                {
+                    return DistillingRenderPipeline.asset.supportsTangentWSTexture;
+                }
+                else
+                {
+                    return m_RequiresTangentWSTextureOption == CameraOverrideOption.On;
+                }
+            }
+            set { m_RequiresTangentWSTextureOption = (value) ? CameraOverrideOption.On : CameraOverrideOption.Off; }
+        }
+        
+        public bool requiresObjectIDTexture
+        {
+            get
+            {
+                if (m_RequiresObjectIDTextureOption == CameraOverrideOption.UsePipelineSettings)
+                {
+                    return DistillingRenderPipeline.asset.supportsObjectIDTexture;
+                }
+                else
+                {
+                    return m_RequiresObjectIDTextureOption == CameraOverrideOption.On;
+                }
+            }
+            set { m_RequiresObjectIDTextureOption = (value) ? CameraOverrideOption.On : CameraOverrideOption.Off; }
+        }
+        
+        public bool requiresTransparentColor
+        {
+            get
+            {
+                if (m_RequiresTransparentColorOption == CameraOverrideOption.UsePipelineSettings)
+                {
+                    return DistillingRenderPipeline.asset.supportsTransparentColor;
+                }
+                else
+                {
+                    return m_RequiresTransparentColorOption == CameraOverrideOption.On;
+                }
+            }
+            set { m_RequiresTransparentColorOption = (value) ? CameraOverrideOption.On : CameraOverrideOption.Off; }
+        }
+        
+        public bool requiresShadowMaskTexture
+        {
+            get
+            {
+                if (m_RequiresShadowMaskTextureOption == CameraOverrideOption.UsePipelineSettings)
+                {
+                    return DistillingRenderPipeline.asset.supportsShadowMaskTexture;
+                }
+                else
+                {
+                    return m_RequiresShadowMaskTextureOption == CameraOverrideOption.On;
+                }
+            }
+            set { m_RequiresShadowMaskTextureOption = (value) ? CameraOverrideOption.On : CameraOverrideOption.Off; }
+        }
+        
         /// <summary>
         /// Returns the <see cref="ScriptableRenderer"/> that is used to render this camera.
         /// </summary>
