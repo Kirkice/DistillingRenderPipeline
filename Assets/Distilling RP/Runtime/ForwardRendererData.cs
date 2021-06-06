@@ -46,6 +46,9 @@ namespace UnityEngine.Rendering.Distilling
             [Reload("Shaders/Utils/Sampling.shader")]
             public Shader samplingPS;
 
+            [Reload("Shaders/Utils/StencilDeferred.shader")]
+            public Shader stencilDeferredPS;
+            
             [Reload("Shaders/Utils/FallbackError.shader")]
             public Shader fallbackErrorPS;
         }
@@ -60,6 +63,9 @@ namespace UnityEngine.Rendering.Distilling
         [SerializeField] StencilStateData m_DefaultStencilState = new StencilStateData();
         [SerializeField] bool m_ShadowTransparentReceive = true;
 
+        [SerializeField] RenderingMode m_RenderingMode = RenderingMode.Forward;
+        [SerializeField] bool m_AccurateGbufferNormals = false;
+        [SerializeField] bool m_TiledDeferredShading = false;
         protected override ScriptableRenderer Create()
         {
 #if UNITY_EDITOR
@@ -118,6 +124,42 @@ namespace UnityEngine.Rendering.Distilling
             {
                 SetDirty();
                 m_ShadowTransparentReceive = value;
+            }
+        }
+        /// <summary>
+        /// Rendering mode.
+        /// </summary>
+        public RenderingMode renderingMode
+        {
+            get => m_RenderingMode;
+            set
+            {
+                SetDirty();
+                m_RenderingMode = value;
+            }
+        }
+        
+        /// <summary>
+        /// Use Octaedron Octahedron normal vector encoding for gbuffer normals.
+        /// The overhead is negligible from desktop GPUs, while it should be avoided for mobile GPUs.
+        /// </summary>
+        public bool accurateGbufferNormals
+        {
+            get => m_AccurateGbufferNormals;
+            set
+            {
+                SetDirty();
+                m_AccurateGbufferNormals = value;
+            }
+        }
+
+        public bool tiledDeferredShading
+        {
+            get => m_TiledDeferredShading;
+            set
+            {
+                SetDirty();
+                m_TiledDeferredShading = value;
             }
         }
 

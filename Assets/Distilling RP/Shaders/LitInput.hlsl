@@ -71,6 +71,12 @@ half SampleOcclusion(float2 uv)
 #endif
 }
 
+void ApplyPerPixelDisplacement(half3 viewDirTS, inout float2 uv)
+{
+    #if defined(_PARALLAXMAP)
+    uv += ParallaxMapping(TEXTURE2D_ARGS(_ParallaxMap, sampler_ParallaxMap), viewDirTS, _Parallax, uv);
+    #endif
+}
 inline void InitializeStandardLitSurfaceData(float2 uv, out SurfaceData outSurfaceData)
 {
     half4 albedoAlpha = SampleAlbedoAlpha(uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));

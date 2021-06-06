@@ -104,7 +104,7 @@ namespace UnityEngine.Rendering.Distilling
             XRGraphics.eyeTextureResolutionScale = asset.renderScale;
 #endif
             // For compatibility reasons we also match old LightweightPipeline tag.
-            Shader.globalRenderPipeline = "DistillingRenderPipeline";
+            Shader.globalRenderPipeline = k_ShaderTagName;
 
             Lightmapping.SetDelegate(lightsDelegate);
 

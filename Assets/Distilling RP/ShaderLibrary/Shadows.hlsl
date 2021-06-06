@@ -277,6 +277,69 @@ float4 GetShadowCoord(VertexPositionInputs vertexInput)
     return TransformWorldToShadowCoord(vertexInput.positionWS);
 }
 
+half GetShadowFade(float3 positionWS)
+{
+    float3 camToPixel = positionWS - _WorldSpaceCameraPos;
+    float distanceCamToPixel2 = dot(camToPixel, camToPixel);
+
+    half fade = saturate(distanceCamToPixel2 * _MainLightShadowParams.z + _MainLightShadowParams.w);
+    return fade * fade;
+}
+
+half MixRealtimeAndBakedShadows(half realtimeShadow, half bakedShadow, half shadowFade)
+{
+    #if defined(LIGHTMAP_SHADOW_MIXING)
+    return min(lerp(realtimeShadow, 1, shadowFade), bakedShadow);
+    #else
+    return lerp(realtimeShadow, bakedShadow, shadowFade);
+    #endif
+}
+
+half MainLightShadow(float4 shadowCoord, float3 positionWS, half4 shadowMask, half4 occlusionProbeChannels)
+{
+    half realtimeShadow = MainLightRealtimeShadow(shadowCoord);
+
+    #ifdef CALCULATE_BAKED_SHADOWS
+    half bakedShadow = BakedShadow(shadowMask, occlusionProbeChannels);
+    #else
+    half bakedShadow = 1.0h;
+    #endif
+
+    #ifdef MAIN_LIGHT_CALCULATE_SHADOWS
+    half shadowFade = GetShadowFade(positionWS);
+    #else
+    half shadowFade = 1.0h;
+    #endif
+
+    #if defined(_MAIN_LIGHT_SHADOWS_CASCADE) && defined(CALCULATE_BAKED_SHADOWS)
+    // shadowCoord.w represents shadow cascade index
+    // in case we are out of shadow cascade we need to set shadow fade to 1.0 for correct blending
+    // it is needed when realtime shadows gets cut to early during fade and causes disconnect between baked shadow
+    shadowFade = shadowCoord.w == 4 ? 1.0h : shadowFade;
+    #endif
+
+    return MixRealtimeAndBakedShadows(realtimeShadow, bakedShadow, shadowFade);
+}
+
+half AdditionalLightShadow(int lightIndex, float3 positionWS, half3 lightDirection, half4 shadowMask, half4 occlusionProbeChannels)
+{
+    half realtimeShadow = AdditionalLightRealtimeShadow(lightIndex, positionWS);
+
+    #ifdef CALCULATE_BAKED_SHADOWS
+    half bakedShadow = BakedShadow(shadowMask, occlusionProbeChannels);
+    #else
+    half bakedShadow = 1.0h;
+    #endif
+
+    #ifdef ADDITIONAL_LIGHT_CALCULATE_SHADOWS
+    half shadowFade = GetShadowFade(positionWS);
+    #else
+    half shadowFade = 1.0h;
+    #endif
+
+    return MixRealtimeAndBakedShadows(realtimeShadow, bakedShadow, shadowFade);
+}
+
 float3 ApplyShadowBias(float3 positionWS, float3 normalWS, float3 lightDirection)
 {
     float invNdotL = 1.0 - saturate(dot(lightDirection, normalWS));

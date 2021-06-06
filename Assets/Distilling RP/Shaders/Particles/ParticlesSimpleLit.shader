@@ -155,5 +155,5 @@ Shader "Universal Render Pipeline/Particles/Simple Lit"
     }
 
     Fallback "Universal Render Pipeline/Particles/Unlit"
-    CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.ParticlesSimpleLitShader"
+    CustomEditor "UnityEditor.Rendering.Distilling.ShaderGUI.ParticlesSimpleLitShader"
 }

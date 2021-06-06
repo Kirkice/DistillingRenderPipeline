@@ -104,5 +104,5 @@ Shader "Universal Render Pipeline/Particles/Unlit"
             ENDHLSL
         }
     }
-    CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.ParticlesUnlitShader"
+    CustomEditor "UnityEditor.Rendering.Distilling.ShaderGUI.ParticlesUnlitShader"
 }

@@ -1,7 +1,7 @@
 #ifndef UNIVERSAL_LIT_META_PASS_INCLUDED
 #define UNIVERSAL_LIT_META_PASS_INCLUDED
 
-#include "Assets/Distilling RP/ShaderLibrary/MetaInput.hlsl"
+#include "Assets/Distilling RP/ShaderLibrary/MetaInput.hlsl" 
 
 struct Attributes
 {

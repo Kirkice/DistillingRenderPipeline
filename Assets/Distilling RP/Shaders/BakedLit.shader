@@ -215,5 +215,5 @@ Shader "Universal Render Pipeline/Baked Lit"
         }
     }
     FallBack "Universal Render Pipeline/Unlit"
-    CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.BakedLitShader"
+    CustomEditor "UnityEditor.Rendering.Distilling.ShaderGUI.BakedLitShader"
 }

@@ -36,6 +36,7 @@ namespace UnityEngine.Rendering.Distilling.Internal
         // Shader data for UBO path
         Matrix4x4[] m_AdditionalLightsWorldToShadow = null;
         Vector4[] m_AdditionalLightsShadowParams = null;
+        int[] m_VisibleLightIndexToAdditionalLightIndex = null;
 
         // Shader data for SSBO
         ShaderInput.ShadowData[] m_AdditionalLightsShadowData = null;
@@ -70,6 +71,7 @@ namespace UnityEngine.Rendering.Distilling.Internal
                 int maxLights = DistillingRenderPipeline.maxVisibleAdditionalLights;
                 m_AdditionalLightsWorldToShadow = new Matrix4x4[maxLights];
                 m_AdditionalLightsShadowParams = new Vector4[maxLights];
+                m_VisibleLightIndexToAdditionalLightIndex = new int[maxLights];
             }
         }
 
@@ -89,12 +91,17 @@ namespace UnityEngine.Rendering.Distilling.Internal
             if (m_AdditionalLightsShadowData == null || m_AdditionalLightsShadowData.Length < additionalLightsCount)
                 m_AdditionalLightsShadowData = new ShaderInput.ShadowData[additionalLightsCount];
 
+            if (m_VisibleLightIndexToAdditionalLightIndex.Length < visibleLights.Length)
+            {
+                m_VisibleLightIndexToAdditionalLightIndex = new int[visibleLights.Length];
+            }
+            
             int validShadowCastingLights = 0;
             bool supportsSoftShadows = renderingData.shadowData.supportsSoftShadows;
             for (int i = 0; i < visibleLights.Length && m_AdditionalShadowCastingLightIndices.Count < additionalLightsCount; ++i)
             {
                 VisibleLight shadowLight = visibleLights[i];
-
+                m_VisibleLightIndexToAdditionalLightIndex[i] = i;
                 // Skip main directional light as it is not packed into the shadow atlas
                 if (i == renderingData.lightData.mainLightIndex)
                     continue;
@@ -248,6 +255,14 @@ namespace UnityEngine.Rendering.Distilling.Internal
             }
         }
 
+        public int GetShadowLightIndexFromLightIndex(int visibleLightIndex)
+        {
+            if (visibleLightIndex < 0 || visibleLightIndex >= m_VisibleLightIndexToAdditionalLightIndex.Length)
+                return -1;
+
+            return m_VisibleLightIndexToAdditionalLightIndex[visibleLightIndex];
+        }
+        
         void Clear()
         {
             m_AdditionalShadowCastingLightIndices.Clear();

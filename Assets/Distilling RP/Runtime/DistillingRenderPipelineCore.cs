@@ -182,6 +182,38 @@ namespace UnityEngine.Rendering.Distilling
         public List<Vector4> bias;
     }
 
+    // Precomputed tile data.
+    public struct PreTile
+    {
+        // Tile left, right, bottom and top plane equations in view space.
+        // Normals are pointing out.
+        public Unity.Mathematics.float4 planeLeft;
+        public Unity.Mathematics.float4 planeRight;
+        public Unity.Mathematics.float4 planeBottom;
+        public Unity.Mathematics.float4 planeTop;
+    }
+
+    // Actual tile data passed to the deferred shaders.
+    public struct TileData
+    {
+        public uint tileID;         // 2x 16 bits
+        public uint listBitMask;    // 32 bits
+        public uint relLightOffset; // 16 bits is enough
+        public uint unused;
+    }
+
+    // Actual point/spot light data passed to the deferred shaders.
+    public struct PunctualLightData
+    {
+        public Vector3 wsPos;
+        public float radius; // TODO remove? included in attenuation
+        public Vector4 color;
+        public Vector4 attenuation; // .xy are used by DistanceAttenuation - .zw are used by AngleAttenuation (for SpotLights)
+        public Vector3 spotDirection;   // for spotLights
+        public int lightIndex;
+        public Vector4 occlusionProbeInfo;
+    }
+    
     internal static class ShaderPropertyId
     {
         public static readonly int scaledScreenParams = Shader.PropertyToID("_ScaledScreenParams");
@@ -249,14 +281,35 @@ namespace UnityEngine.Rendering.Distilling
         public static readonly string FilmGrain = "_FILM_GRAIN";
         public static readonly string Fxaa = "_FXAA";
         public static readonly string Dithering = "_DITHERING";
-
+        public static readonly string _GBUFFER_NORMALS_OCT = "_GBUFFER_NORMALS_OCT";
+        public static readonly string LightmapShadowMixing = "LIGHTMAP_SHADOW_MIXING";
+        public static readonly string ShadowsShadowMask = "SHADOWS_SHADOWMASK";
         public static readonly string HighQualitySampling = "_HIGH_QUALITY_SAMPLING";
+        public static readonly string DOWNSAMPLING_SIZE_2 = "DOWNSAMPLING_SIZE_2";
+        public static readonly string DOWNSAMPLING_SIZE_4 = "DOWNSAMPLING_SIZE_4";
+        public static readonly string DOWNSAMPLING_SIZE_8 = "DOWNSAMPLING_SIZE_8";
+        public static readonly string DOWNSAMPLING_SIZE_16 = "DOWNSAMPLING_SIZE_16";
+        
+        public static readonly string _DEFERRED_MIXED_LIGHTING = "_DEFERRED_MIXED_LIGHTING";
+        public static readonly string _DIRECTIONAL = "_DIRECTIONAL";
+        public static readonly string _DEFERRED_ADDITIONAL_LIGHT_SHADOWS = "_DEFERRED_ADDITIONAL_LIGHT_SHADOWS";
+        public static readonly string _POINT = "_POINT";
+        public static readonly string _SPOT = "_SPOT";
     }
 
     public sealed partial class DistillingRenderPipeline
     {
+        static Vector4 k_DefaultLightPosition = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
+        static Vector4 k_DefaultLightColor = Color.black;
+        
+        static Vector4 k_DefaultLightAttenuation = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+        static Vector4 k_DefaultLightSpotDirection = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
+        static Vector4 k_DefaultLightsProbeChannel = new Vector4(0.0f, 0.0f, 0.0f, 0.0f);
+        
         static List<Vector4> m_ShadowBiasData = new List<Vector4>();
 
+        static List<int> m_ShadowResolutionData = new List<int>();
+        
         /// <summary>
         /// Checks if a camera is a game camera.
         /// </summary>
@@ -474,10 +527,142 @@ namespace UnityEngine.Rendering.Distilling
             }
 #endif
         };
-    }
+        public static void GetLightAttenuationAndSpotDirection(
+            LightType lightType, float lightRange, Matrix4x4 lightLocalToWorldMatrix,
+            float spotAngle, float? innerSpotAngle,
+            out Vector4 lightAttenuation, out Vector4 lightSpotDir)
+        {
+            lightAttenuation = k_DefaultLightAttenuation;
+            lightSpotDir = k_DefaultLightSpotDirection;
 
+            // Directional Light attenuation is initialize so distance attenuation always be 1.0
+            if (lightType != LightType.Directional)
+            {
+                // Light attenuation in universal matches the unity vanilla one.
+                // attenuation = 1.0 / distanceToLightSqr
+                // We offer two different smoothing factors.
+                // The smoothing factors make sure that the light intensity is zero at the light range limit.
+                // The first smoothing factor is a linear fade starting at 80 % of the light range.
+                // smoothFactor = (lightRangeSqr - distanceToLightSqr) / (lightRangeSqr - fadeStartDistanceSqr)
+                // We rewrite smoothFactor to be able to pre compute the constant terms below and apply the smooth factor
+                // with one MAD instruction
+                // smoothFactor =  distanceSqr * (1.0 / (fadeDistanceSqr - lightRangeSqr)) + (-lightRangeSqr / (fadeDistanceSqr - lightRangeSqr)
+                //                 distanceSqr *           oneOverFadeRangeSqr             +              lightRangeSqrOverFadeRangeSqr
+
+                // The other smoothing factor matches the one used in the Unity lightmapper but is slower than the linear one.
+                // smoothFactor = (1.0 - saturate((distanceSqr * 1.0 / lightrangeSqr)^2))^2
+                float lightRangeSqr = lightRange * lightRange;
+                float fadeStartDistanceSqr = 0.8f * 0.8f * lightRangeSqr;
+                float fadeRangeSqr = (fadeStartDistanceSqr - lightRangeSqr);
+                float oneOverFadeRangeSqr = 1.0f / fadeRangeSqr;
+                float lightRangeSqrOverFadeRangeSqr = -lightRangeSqr / fadeRangeSqr;
+                float oneOverLightRangeSqr = 1.0f / Mathf.Max(0.0001f, lightRange * lightRange);
+
+                // On mobile and Nintendo Switch: Use the faster linear smoothing factor (SHADER_HINT_NICE_QUALITY).
+                // On other devices: Use the smoothing factor that matches the GI.
+                lightAttenuation.x = Application.isMobilePlatform || SystemInfo.graphicsDeviceType == GraphicsDeviceType.Switch ? oneOverFadeRangeSqr : oneOverLightRangeSqr;
+                lightAttenuation.y = lightRangeSqrOverFadeRangeSqr;
+            }
+
+            if (lightType == LightType.Spot)
+            {
+                Vector4 dir = lightLocalToWorldMatrix.GetColumn(2);
+                lightSpotDir = new Vector4(-dir.x, -dir.y, -dir.z, 0.0f);
+
+                // Spot Attenuation with a linear falloff can be defined as
+                // (SdotL - cosOuterAngle) / (cosInnerAngle - cosOuterAngle)
+                // This can be rewritten as
+                // invAngleRange = 1.0 / (cosInnerAngle - cosOuterAngle)
+                // SdotL * invAngleRange + (-cosOuterAngle * invAngleRange)
+                // If we precompute the terms in a MAD instruction
+                float cosOuterAngle = Mathf.Cos(Mathf.Deg2Rad * spotAngle * 0.5f);
+                // We neeed to do a null check for particle lights
+                // This should be changed in the future
+                // Particle lights will use an inline function
+                float cosInnerAngle;
+                if (innerSpotAngle.HasValue)
+                    cosInnerAngle = Mathf.Cos(innerSpotAngle.Value * Mathf.Deg2Rad * 0.5f);
+                else
+                    cosInnerAngle = Mathf.Cos((2.0f * Mathf.Atan(Mathf.Tan(spotAngle * 0.5f * Mathf.Deg2Rad) * (64.0f - 18.0f) / 64.0f)) * 0.5f);
+                float smoothAngleRange = Mathf.Max(0.001f, cosInnerAngle - cosOuterAngle);
+                float invAngleRange = 1.0f / smoothAngleRange;
+                float add = -cosOuterAngle * invAngleRange;
+                lightAttenuation.z = invAngleRange;
+                lightAttenuation.w = add;
+            }
+        }
+
+        public static void InitializeLightConstants_Common(NativeArray<VisibleLight> lights, int lightIndex, out Vector4 lightPos, out Vector4 lightColor, out Vector4 lightAttenuation, out Vector4 lightSpotDir, out Vector4 lightOcclusionProbeChannel)
+        {
+            lightPos = k_DefaultLightPosition;
+            lightColor = k_DefaultLightColor;
+            lightOcclusionProbeChannel = k_DefaultLightsProbeChannel;
+            lightAttenuation = k_DefaultLightAttenuation;
+            lightSpotDir = k_DefaultLightSpotDirection;
+
+            // When no lights are visible, main light will be set to -1.
+            // In this case we initialize it to default values and return
+            if (lightIndex < 0)
+                return;
+
+            VisibleLight lightData = lights[lightIndex];
+            if (lightData.lightType == LightType.Directional)
+            {
+                Vector4 dir = -lightData.localToWorldMatrix.GetColumn(2);
+                lightPos = new Vector4(dir.x, dir.y, dir.z, 0.0f);
+            }
+            else
+            {
+                Vector4 pos = lightData.localToWorldMatrix.GetColumn(3);
+                lightPos = new Vector4(pos.x, pos.y, pos.z, 1.0f);
+            }
+
+            // VisibleLight.finalColor already returns color in active color space
+            lightColor = lightData.finalColor;
+
+            GetLightAttenuationAndSpotDirection(
+                lightData.lightType, lightData.range, lightData.localToWorldMatrix,
+                lightData.spotAngle, lightData.light?.innerSpotAngle,
+                out lightAttenuation, out lightSpotDir);
+
+            Light light = lightData.light;
+
+            if (light != null && light.bakingOutput.lightmapBakeType == LightmapBakeType.Mixed &&
+                0 <= light.bakingOutput.occlusionMaskChannel &&
+                light.bakingOutput.occlusionMaskChannel < 4)
+            {
+                lightOcclusionProbeChannel[light.bakingOutput.occlusionMaskChannel] = 1.0f;
+            }
+        }
+    }
+    
     internal enum URPProfileId
     {
+        // CPU
+        UniversalRenderTotal,
+        UpdateVolumeFramework,
+        RenderCameraStack,
+
+        // GPU
+        AdditionalLightsShadow,
+        ColorGradingLUT,
+        CopyColor,
+        CopyDepth,
+        DepthNormalPrepass,
+        DepthPrepass,
+
+        // DrawObjectsPass
+        DrawOpaqueObjects,
+        DrawTransparentObjects,
+
+        // RenderObjectsPass
+        //RenderObjects,
+
+        MainLightShadow,
+        ResolveShadows,
+        SSAO,
+
+        // PostProcessPass
         StopNaNs,
         SMAA,
         GaussianDepthOfField,
@@ -486,5 +671,7 @@ namespace UnityEngine.Rendering.Distilling
         PaniniProjection,
         UberPostProcess,
         Bloom,
+
+        FinalBlit
     }
 }

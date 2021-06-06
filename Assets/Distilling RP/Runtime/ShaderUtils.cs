@@ -89,5 +89,20 @@ namespace UnityEngine.Rendering.Distilling
             return "";
         }
 #endif
+
+        public static int GetDeferredMaterialPass(string passName)
+        {
+            switch (passName)
+            {
+                case "Stencil Volume": return 0; break;
+                case "Deferred Punctual Light (Lit)": return 1; break;
+                case "Deferred Punctual Light (SimpleLit)": return 2; break;
+                case "Deferred Directional Light (Lit)": return 3; break;
+                case "Deferred Directional Light (SimpleLit)": return 4; break;
+                case "Fog": return 5; break;
+                case "ClearStencilPartial" : return 6;
+                default: return -1;
+            }
+        }
     }
 }

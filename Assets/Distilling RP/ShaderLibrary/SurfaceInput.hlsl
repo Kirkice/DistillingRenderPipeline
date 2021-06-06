@@ -2,8 +2,8 @@
 #define UNIVERSAL_INPUT_SURFACE_INCLUDED
 
 #include "Assets/Distilling RP/ShaderLibrary/Core.hlsl"
-#include "Assets\Core RP Library/ShaderLibrary/Packing.hlsl"
-#include "Assets\Core RP Library/ShaderLibrary/CommonMaterial.hlsl"
+#include "Assets/Core RP Library/ShaderLibrary/Packing.hlsl"
+#include "Assets/Core RP Library/ShaderLibrary/CommonMaterial.hlsl"
 
 TEXTURE2D(_BaseMap);            SAMPLER(sampler_BaseMap);
 TEXTURE2D(_BumpMap);            SAMPLER(sampler_BumpMap);

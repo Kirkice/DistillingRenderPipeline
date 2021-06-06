@@ -34,6 +34,11 @@ namespace UnityEngine.Rendering.Distilling
             /// <seealso cref="UniversalAdditionalCameraData.cameraStack"/>
             /// </summary>
             public bool cameraStacking { get; set; } = false;
+            
+            /// <summary>
+            /// This setting controls if the Universal Render Pipeline asset should expose MSAA option.
+            /// </summary>
+            public bool msaa { get; set; } = true;
         }
 
         /// <summary>
@@ -196,6 +201,12 @@ namespace UnityEngine.Rendering.Distilling
         /// </summary>
         public RenderingFeatures supportedRenderingFeatures { get; set; } = new RenderingFeatures();
 
+        /// <summary>
+        /// List of unsupported Graphics APIs for this renderer.
+        /// <see cref="unsupportedGraphicsDeviceTypes"/>
+        /// </summary>
+        public GraphicsDeviceType[] unsupportedGraphicsDeviceTypes { get; set; } = new GraphicsDeviceType[0];
+        
         static class RenderPassBlock
         {
             // Executes render passes that are inputs to the main rendering
