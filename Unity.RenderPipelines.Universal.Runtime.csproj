@@ -133,6 +133,10 @@
      <Compile Include="Assets\Distilling RP\Runtime\Passes\TransparentSettingsPass.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\PostProcessUtils.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\RenderTargetHandle.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\RendererFeatures\CopyNormalWFeature.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\RendererFeatures\CopyPosWFeature.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\RendererFeatures\CopyShadowMaskFeature.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\RendererFeatures\CopyTangentFeature.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\RendererFeatures\RenderObjects.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\RenderingUtils.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\SampleCount.cs" />

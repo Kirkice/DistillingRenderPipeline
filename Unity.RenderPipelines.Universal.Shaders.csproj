@@ -51,6 +51,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Distilling RP\Shaders\Shaders.cs" />
+     <None Include="Assets\Distilling RP\Shaders\Utils\CopyPosW.shader" />
      <None Include="Assets\Distilling RP\Shaders\Utils\Deferred.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\SimpleLitGBufferPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Particles\ParticlesSimpleLitForwardPass.hlsl" />
@@ -63,7 +64,9 @@
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\PaniniProjection.shader" />
      <None Include="Assets\Distilling RP\Shaders\Utils\Blit.shader" />
      <None Include="Assets\Distilling RP\Shaders\2D\Shadow2DRemoveSelf.shader" />
+     <None Include="Assets\Distilling RP\Shaders\ProjectShaders\Common\Test.shader" />
      <None Include="Assets\Distilling RP\Shaders\2D\Sprite-Lit-Default.shader" />
+     <None Include="Assets\Distilling RP\Shaders\Utils\CopyShadowMask.shader" />
      <None Include="Assets\Distilling RP\Shaders\UnlitMetaPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\SubpixelMorphologicalAntialiasing.shader" />
      <None Include="Assets\Distilling RP\Shaders\Lit.shader" />
@@ -116,6 +119,7 @@
      <None Include="Assets\Distilling RP\Shaders\Terrain\WavingGrassInput.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\Common.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Nature\SpeedTree7BillboardPasses.hlsl" />
+     <None Include="Assets\Distilling RP\Shaders\Utils\CopyNormalWS.shader" />
      <None Include="Assets\Distilling RP\Shaders\BakedLit.shader" />
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\SubpixelMorphologicalAntialiasingBridge.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\LitMetaPass.hlsl" />
@@ -136,6 +140,7 @@
      <None Include="Assets\Distilling RP\Shaders\Utils\ScreenSpaceShadows.shader" />
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\SubpixelMorphologicalAntialiasing.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\Bloom.shader" />
+     <None Include="Assets\Distilling RP\Shaders\Utils\CopyTangenWS.shader" />
      <None Include="Assets\Distilling RP\Shaders\Terrain\TerrainLitBasemapGen.shader" />
      <None Include="Assets\Distilling RP\Shaders\SimpleLitMetaPass.hlsl" />
  <Reference Include="UnityEditor.UI">
