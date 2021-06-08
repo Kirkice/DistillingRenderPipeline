@@ -74,6 +74,7 @@
      <Compile Include="Assets\Distilling RP\Runtime\Data\DistillingRenderPipelineEditorResources.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Data\PostProcessData.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Data\RenderStateData.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\Data\ScreenSpaceRayTracingData.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\DeferredLights.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\DeferredShaderData.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\DeferredTiler.cs" />
@@ -92,6 +93,7 @@
      <Compile Include="Assets\Distilling RP\Runtime\ForwardLights.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\ForwardRenderer.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\ForwardRendererData.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\StochasticScreenSpaceRayTracing.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Overrides\Bloom.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Overrides\ChannelMixer.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Overrides\ChromaticAberration.cs" />
@@ -139,6 +141,7 @@
      <Compile Include="Assets\Distilling RP\Runtime\RendererFeatures\CopyTangentFeature.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\RendererFeatures\RenderObjects.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\RenderingUtils.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\SSRDataCreature.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\SampleCount.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\SceneViewDrawMode.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\ScriptableRenderer.cs" />

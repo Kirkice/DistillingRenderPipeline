@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/ProjectAssets/Scenes/Sponza.unity
+- path: Assets/ProjectAssets/Scenes/1.0 CornellBox.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

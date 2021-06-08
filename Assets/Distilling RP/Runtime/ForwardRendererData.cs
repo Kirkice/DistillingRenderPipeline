@@ -65,7 +65,8 @@ namespace UnityEngine.Rendering.Distilling
         [SerializeField] LayerMask m_TransparentLayerMask = -1;
         [SerializeField] StencilStateData m_DefaultStencilState = new StencilStateData();
         [SerializeField] bool m_ShadowTransparentReceive = true;
-
+        [SerializeField] bool m_BoolScreenSpaceRayTracing = false;
+        [SerializeField] SSRData m_SSRData; 
         [SerializeField] RenderingMode m_RenderingMode = RenderingMode.Forward;
         [SerializeField] bool m_AccurateGbufferNormals = false;
         [SerializeField] bool m_TiledDeferredShading = false;
@@ -117,6 +118,15 @@ namespace UnityEngine.Rendering.Distilling
             }
         }
 
+        public SSRData screenSpaceRayTracingData
+        {
+            get => m_SSRData;
+            set
+            {
+                SetDirty();
+                m_SSRData = value;
+            }
+        }
         /// <summary>
         /// True if transparent objects receive shadows.
         /// </summary>
@@ -127,6 +137,19 @@ namespace UnityEngine.Rendering.Distilling
             {
                 SetDirty();
                 m_ShadowTransparentReceive = value;
+            }
+        }
+
+        /// <summary>
+        /// 屏幕空间光线追踪
+        /// </summary>
+        public bool BoolScreenSpaceRayTracing
+        {
+            get => m_BoolScreenSpaceRayTracing;
+            set
+            {
+                SetDirty();
+                m_BoolScreenSpaceRayTracing = false;
             }
         }
         /// <summary>
@@ -169,7 +192,8 @@ namespace UnityEngine.Rendering.Distilling
         protected override void OnEnable()
         {
             base.OnEnable();
-
+            
+            m_SSRData = new SSRData();
             // Upon asset creation, OnEnable is called and `shaders` reference is not yet initialized
             // We need to call the OnEnable for data migration when updating from old versions of UniversalRP that
             // serialized resources in a different format. Early returning here when OnEnable is called

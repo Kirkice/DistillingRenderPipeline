@@ -19,6 +19,10 @@ namespace UnityEditor.Rendering.Distilling
             public static readonly GUIContent shadowTransparentReceiveLabel = EditorGUIUtility.TrTextContent("Transparent Receive Shadows", "When disabled, none of the transparent objects will receive shadows.");
             public static readonly GUIContent LightingLabel = new GUIContent("Rendering Settings", "Settings related to lighting and rendering paths.");
             public static readonly GUIContent RenderingModeLabel = new GUIContent("Rendering Mode", "Select a rendering path.");
+
+            public static readonly GUIContent RealTimeGlobalIllumationLabel = new GUIContent("RealTime GlobalIllumation Settings", "Setting RealTime GlobalIllumation.");
+            public static readonly GUIContent BoolScreenSpaceLabel = new GUIContent("Use Screen Space Ray Tracing", "Select use Screen Space Ray Tracing.");
+            public static readonly GUIContent SSRDataLabel = new GUIContent("SSR Data", "Set Screen Space Ray Tracing Data.");
             public static readonly GUIContent accurateGbufferNormalsLabel = EditorGUIUtility.TrTextContent("G-buffer Depth Normals", "Normals in G-buffer use octahedron encoding/decoding. This improves visual quality but might reduce performance.");
             // public static readonly GUIContent tiledDeferredShadingLabel = EditorGUIUtility.TrTextContent("Tiled Deferred Shading (Experimental)", "Allows Tiled Deferred Shading on appropriate lights");
         }
@@ -29,18 +33,22 @@ namespace UnityEditor.Rendering.Distilling
         SerializedProperty m_AccurateGbufferNormals;
         SerializedProperty m_TiledDeferredShading;
         SerializedProperty m_DefaultStencilState;
+        SerializedProperty m_screenSpaceRayTracingData;
         SerializedProperty m_PostProcessData;
         SerializedProperty m_Shaders;
         SerializedProperty m_ShadowTransparentReceiveProp;
+        SerializedProperty m_BoolScreenSpaceRayTracing;
 
         private void OnEnable()
         {
             m_OpaqueLayerMask = serializedObject.FindProperty("m_OpaqueLayerMask");
             m_TransparentLayerMask = serializedObject.FindProperty("m_TransparentLayerMask");
             m_RenderingMode = serializedObject.FindProperty("m_RenderingMode");
+            m_BoolScreenSpaceRayTracing = serializedObject.FindProperty("m_BoolScreenSpaceRayTracing");
             m_AccurateGbufferNormals = serializedObject.FindProperty("m_AccurateGbufferNormals");
             m_TiledDeferredShading = serializedObject.FindProperty("m_TiledDeferredShading");
             m_DefaultStencilState = serializedObject.FindProperty("m_DefaultStencilState");
+            m_screenSpaceRayTracingData = serializedObject.FindProperty("m_SSRData");
             m_PostProcessData = serializedObject.FindProperty("postProcessData");
             m_Shaders = serializedObject.FindProperty("shaders");
             m_ShadowTransparentReceiveProp = serializedObject.FindProperty("m_ShadowTransparentReceive");
@@ -74,6 +82,17 @@ namespace UnityEditor.Rendering.Distilling
             EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(m_OpaqueLayerMask, Styles.OpaqueMask);
             EditorGUILayout.PropertyField(m_TransparentLayerMask, Styles.TransparentMask);
+            EditorGUI.indentLevel--;
+            EditorGUILayout.Space();
+            
+            
+            EditorGUILayout.LabelField(Styles.RealTimeGlobalIllumationLabel, EditorStyles.boldLabel);
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(m_BoolScreenSpaceRayTracing, Styles.BoolScreenSpaceLabel, true);
+            if (m_BoolScreenSpaceRayTracing.boolValue)
+            {
+                EditorGUILayout.PropertyField(m_screenSpaceRayTracingData, Styles.SSRDataLabel, true);
+            }
             EditorGUI.indentLevel--;
             EditorGUILayout.Space();
 

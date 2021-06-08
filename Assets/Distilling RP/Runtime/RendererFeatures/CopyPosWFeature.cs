@@ -6,6 +6,7 @@ public class CopyPosWFeature : ScriptableRendererFeature
 {
     class CopyPosWPass : ScriptableRenderPass
     {
+        
         private Material _material;
         public int soildColorID = 0;
         public ShaderTagId shaderTag = new ShaderTagId("UniversalForward");

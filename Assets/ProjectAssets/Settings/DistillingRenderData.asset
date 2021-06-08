@@ -51,6 +51,8 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
+  m_BoolScreenSpaceRayTracing: 1
+  m_SSRData: {fileID: 0}
   m_RenderingMode: 0
   m_AccurateGbufferNormals: 1
   m_TiledDeferredShading: 0

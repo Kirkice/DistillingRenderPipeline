@@ -152,6 +152,7 @@
      <Compile Include="Assets\Distilling RP\Editor\RenderStateDataEditor.cs" />
      <Compile Include="Assets\Distilling RP\Editor\RendererFeatures\NewRendererFeatureDropdownItem.cs" />
      <Compile Include="Assets\Distilling RP\Editor\RendererFeatures\RenderObjectsPassFeatureEditor.cs" />
+     <Compile Include="Assets\Distilling RP\Editor\SSRDataEditor.cs" />
      <Compile Include="Assets\Distilling RP\Editor\SavedParameter.cs" />
      <Compile Include="Assets\Distilling RP\Editor\ScriptableRendererDataEditor.cs" />
      <Compile Include="Assets\Distilling RP\Editor\ScriptableRendererFeatureEditor.cs" />
