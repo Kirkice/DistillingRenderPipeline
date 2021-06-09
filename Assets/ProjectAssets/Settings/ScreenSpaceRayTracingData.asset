@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: ScreenSpaceRayTracingData
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime:UnityEngine.Rendering.Distilling:SSRData
+  depthMode: 1
+  rayMode: 1
+  rayDistance: 70
+  BRDFBias: 0.7
+  resolveMode: 1
+  rayReuse: 1
+  normalization: 1
+  reduceFireflies: 1
+  useMipMap: 1
+  useTemporal: 1
+  scale: 2
+  response: 0.85
+  useUnityMotion: 0
+  useFresnel: 1
+  screenFadeSize: 0.25
+  smoothnessRange: 1
+  debugPass: 0

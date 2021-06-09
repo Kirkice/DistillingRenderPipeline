@@ -52,7 +52,7 @@ MonoBehaviour:
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
   m_BoolScreenSpaceRayTracing: 1
-  m_SSRData: {fileID: 0}
+  m_SSRData: {fileID: 11400000, guid: e85d1c74204fbd845bd49ea79f56f911, type: 2}
   m_RenderingMode: 0
   m_AccurateGbufferNormals: 1
   m_TiledDeferredShading: 0

@@ -32,58 +32,43 @@ namespace UnityEngine.Rendering.Distilling
         /// <summary>
         /// RayCast
         /// </summary>
-        [SerializeField]
-        public static ResolutionMode depthMode = ResolutionMode.halfRes;
-        [SerializeField]
-        public static ResolutionMode rayMode = ResolutionMode.halfRes;
-        [SerializeField]
-        public static int rayDistance = 70;
+        [SerializeField] ResolutionMode depthMode = ResolutionMode.halfRes;
+        [SerializeField] ResolutionMode rayMode = ResolutionMode.halfRes;
+        [SerializeField] int rayDistance = 70;
         [Range(0.00001f, 1.0f)]
-        [SerializeField]
-        public static float BRDFBias = 0.7f;
+        [SerializeField] float BRDFBias = 0.7f;
         
         /// <summary>
         /// Resolve
         /// </summary>
-        [SerializeField]
-        public static ResolutionMode resolveMode = ResolutionMode.fullRes;
-        [SerializeField]
-        public static bool rayReuse = true;
-        [SerializeField]
-        public static bool normalization = true;
-        [SerializeField]
-        public static bool reduceFireflies = true;
-        [SerializeField]
-        public static bool useMipMap = true;
+        [SerializeField] ResolutionMode resolveMode = ResolutionMode.fullRes;
+        [SerializeField] bool rayReuse = true;
+        [SerializeField] bool normalization = true;
+        [SerializeField] bool reduceFireflies = true;
+        [SerializeField] bool useMipMap = true;
         
         /// <summary>
         /// Temporal
         /// </summary>
-        [SerializeField]
-        public static bool useTemporal = true;
-        [SerializeField]
-        public static float scale = 2.0f;
+        [SerializeField] bool useTemporal = true;
+        [SerializeField] float scale = 2.0f;
         [Range(0.0f, 1.0f)]
-        [SerializeField]
-        public static float response = 0.85f;
-        public static bool useUnityMotion;
+        [SerializeField] float response = 0.85f;
+        [SerializeField] bool useUnityMotion;
         
         /// <summary>
         /// General
         /// </summary>
-        [SerializeField]
-        public static bool useFresnel = true;
+        [SerializeField] bool useFresnel = true;
         [Range(0.0f, 1.0f)]
-        [SerializeField]
-        public static float screenFadeSize = 0.25f;
+        [SerializeField] float screenFadeSize = 0.25f;
         
         /// <summary>
         /// Debug
         /// </summary>
         [Range(0.0f, 1.0f)]
-        [SerializeField]
-        public static float smoothnessRange = 1.0f;
-        public static SSRDebugPass debugPass = SSRDebugPass.Combine;
+        [SerializeField] float smoothnessRange = 1.0f;
+        [SerializeField] SSRDebugPass debugPass = SSRDebugPass.Combine;
         
     }
 }
