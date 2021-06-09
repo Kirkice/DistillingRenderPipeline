@@ -28,6 +28,7 @@ MonoBehaviour:
   m_RendererFeatures: []
   m_RendererFeatureMap: 
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
+  m_SSRData: {fileID: 11400000, guid: 2c59ccb6819dca44984e9d188be81923, type: 2}
   shaders:
     blitPS: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
     copyDepthPS: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
@@ -52,7 +53,6 @@ MonoBehaviour:
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
   m_BoolScreenSpaceRayTracing: 1
-  m_SSRData: {fileID: 11400000, guid: e85d1c74204fbd845bd49ea79f56f911, type: 2}
   m_RenderingMode: 0
   m_AccurateGbufferNormals: 1
   m_TiledDeferredShading: 0

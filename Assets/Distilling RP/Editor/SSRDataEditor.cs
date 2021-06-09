@@ -19,7 +19,7 @@ namespace UnityEditor.Rendering.Distilling
             public static readonly GUIContent depthModeLabel = new GUIContent("Depth Mode", "DepthMode.");
             public static readonly GUIContent rayModeLabel = new GUIContent("Ray Mode", "RayMode.");
             public static readonly GUIContent rayDistanceLabel = new GUIContent("Ray Distance", "RayDistance.");
-            
+            public static readonly GUIContent ThicknessLabel = new GUIContent("Thickness", "Thickness.");
             public static readonly GUIContent BRDFBiasLabel = new GUIContent("BRDF Bias", "BRDFBias.");
             public static readonly GUIContent resolveModeLabel = new GUIContent("Resolve Mode", "ResolveMode.");
             public static readonly GUIContent rayReuseLabel = new GUIContent("Ray Reuse", "RayReuse.");
@@ -43,6 +43,7 @@ namespace UnityEditor.Rendering.Distilling
         private SerializedProperty m_rayMode;
         private SerializedProperty m_rayDistance;
         private SerializedProperty m_BRDFBias;
+        private SerializedProperty m_Thickness;
         
         private SerializedProperty m_resolveMode;
         private SerializedProperty m_rayReuse;
@@ -66,6 +67,7 @@ namespace UnityEditor.Rendering.Distilling
             m_depthMode = serializedObject.FindProperty("depthMode");
             m_rayMode = serializedObject.FindProperty("rayMode");
             m_rayDistance = serializedObject.FindProperty("rayDistance");
+            m_Thickness = serializedObject.FindProperty("thickness");
             m_BRDFBias = serializedObject.FindProperty("BRDFBias");
             m_resolveMode = serializedObject.FindProperty("resolveMode");
             m_rayReuse = serializedObject.FindProperty("rayReuse");
@@ -93,6 +95,7 @@ namespace UnityEditor.Rendering.Distilling
             EditorGUILayout.PropertyField(m_depthMode, Styles.depthModeLabel);
             EditorGUILayout.PropertyField(m_rayMode, Styles.rayModeLabel);
             EditorGUILayout.PropertyField(m_rayDistance, Styles.rayDistanceLabel);
+            EditorGUILayout.PropertyField(m_Thickness, Styles.ThicknessLabel);
             EditorGUILayout.PropertyField(m_BRDFBias, Styles.BRDFBiasLabel);
             EditorGUI.indentLevel--; 
             EditorGUILayout.Space();

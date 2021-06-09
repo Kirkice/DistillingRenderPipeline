@@ -59,6 +59,8 @@ namespace UnityEngine.Rendering.Distilling
         [Reload("Runtime/Data/PostProcessData.asset")]
         public PostProcessData postProcessData = null;
 
+        [Reload("Runtime/Data/ScreenSpaceRayTracingData.asset")]
+        public SSRData m_SSRData = null;
         public ShaderResources shaders = null;
 
         [SerializeField] LayerMask m_OpaqueLayerMask = -1;
@@ -66,7 +68,6 @@ namespace UnityEngine.Rendering.Distilling
         [SerializeField] StencilStateData m_DefaultStencilState = new StencilStateData();
         [SerializeField] bool m_ShadowTransparentReceive = true;
         [SerializeField] bool m_BoolScreenSpaceRayTracing = false;
-        [SerializeField] SSRData m_SSRData; 
         [SerializeField] RenderingMode m_RenderingMode = RenderingMode.Forward;
         [SerializeField] bool m_AccurateGbufferNormals = false;
         [SerializeField] bool m_TiledDeferredShading = false;
@@ -77,6 +78,7 @@ namespace UnityEngine.Rendering.Distilling
             {
                 ResourceReloader.TryReloadAllNullIn(this, "Assets/Distilling RP");
                 ResourceReloader.TryReloadAllNullIn(postProcessData, "Assets/Distilling RP");
+                ResourceReloader.TryReloadAllNullIn(m_SSRData, "Assets/Distilling RP");
             }
 #endif
             return new ForwardRenderer(this);
@@ -192,8 +194,6 @@ namespace UnityEngine.Rendering.Distilling
         protected override void OnEnable()
         {
             base.OnEnable();
-            
-            m_SSRData = new SSRData();
             // Upon asset creation, OnEnable is called and `shaders` reference is not yet initialized
             // We need to call the OnEnable for data migration when updating from old versions of UniversalRP that
             // serialized resources in a different format. Early returning here when OnEnable is called
@@ -204,6 +204,7 @@ namespace UnityEngine.Rendering.Distilling
 #if UNITY_EDITOR
             ResourceReloader.TryReloadAllNullIn(this, DistillingRenderPipelineAsset.packagePath);
             ResourceReloader.TryReloadAllNullIn(postProcessData, DistillingRenderPipelineAsset.packagePath);
+            ResourceReloader.TryReloadAllNullIn(m_SSRData, DistillingRenderPipelineAsset.packagePath);
 #endif
         }
     }
