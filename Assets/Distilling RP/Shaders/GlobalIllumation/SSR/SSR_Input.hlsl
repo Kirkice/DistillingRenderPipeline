@@ -9,8 +9,10 @@
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*/
 #include "Assets/Distilling RP/ShaderLibrary/Core.hlsl"
+#include "Assets/Distilling RP/ShaderLibrary/DeclareDepthTexture.hlsl"
 
 CBUFFER_START(UnityPerMaterial)
+
 TEXTURE2D(_MainTex);                                    SAMPLER(sampler_MainTex);
 TEXTURE2D(_ReflectionBuffer);                           SAMPLER(sampler_ReflectionBuffer);
 TEXTURE2D(_PreviousBuffer);                             SAMPLER(sampler_PreviousBuffer);
@@ -23,7 +25,6 @@ TEXTURE2D(_CameraGBufferTexture1);                      SAMPLER(sampler_CameraGB
 TEXTURE2D(_CameraGBufferTexture2);                      SAMPLER(sampler_CameraGBufferTexture2);
 TEXTURE2D(_CameraReflectionsTexture);                   SAMPLER(sampler_CameraReflectionsTexture);
 
-TEXTURE2D(_CameraDepthTexture);                         SAMPLER(sampler_CameraDepthTexture);
 TEXTURE2D(_CameraDepthBuffer);                          SAMPLER(sampler_CameraDepthBuffer);
 TEXTURE2D_HALF(_CameraMotionVectorsTexture);            SAMPLER(sampler_CameraMotionVectorsTexture);
 
