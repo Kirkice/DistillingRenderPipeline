@@ -70,4 +70,5 @@ uniform     float4x4	                                    _WorldToCameraMatrix;
 uniform     float4x4	                                    _CameraToWorldMatrix;
 uniform     float4x4	                                    _PrevInverseViewProjectionMatrix;
 uniform     float4x4	                                    _PrevViewProjectionMatrix;
+
 CBUFFER_END
