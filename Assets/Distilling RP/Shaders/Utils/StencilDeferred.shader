@@ -209,7 +209,7 @@ Shader "Hidden/Universal Render Pipeline/StencilDeferred"
 
         half3 color = half3(0,0,0);
 
-        #if defined(_LIT)
+        #if defined(_LIT)       
             BRDFData brdfData = BRDFDataFromGbuffer(gbuffer0, gbuffer1, gbuffer2);
             color = LightingPhysicallyBased(brdfData, unityLight, inputData.normalWS, inputData.viewDirectionWS, materialSpecularHighlightsOff);
         #elif defined(_SIMPLELIT)

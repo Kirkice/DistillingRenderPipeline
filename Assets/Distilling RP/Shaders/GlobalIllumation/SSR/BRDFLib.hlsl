@@ -10,11 +10,11 @@
 *---------------------------------------------------------------------------------------------*/
 
 #define     PI                                          3.141592
-
+#define		UNITY_INV_PI								0.31830988618f
 /// <summary>
 /// D_GGX
 /// </summary>
-float D_GGX(float Roughness, float NdotH)
+float SSR_D_GGX(float Roughness, float NdotH)
 {
 	float m																			= Roughness * Roughness;
 	float m2																		= m * m;
@@ -54,6 +54,52 @@ float BRDF_UE4(float3 V, float3 L, float3 N, float Roughness)
 		float G 																	= G_GGX(Roughness, NdotL, NdotV);
 
 		return																		D * G;
+}
+
+/// <summary>
+/// SmithJointGGXVisibilityTerm
+/// </summary>
+inline float SmithJointGGXVisibilityTerm (float NdotL, float NdotV, float roughness)
+{
+	#if 0
+	// Original formulation:
+	//  lambda_v    = (-1 + sqrt(a2 * (1 - NdotL2) / NdotL2 + 1)) * 0.5f;
+	//  lambda_l    = (-1 + sqrt(a2 * (1 - NdotV2) / NdotV2 + 1)) * 0.5f;
+	//  G           = 1 / (1 + lambda_v + lambda_l);
+
+	// Reorder code to be more optimal
+	half a          																= roughness;
+	half a2         																= a * a;
+
+	half lambdaV    																= NdotL * sqrt((-NdotV * a2 + NdotV) * NdotV + a2);
+	half lambdaL    																= NdotV * sqrt((-NdotL * a2 + NdotL) * NdotL + a2);
+
+	// Simplify visibility term: (2.0f * NdotL * NdotV) /  ((4.0f * NdotL * NdotV) * (lambda_v + lambda_l + 1e-5f));
+	return																			0.5f / (lambdaV + lambdaL + 1e-5f);  // This function is not intended to be running on Mobile,
+	// therefore epsilon is smaller than can be represented by half
+	#else
+	// Approximation of the above formulation (simplify the sqrt, not mathematically correct but close enough)
+	float 																			a = roughness;
+	float 																			lambdaV = NdotL * (NdotV * (1 - a) + a);
+	float 																			lambdaL = NdotV * (NdotL * (1 - a) + a);
+
+	#if defined(SHADER_API_SWITCH)
+	return																			0.5f / (lambdaV + lambdaL + 1e-4f); // work-around against hlslcc rounding error
+	#else
+	return																			0.5f / (lambdaV + lambdaL + 1e-5f);
+	#endif
+
+	#endif
+}
+
+/// <summary>
+/// GGXTerm
+/// </summary>
+inline float GGXTerm (float NdotH, float roughness)
+{
+	float a2																		= roughness * roughness;
+	float d																			= (NdotH * a2 - NdotH) * NdotH + 1.0f;
+	return																			UNITY_INV_PI * a2 / (d * d + 1e-7f); 
 }
 
 /// <summary>

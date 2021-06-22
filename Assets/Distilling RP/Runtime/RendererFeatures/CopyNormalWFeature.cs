@@ -46,7 +46,6 @@ public class CopyNormalWFeature : ScriptableRendererFeature
         
         public override void FrameCleanup(CommandBuffer cmd)
         {
-
         }
     }
 

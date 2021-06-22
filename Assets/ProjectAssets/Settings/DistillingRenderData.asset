@@ -52,10 +52,24 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_BoolScreenSpaceRayTracing: 1
-  m_RenderingMode: 0
-  m_AccurateGbufferNormals: 1
+  m_BoolScreenSpaceRayTracing: 0
+  m_RenderingMode: 1
+  m_AccurateGbufferNormals: 0
   m_TiledDeferredShading: 0
+--- !u!114 &454096027293037993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c0563625eb97a4a97056285d755ef5, type: 3}
+  m_Name: StochasticScreenSpaceRayTracing
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  _ssrData: {fileID: 0}
 --- !u!114 &4354169060432308613
 MonoBehaviour:
   m_ObjectHideFlags: 0

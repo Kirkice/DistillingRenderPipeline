@@ -1,5 +1,5 @@
 /* $Header: /SSR/SSR_Lib.hlsl         6/09/21 23:35p KirkZhu $ */
-/*---------------------------------------------------------------------------------------------*
+/*--------------------------------------------------------------------------------------------*
 *                                                                                             *
 *                 Project Name : DistillingRenderPipeline                                     *
 *                                                                                             *
@@ -49,7 +49,7 @@ float4 GetCubeMap (float2 uv)
 /// </summary>
 float4 GetAlbedo (float2 uv)
 {
-    return SAMPLE_TEXTURE2D(_CameraGBufferTexture0, sampler_CameraGBufferTexture0, uv);
+    return SAMPLE_TEXTURE2D(_GBuffer0, sampler_GBuffer0, uv);
 }
 
 /// <summary>
@@ -57,7 +57,7 @@ float4 GetAlbedo (float2 uv)
 /// </summary>
 float4 GetSpecular (float2 uv)
 {
-    return SAMPLE_TEXTURE2D(_CameraGBufferTexture1, sampler_CameraGBufferTexture1, uv);
+    return SAMPLE_TEXTURE2D(_GBuffer1, sampler_GBuffer1, uv);
 }
 
 /// <summary>
@@ -73,8 +73,16 @@ float GetRoughness (float smoothness)
 /// </summary>
 float4 GetNormal (float2 uv) 
 {
-    float4 gbuffer2                                                                         = SAMPLE_TEXTURE2D(_CameraGBufferTexture2, sampler_CameraGBufferTexture2, uv);
-    return gbuffer2*2-1;
+    return                                                                                       SAMPLE_TEXTURE2D(_GBuffer2, sampler_GBuffer2, uv);
+}
+
+/// <summary>
+/// GetRoughness
+/// </summary>
+float4 GetRoughness (float2 uv) 
+{
+    float4 color                                                                                 = SAMPLE_TEXTURE2D(_GBuffer2, sampler_GBuffer2, uv);
+    return color.aaaa;
 }
 
 /// <summary>
@@ -300,4 +308,87 @@ void GetCommonVector_Resolve(float2 setUV, inout float roughness, inout float de
 float2x2 GetOffsetRotationMatrix(float2 blueNoise)
 {
     return                                                                                  float2x2(blueNoise.x, blueNoise.y, -blueNoise.y, blueNoise.x);
+}
+
+float4 RayMarch(float4x4 _ProjectionMatrix, float3 viewDir, int NumSteps, float3 viewPos, float3 screenPos, float2 screenUV, float stepSize, float thickness)
+{
+    float4 dirProject                                                                       = float4
+    (
+        abs(unity_CameraProjection._m00 * 0.5), 
+        abs(unity_CameraProjection._m11 * 0.5), 
+        ((_ProjectionParams.z * _ProjectionParams.y) / (_ProjectionParams.y - _ProjectionParams.z)) * 0.5,
+        0.0
+    );
+
+    float linearDepth                                                                       =  LinearEyeDepth(SampleSceneDepth(screenUV.xy),_ZBufferParams);
+
+    float3 ray                                                                              = viewPos / viewPos.z;
+    float3 rayDir                                                                           = normalize(float3(viewDir.xy - ray * viewDir.z, viewDir.z / linearDepth) * dirProject);
+    rayDir.xy                                                                               *= 0.5;
+
+    float3 rayStart                                                                         = float3(screenPos.xy * 0.5 + 0.5,  screenPos.z);
+
+    float3 samplePos                                                                        = rayStart;
+
+    float project                                                                           = ( _ProjectionParams.z * _ProjectionParams.y) / (_ProjectionParams.y - _ProjectionParams.z);
+    
+    float mask                                                                              = 0.0;
+
+    float oldDepth                                                                          = samplePos.z;
+    float oldDelta                                                                          = 0.0;
+    float3 oldSamplePos                                                                     = samplePos;
+
+    UNITY_LOOP
+    for (int i = 0;  i < NumSteps; i++)
+    {
+        float depth                                                                         = SampleSceneDepth (samplePos.xy);
+        float delta                                                                         = samplePos.z - depth;
+        
+        if (0.0 < delta)
+        {
+            if(delta)
+            {
+                mask                                                                        = 1.0;
+                break;
+            }
+        }
+        else
+        {
+            oldDelta                                                                        = -delta;
+            oldSamplePos                                                                    = samplePos;
+        }
+        oldDepth                                                                            = depth; 
+        samplePos                                                                           += rayDir * stepSize;
+    }
+	
+    return                                                                                  float4(samplePos, mask);
+}
+
+/// <summary>
+/// SpecularStrength
+/// </summary>
+half SpecularStrength(half3 specular)
+{
+    #if (SHADER_TARGET < 30)
+    // SM2.0: instruction count limitation
+    // SM2.0: simplified SpecularStrength
+    return specular.r; // Red channel - because most metals are either monocrhome or with redish/yellowish tint
+    #else
+    return max (max (specular.r, specular.g), specular.b);
+    #endif
+}
+
+/// <summary>
+/// EnergyConservationBetweenDiffuseAndSpecular
+/// </summary>
+inline half3 EnergyConservationBetweenDiffuseAndSpecular (half3 albedo, half3 specColor, out half oneMinusReflectivity)
+{
+    oneMinusReflectivity = 1 - SpecularStrength(specColor);
+    #if !UNITY_CONSERVE_ENERGY
+    return albedo;
+    #elif UNITY_CONSERVE_ENERGY_MONOCHROME
+    return albedo * oneMinusReflectivity;
+    #else
+    return albedo * (half3(1,1,1) - specColor);
+    #endif
 }

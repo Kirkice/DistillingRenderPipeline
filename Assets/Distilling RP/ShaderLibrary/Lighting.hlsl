@@ -656,15 +656,15 @@ half3 LightingPhysicallyBased(BRDFData brdfData, Light light, half3 normalWS, ha
     return LightingPhysicallyBased(brdfData, noClearCoat, light, normalWS, viewDirectionWS, 0.0, specularHighlightsOff);
 }
 
-half3 LightingPhysicallyBased(BRDFData brdfData, half3 lightColor, half3 lightDirectionWS, half lightAttenuation, half3 normalWS, half3 viewDirectionWS, bool specularHighlightsOff)
-{
-    Light light;
-    light.color = lightColor;
-    light.direction = lightDirectionWS;
-    light.distanceAttenuation = lightAttenuation;
-    light.shadowAttenuation   = 1;
-    return LightingPhysicallyBased(brdfData, light, viewDirectionWS, specularHighlightsOff, specularHighlightsOff);
-}
+// half3 LightingPhysicallyBased(BRDFData brdfData, half3 lightColor, half3 lightDirectionWS, half lightAttenuation, half3 normalWS, half3 viewDirectionWS, bool specularHighlightsOff)
+// {
+//     Light light;
+//     light.color = lightColor;
+//     light.direction = lightDirectionWS;
+//     light.distanceAttenuation = lightAttenuation;
+//     light.shadowAttenuation   = 1;
+//     return LightingPhysicallyBased(brdfData, light, viewDirectionWS, specularHighlightsOff, specularHighlightsOff);
+// }
 
 half3 VertexLighting(float3 positionWS, half3 normalWS)
 {

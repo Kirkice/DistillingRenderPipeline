@@ -12,3 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 458cf21bbefeb3546bcbe8326a1fee48, type: 3}
   m_Name: ScreenSpaceRayTracingData
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime:UnityEngine.Rendering.Distilling:SSRData
+  depthMode: 2
+  rayMode: 2
+  rayDistance: 70
+  thickness: 0.124
+  BRDFBias: 0.7
+  resolveMode: 1
+  rayReuse: 1
+  normalization: 1
+  reduceFireflies: 1
+  useMipMap: 1
+  useTemporal: 1
+  scale: 2
+  response: 0.85
+  useUnityMotion: 0
+  useFresnel: 1
+  screenFadeSize: 0.25
+  smoothnessRange: 1
+  debugPass: 0
