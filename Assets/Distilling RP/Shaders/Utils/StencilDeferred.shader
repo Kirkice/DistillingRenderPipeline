@@ -371,7 +371,7 @@ Shader "Hidden/Universal Render Pipeline/StencilDeferred"
             BlendOp Add, Add
 
             Stencil {
-                Ref [_LitDirStencilRef]
+//                Ref [_LitDirStencilRef]
                 ReadMask [_LitDirStencilReadMask]
                 WriteMask [_LitDirStencilWriteMask]
                 Comp Equal

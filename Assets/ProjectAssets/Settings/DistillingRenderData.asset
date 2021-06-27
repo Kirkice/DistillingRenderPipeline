@@ -47,14 +47,14 @@ MonoBehaviour:
   m_DefaultStencilState:
     overrideStencilState: 0
     stencilReference: 0
-    stencilCompareFunction: 8
-    passOperation: 0
-    failOperation: 0
-    zFailOperation: 0
+    stencilCompareFunction: 0
+    passOperation: 2
+    failOperation: 2
+    zFailOperation: 2
   m_ShadowTransparentReceive: 1
   m_BoolScreenSpaceRayTracing: 0
-  m_RenderingMode: 1
-  m_AccurateGbufferNormals: 0
+  m_RenderingMode: 0
+  m_AccurateGbufferNormals: 1
   m_TiledDeferredShading: 0
 --- !u!114 &454096027293037993
 MonoBehaviour:

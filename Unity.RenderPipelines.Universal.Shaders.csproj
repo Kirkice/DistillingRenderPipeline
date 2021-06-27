@@ -64,11 +64,13 @@
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\PaniniProjection.shader" />
      <None Include="Assets\Distilling RP\Shaders\Utils\Blit.shader" />
      <None Include="Assets\Distilling RP\Shaders\2D\Shadow2DRemoveSelf.shader" />
+     <None Include="Assets\Distilling RP\Shaders\PBR\PassFunction.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\ProjectShaders\Common\Test.shader" />
      <None Include="Assets\Distilling RP\Shaders\2D\Sprite-Lit-Default.shader" />
      <None Include="Assets\Distilling RP\Shaders\GlobalIllumation\SSR\ScreenSpaceRayTracingPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Utils\CopyShadowMask.shader" />
      <None Include="Assets\Distilling RP\Shaders\UnlitMetaPass.hlsl" />
+     <None Include="Assets\Distilling RP\Shaders\PBR\Input.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\SubpixelMorphologicalAntialiasing.shader" />
      <None Include="Assets\Distilling RP\Shaders\Lit.shader" />
      <None Include="Assets\Distilling RP\Shaders\2D\Include\LightingUtility.hlsl" />
@@ -80,6 +82,7 @@
      <None Include="Assets\Distilling RP\Shaders\BakedLitMetaPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Utils\Sampling.shader" />
      <None Include="Assets\Distilling RP\Shaders\Particles\ParticlesUnlit.shader" />
+     <None Include="Assets\Distilling RP\Shaders\PBR\BRDFs.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Utils\StencilDeferred.shader" />
      <None Include="Assets\Distilling RP\Shaders\Unity.RenderPipelines.Universal.Shaders.asmdef" />
      <None Include="Assets\Distilling RP\Shaders\Terrain\WavingGrassPasses.hlsl" />
@@ -104,12 +107,15 @@
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\UberPost.shader" />
      <None Include="Assets\Distilling RP\Shaders\UnlitInput.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\2D\Include\CombinedShapeLightShared.hlsl" />
+     <None Include="Assets\Distilling RP\Shaders\Distilling-Lit.shader" />
      <None Include="Assets\Distilling RP\Shaders\Particles\ParticlesLitForwardPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Terrain\TerrainLitInput.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\LitGBufferPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\GlobalIllumation\SSR\SSR_Input.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Terrain\WavingGrassBillboard.shader" />
+     <None Include="Assets\Distilling RP\Shaders\Base.shader" />
      <None Include="Assets\Distilling RP\Shaders\GlobalIllumation\SSR\NoiseLib.hlsl" />
+     <None Include="Assets\Distilling RP\Shaders\PBR\BTDFs.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Terrain\TerrainLit.shader" />
      <None Include="Assets\Distilling RP\Shaders\Nature\SpeedTree7BillboardInput.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\GlobalIllumation\SSR\SSR_Lib.hlsl" />
@@ -135,6 +141,7 @@
      <None Include="Assets\Distilling RP\Shaders\SimpleLit.shader" />
      <None Include="Assets\Distilling RP\Shaders\Terrain\TerrainLitPasses.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\SimpleLitInput.hlsl" />
+     <None Include="Assets\Distilling RP\Shaders\PBR\StructData.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\DepthNormalsPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\CameraMotionBlur.shader" />
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\GaussianDepthOfField.shader" />
@@ -144,6 +151,8 @@
      <None Include="Assets\Distilling RP\Shaders\SimpleLitForwardPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Nature\SpeedTree7.shader" />
      <None Include="Assets\Distilling RP\Shaders\Utils\ScreenSpaceShadows.shader" />
+     <None Include="Assets\Distilling RP\Shaders\PBR\DistillingLitForwardPass.hlsl" />
+     <None Include="Assets\Distilling RP\Shaders\PBR\Common.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\SubpixelMorphologicalAntialiasing.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\Bloom.shader" />
      <None Include="Assets\Distilling RP\Shaders\Utils\CopyTangenWS.shader" />

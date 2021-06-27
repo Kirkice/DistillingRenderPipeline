@@ -50,8 +50,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\CopyNormalW.cs" />
-     <None Include="Assets\NewUnlitShader.shader" />
+     <Compile Include="Assets\ProjectAssets\Scripts\TempleSetFactory.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

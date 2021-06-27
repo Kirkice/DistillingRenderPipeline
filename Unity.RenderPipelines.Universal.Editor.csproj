@@ -156,7 +156,9 @@
      <Compile Include="Assets\Distilling RP\Editor\SavedParameter.cs" />
      <Compile Include="Assets\Distilling RP\Editor\ScriptableRendererDataEditor.cs" />
      <Compile Include="Assets\Distilling RP\Editor\ScriptableRendererFeatureEditor.cs" />
+     <Compile Include="Assets\Distilling RP\Editor\ShaderCreater.cs" />
      <Compile Include="Assets\Distilling RP\Editor\ShaderGUI\BaseShaderGUI.cs" />
+     <Compile Include="Assets\Distilling RP\Editor\ShaderGUI\DistillingShaderGUI.cs" />
      <Compile Include="Assets\Distilling RP\Editor\ShaderGUI\ParticleGUI.cs" />
      <Compile Include="Assets\Distilling RP\Editor\ShaderGUI\Shaders\BakedLitShader.cs" />
      <Compile Include="Assets\Distilling RP\Editor\ShaderGUI\Shaders\LitShader.cs" />

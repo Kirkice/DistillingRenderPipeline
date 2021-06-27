@@ -57,6 +57,7 @@
      <None Include="Assets\Distilling RP\ShaderLibrary\SurfaceInput.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\UnityInput.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\Lighting.hlsl" />
+     <None Include="Assets\Distilling RP\ShaderLibrary\ShaderVariablesFunctions.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\Particles.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\Deprecated.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\DeclareOpaqueTexture.hlsl" />

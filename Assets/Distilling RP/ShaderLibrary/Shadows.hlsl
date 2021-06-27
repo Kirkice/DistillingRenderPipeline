@@ -35,6 +35,14 @@ SAMPLER_CMP(sampler_MainLightShadowmapTexture);
 TEXTURE2D_SHADOW(_AdditionalLightsShadowmapTexture);
 SAMPLER_CMP(sampler_AdditionalLightsShadowmapTexture);
 
+#if defined(SHADOWS_SHADOWMASK) && defined(LIGHTMAP_ON)
+#define SAMPLE_SHADOWMASK(uv) SAMPLE_TEXTURE2D_LIGHTMAP(SHADOWMASK_NAME, SHADOWMASK_SAMPLER_NAME, uv SHADOWMASK_SAMPLE_EXTRA_ARGS);
+#elif !defined (LIGHTMAP_ON)
+#define SAMPLE_SHADOWMASK(uv) unity_ProbesOcclusion;
+#else
+#define SAMPLE_SHADOWMASK(uv) half4(1, 1, 1, 1);
+#endif
+
 // GLES3 causes a performance regression in some devices when using CBUFFER.
 #ifndef SHADER_API_GLES3
 CBUFFER_START(MainLightShadows)

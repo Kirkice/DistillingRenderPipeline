@@ -156,7 +156,7 @@ SurfaceDataGBuffer SurfaceDataFromGbuffer(half4 gbuffer0, half4 gbuffer1, half4 
 
     return surfaceData;
 }
-
+ 
 // This will encode SurfaceData into GBuffer
 FragmentOutput BRDFDataToGbuffer(BRDFData brdfData, InputData inputData, half smoothness, half3 globalIllumination)
 {

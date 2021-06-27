@@ -270,6 +270,7 @@ float2 UnityStereoTransformScreenSpaceTex(float2 uv)
 
 #endif // defined(UNITY_SINGLE_PASS_STEREO)
 
+#include "Assets/Distilling RP/ShaderLibrary/ShaderVariablesFunctions.hlsl"
 #include "Assets/Distilling RP/ShaderLibrary/Deprecated.hlsl"
 
 #endif

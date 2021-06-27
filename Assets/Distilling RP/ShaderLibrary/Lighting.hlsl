@@ -2,9 +2,13 @@
 #define UNIVERSAL_LIGHTING_INCLUDED
 
 #include "Assets\Core RP Library/ShaderLibrary/Common.hlsl"
+#include "Assets\Core RP Library/ShaderLibrary/CommonMaterial.hlsl"
 #include "Assets\Core RP Library/ShaderLibrary/EntityLighting.hlsl"
 #include "Assets\Core RP Library/ShaderLibrary/ImageBasedLighting.hlsl"
+#include "Assets\Core RP Library/ShaderLibrary/BSDF.hlsl"
 #include "Assets/Distilling RP/ShaderLibrary/Core.hlsl"
+#include "Assets/Distilling RP/ShaderLibrary/Deprecated.hlsl"
+#include "Assets/Distilling RP/ShaderLibrary/SurfaceData.hlsl"
 #include "Assets/Distilling RP/ShaderLibrary/Shadows.hlsl"
 
 // If lightmap is not defined than we evaluate GI (ambient + probes) from SH
