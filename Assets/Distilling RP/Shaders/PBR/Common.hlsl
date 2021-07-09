@@ -13,6 +13,8 @@
 
 uniform float2                                                              _Pixel;
 uniform float                                                               _Seed;
+#define kDieletricSpec                                                      half4(0.04, 0.04, 0.04, 1.0 - 0.04)
+#define HALF_MIN                                                            6.103515625e-5 
 
 /// <summary>
 /// rand
@@ -178,4 +180,69 @@ float Calculatefresnel(const float3 I, const float3 N, const float3 ior)
     return kr;
 }
 
+/// <summary>
+/// OneMinusReflectivityMetallic
+/// </summary>
+float OneMinusReflectivityMetallic(float metallic)
+{
+    float oneMinusDielectricSpec                                            = kDieletricSpec.a;
+    return                                                                  oneMinusDielectricSpec - metallic * oneMinusDielectricSpec;
+}
+
+/// <summary>
+/// GlossyEnvironmentReflection
+/// </summary>
+float3 GlossyEnvironmentReflection(float3 reflectVector, float mip, float occlusion)
+{
+    float4 encodedIrradiance                                                = SAMPLE_TEXTURECUBE_LOD(unity_SpecCube0, samplerunity_SpecCube0, reflectVector, mip);
+    float3 irradiance                                                       = DecodeHDREnvironment(encodedIrradiance, unity_SpecCube0_HDR);
+    return                                                                  irradiance * occlusion;
+}
+
+/// <summary>
+/// EnvBRDF
+/// </summary>
+half3 EnvBRDF(mBRDFData brdfData, half3 indirectDiffuse, half3 indirectSpecular, half fresnelTerm)
+{
+    half3 c                                                                 = indirectDiffuse * brdfData.diffuse;
+    float surfaceReduction                                                  = 1.0 / (brdfData.roughness2 + 1.0);
+    c                                                                       += surfaceReduction * indirectSpecular * lerp(brdfData.specular, brdfData.grazingTerm, fresnelTerm);
+    return c;
+}
+
+/// <summary>
+/// InDirectionLight
+/// </summary>
+inline void InDirectionLight(mBRDFData brdfData, half occlusion, DirectionData directionData, inout float3 color)
+{
+    float3 reflectVector                                                    = reflect(- directionData.V, directionData.PosW);
+    float fresnelTerm                                                       = Pow4(1.0 - saturate(dot(directionData.PosW, directionData.V)));
+    float3 indirectDiffuse                                                  = occlusion;
+    float3 indirectSpecular                                                 = GlossyEnvironmentReflection(reflectVector, brdfData.perceptualRoughness, occlusion);
+    color                                                                   = EnvBRDF(brdfData, indirectDiffuse, indirectSpecular, fresnelTerm);
+}
+
+/// <summary>
+/// DirectBRDFSpecular
+/// </summary>
+float DirectBRDFSpecular(mBRDFData brdfData, float3 normalWS, float3 lightDirectionWS, float3 viewDirectionWS)
+{
+    float3 halfDir                                                          = SafeNormalize(float3(lightDirectionWS) + float3(viewDirectionWS));
+    float NoH                                                               = saturate(dot(normalWS, halfDir));
+    float LoH                                                               = saturate(dot(lightDirectionWS, halfDir));
+    float d                                                                 = NoH * NoH * brdfData.roughness2MinusOne + 1.00001f;
+    float LoH2                                                              = LoH * LoH;
+    float specularTerm                                                      = brdfData.roughness2 / ((d * d) * max(0.1h, LoH2) * brdfData.normalizationTerm);
+    return specularTerm;
+}
+
+/// <summary>
+/// DirectionLight
+/// </summary>
+inline void DirectionLight(mBRDFData brdfData, DirectionData dirData, inout float3 color)
+{
+    float NdotL                                                              = saturate(dot(dirData.N, dirData.L.direction));
+    float3 radiance                                                          = dirData.L.color * (dirData.L.distanceAttenuation * NdotL);
+    color                                                                    += DirectBRDFSpecular(brdfData, dirData.N, dirData.L.direction, dirData.V) * radiance;
+}
 #endif

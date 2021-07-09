@@ -33,7 +33,7 @@ uniform TEXTURE2D(_OcclusionMap);                           SAMPLER(sampler_Occl
 uniform TEXTURE2D(_EmissionMap);                            SAMPLER(sampler_EmissionMap);
 uniform TEXTURE2D(_MatCapMap);                              SAMPLER(sampler_MatCapMap);
 uniform TEXTURE2D(_LUT);                                    SAMPLER(sampler_LUT);
-uniform TEXTURECUBE(_CubeMap);                              SAMPLER(sampler_CubeMap);
+uniform TEXTURECUBE(_GlobalCubeMap);                        SAMPLER(sampler_GlobalCubeMap);
 
 /// <summary>
 /// INT

@@ -68,10 +68,11 @@
     }
     SubShader 
     { 
-        Tags{"RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline"}
+        Tags{"RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" "IgnoreProjector" = "True"}
         
         Pass
         {
+            Cull [_CullMode]
             Tags{"LightMode"    = "UniversalForward"}
             HLSLPROGRAM
             #include "Assets/Distilling RP/Shaders/PBR/DistillingLitForwardPass.hlsl"

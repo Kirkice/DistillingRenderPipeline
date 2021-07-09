@@ -14,7 +14,7 @@
 /// <summary>
 /// PBR DATA
 /// </summary>
-struct PBR_Data
+struct PBRData
 {
     float4                                              Albedo;
     float                                               Metallic;
@@ -22,6 +22,35 @@ struct PBR_Data
     float3                                              Normal;
     float                                               Occlusion;
     float4                                              Emission;
+};
+
+/// <summary>
+/// DirectionData
+/// </summary>
+struct DirectionData
+{
+    float4                                              PosL;
+    float3                                              PosW;
+    float4                                              PosS;
+    float3                                              V;
+    float3                                              N;
+    Light                                               L;
+    float4                                              shadowCorrd;
+};
+
+/// <summary>
+/// mBRDFData
+/// </summary>
+struct mBRDFData
+{
+    float3                                              diffuse;
+    float3                                              specular;
+    float                                               perceptualRoughness;
+    float                                               roughness;
+    float                                               roughness2;
+    float                                               grazingTerm;
+    float                                               normalizationTerm;     
+    float                                               roughness2MinusOne;
 };
 
 #endif

@@ -53,6 +53,8 @@ MonoBehaviour:
     zFailOperation: 2
   m_ShadowTransparentReceive: 1
   m_BoolScreenSpaceRayTracing: 0
+  m_BoolPRT: 1
+  m_GlobalCubeMap: {fileID: 8900000, guid: e0d6c1c96a83ce8428dfbdddca1592dc, type: 3}
   m_RenderingMode: 0
   m_AccurateGbufferNormals: 1
   m_TiledDeferredShading: 0

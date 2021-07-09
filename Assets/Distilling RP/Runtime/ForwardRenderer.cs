@@ -25,6 +25,10 @@ namespace UnityEngine.Rendering.Distilling
         /// 使用SSR
         /// </summary>
         private bool m_BoolScreenSpaceRayTracing;
+        /// <summary>
+        /// 使用PRT
+        /// </summary>
+        private bool m_BoolPRT;
         private static class Profiling
         {
             private const string k_Name = nameof(ForwardRenderer);
@@ -38,6 +42,7 @@ namespace UnityEngine.Rendering.Distilling
         internal bool accurateGbufferNormals { get { return m_DeferredLights != null ? m_DeferredLights.AccurateGbufferNormals : false; } }
 
         StochasticScreenSpaceRayTracing m_SSR;
+        PRTInit m_PRT;
         DepthOnlyPass m_DepthPrepass;
         DepthNormalOnlyPass m_DepthNormalPrepass;
         MainLightShadowCasterPass m_MainLightShadowCasterPass;
@@ -123,6 +128,7 @@ namespace UnityEngine.Rendering.Distilling
             m_ForwardLights = new ForwardLights();
             this.m_RenderingMode = data.renderingMode;
             this.m_BoolScreenSpaceRayTracing = data.BoolScreenSpaceRayTracing;
+            this.m_BoolPRT = data.BoolPRT;
             m_MainLightShadowCasterPass = new MainLightShadowCasterPass(RenderPassEvent.BeforeRenderingShadows);
             m_AdditionalLightsShadowCasterPass = new AdditionalLightsShadowCasterPass(RenderPassEvent.BeforeRenderingShadows);
             
@@ -160,6 +166,7 @@ namespace UnityEngine.Rendering.Distilling
             m_CopyColorPass = new CopyColorPass(RenderPassEvent.AfterRenderingSkybox, m_SamplingMaterial);
 
             m_SSR = new StochasticScreenSpaceRayTracing(data.m_SSRData);
+            m_PRT = new PRTInit(data.GlobalCubeMapProp);
             m_CopyNormalWPass = new CopyNormalWFeature();
             m_CopyPosWPass = new CopyPosWFeature();
             m_CopyTangentPass = new CopyTangentFeature();
@@ -417,6 +424,10 @@ namespace UnityEngine.Rendering.Distilling
             if (m_BoolScreenSpaceRayTracing)
             {
                 m_SSR.AddRenderPasses(this, ref renderingData);
+            }
+            if (m_BoolPRT)
+            {
+                m_PRT.AddRenderPasses(this,ref renderingData);
             }
             if (requireNormalWSTexture)
             {
