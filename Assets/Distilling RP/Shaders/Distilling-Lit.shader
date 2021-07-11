@@ -52,6 +52,12 @@
         _EmissionMap("Emission Map",2D) = "white"{}
         [HDR]_EmissionColor("Emission Color",Color) = (0,0,0,0)
         
+        //Height Settings
+        _UseHeightMap("Use HeightMap",float) = 0
+        _HeightMap("Height Map",2D) = "white"{}
+        _Height("Displacement Amount",range(0,0.1)) = 0.01
+        _HeightAmount("Turbulence Amount",range(0,100)) = 1
+        
         //GI Settings
         _UseGI("Use GI",float) = 0
         _UsePRT("Use PRT",float) = 0
@@ -65,6 +71,16 @@
         _GIStrength("GI Strength",Range(0,1)) = 1
         
         //Debug Settings
+        _DebugPosW("Debug PosW",float) = 0
+        _DebugPosL("Debug PosL",float) = 0
+        _DebugTangent("Debug Tangent",float) = 0
+        _DebugNormal("Debug Normal",float) = 0
+        _DebugUVX("Debug UV (X)",float) = 0
+        _DebugUVY("Debug UV (Y)",float) = 0
+        _DebugVColorR("Debug VColor (R)",float) = 0
+        _DebugVColorG("Debug VColor (G)",float) = 0
+        _DebugVColorB("Debug VColor (B)",float) = 0
+        _DebugWireframe("Debug Wireframe",float) = 0
     }
     SubShader 
     { 
@@ -77,9 +93,35 @@
             HLSLPROGRAM
             #include "Assets/Distilling RP/Shaders/PBR/DistillingLitForwardPass.hlsl"
             #pragma vertex      Lit_VS
+            #pragma geometry    Lit_GS
             #pragma fragment    Lit_PS
             ENDHLSL
         } 
+        
+        Pass
+        {
+            Tags{"LightMode" = "ShadowCaster"}
+            Cull [_CullMode]
+
+            HLSLPROGRAM
+            #pragma vertex ShadowPassVertex
+            #pragma fragment ShadowPassFragment
+            #include "Assets/Distilling RP/Shaders/LitInput.hlsl"
+            #include "Assets/Distilling RP/Shaders/ShadowCasterPass.hlsl"
+            ENDHLSL
+        }
+        
+        Pass
+        {
+            Tags{"LightMode" = "DepthOnly"}
+            Cull[_Cull]
+            HLSLPROGRAM
+            #pragma vertex DepthOnlyVertex
+            #pragma fragment DepthOnlyFragment
+            #include "Assets/Distilling RP/Shaders/LitInput.hlsl"
+            #include "Assets/Distilling RP/Shaders/DepthOnlyPass.hlsl"
+            ENDHLSL
+        }
     }
     CustomEditor "DistillingShaderGUI"
 }

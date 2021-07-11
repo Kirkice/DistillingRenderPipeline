@@ -181,6 +181,23 @@ float Calculatefresnel(const float3 I, const float3 N, const float3 ior)
 }
 
 /// <summary>
+/// SpecularBRDF
+/// </summary>
+float3 SpecularBRDF(float D, float G, float3 F, float3 V, float3 L, float3 N)
+{        
+    float NdotL                                                                 = abs(dot(N, L));
+    float NdotV                                                                 = abs(dot(N, V));
+            
+    //specualr
+    //Microfacet specular = D * G * F / (4 * NoL * NoV)
+    float3 nominator                                                            = D * G * F;
+    float denominator                                                           = 4.0 * NdotV * NdotL + 0.001;
+    float3 specularBrdf                                                         = nominator / denominator;
+    
+    return specularBrdf;
+}
+
+/// <summary>
 /// OneMinusReflectivityMetallic
 /// </summary>
 float OneMinusReflectivityMetallic(float metallic)
@@ -190,13 +207,24 @@ float OneMinusReflectivityMetallic(float metallic)
 }
 
 /// <summary>
-/// GlossyEnvironmentReflection
+/// GlossyEnvironmentReflection 
 /// </summary>
-float3 GlossyEnvironmentReflection(float3 reflectVector, float mip, float occlusion)
+float3 GlossyEnvironmentReflection(float3 reflectVector, float perceptualRoughness, float occlusion)
 {
-    float4 encodedIrradiance                                                = SAMPLE_TEXTURECUBE_LOD(unity_SpecCube0, samplerunity_SpecCube0, reflectVector, mip);
-    float3 irradiance                                                       = DecodeHDREnvironment(encodedIrradiance, unity_SpecCube0_HDR);
+    #if !defined(_ENVIRONMENTREFLECTIONS_OFF)
+    half mip                                                                = PerceptualRoughnessToMipmapLevel(perceptualRoughness);
+    half4 encodedIrradiance                                                 = SAMPLE_TEXTURECUBE_LOD(unity_SpecCube0, samplerunity_SpecCube0, reflectVector, mip);
+
+    #if !defined(UNITY_USE_NATIVE_HDR)
+    half3 irradiance                                                        = DecodeHDREnvironment(encodedIrradiance, unity_SpecCube0_HDR);
+    #else
+    half3 irradiance                                                        = encodedIrradiance.rgb;
+    #endif
+
     return                                                                  irradiance * occlusion;
+    #endif
+
+    return _GlossyEnvironmentColor.rgb * occlusion;
 }
 
 /// <summary>
@@ -215,9 +243,12 @@ half3 EnvBRDF(mBRDFData brdfData, half3 indirectDiffuse, half3 indirectSpecular,
 /// </summary>
 inline void InDirectionLight(mBRDFData brdfData, half occlusion, DirectionData directionData, inout float3 color)
 {
-    float3 reflectVector                                                    = reflect(- directionData.V, directionData.PosW);
-    float fresnelTerm                                                       = Pow4(1.0 - saturate(dot(directionData.PosW, directionData.V)));
-    float3 indirectDiffuse                                                  = occlusion;
+    if(_UsePRT < 0.5)
+        return;
+    
+    float3 reflectVector                                                    = reflect(- directionData.V, directionData.N);
+    float fresnelTerm                                                       = Pow4(1.0 - saturate(dot(directionData.N, directionData.V)));
+    float3 indirectDiffuse                                                  = occlusion * directionData.bakedGI;
     float3 indirectSpecular                                                 = GlossyEnvironmentReflection(reflectVector, brdfData.perceptualRoughness, occlusion);
     color                                                                   = EnvBRDF(brdfData, indirectDiffuse, indirectSpecular, fresnelTerm);
 }
@@ -225,7 +256,7 @@ inline void InDirectionLight(mBRDFData brdfData, half occlusion, DirectionData d
 /// <summary>
 /// DirectBRDFSpecular
 /// </summary>
-float DirectBRDFSpecular(mBRDFData brdfData, float3 normalWS, float3 lightDirectionWS, float3 viewDirectionWS)
+float3 DirectBRDFSpecular(mBRDFData brdfData, float3 normalWS, float3 lightDirectionWS, float3 viewDirectionWS)
 {
     float3 halfDir                                                          = SafeNormalize(float3(lightDirectionWS) + float3(viewDirectionWS));
     float NoH                                                               = saturate(dot(normalWS, halfDir));
@@ -233,16 +264,62 @@ float DirectBRDFSpecular(mBRDFData brdfData, float3 normalWS, float3 lightDirect
     float d                                                                 = NoH * NoH * brdfData.roughness2MinusOne + 1.00001f;
     float LoH2                                                              = LoH * LoH;
     float specularTerm                                                      = brdfData.roughness2 / ((d * d) * max(0.1h, LoH2) * brdfData.normalizationTerm);
-    return specularTerm;
+    half3 color                                                             = specularTerm * brdfData.specular + brdfData.diffuse;
+    return                                                                  color;
+}
+
+/// <summary>
+/// CalculateSpecularBRDF
+/// </summary>
+float3 CalculateSpecularBRDF(float3 N, float3 H, float3 V, float3 L, float Roughness)
+{
+    float NDF                                                               = DistributionGGX(N, H, Roughness);
+    float G                                                                 = GeometrySmith(N, V, L, Roughness);
+    float3 F                                                                = FresnelSchlick(max(dot(H, V), 0.0), _Rf0);
+    float3 specularBrdf                                                     = SpecularBRDF(NDF, G, F, V, L, N);
+    return                                                                  specularBrdf;
 }
 
 /// <summary>
 /// DirectionLight
 /// </summary>
-inline void DirectionLight(mBRDFData brdfData, DirectionData dirData, inout float3 color)
+inline void DirectionLight(mBRDFData brdfData, Light light, DirectionData dirData, inout float3 color)
 {
-    float NdotL                                                              = saturate(dot(dirData.N, dirData.L.direction));
-    float3 radiance                                                          = dirData.L.color * (dirData.L.distanceAttenuation * NdotL);
-    color                                                                    += DirectBRDFSpecular(brdfData, dirData.N, dirData.L.direction, dirData.V) * radiance;
+    float NdotL                                                              = saturate(dot(dirData.N, light.direction));
+    float3 radiance                                                          = light.color * (light.distanceAttenuation * NdotL);
+    color                                                                    += DirectBRDFSpecular(brdfData, dirData.N, light.direction, dirData.V) * radiance;
+}
+
+/// <summary>
+/// MultipleLight
+/// </summary>
+inline void MultipleLight(mBRDFData brdfData, DirectionData directionData, inout float3 color)
+{
+    if(_UseMultipleLight > 0.5)
+    {
+        uint pixelLightCount                                                = GetAdditionalLightsCount();
+        for (uint lightIndex = 0u; lightIndex < pixelLightCount; ++lightIndex)
+        {
+            Light light                                                     = GetAdditionalLight(lightIndex, directionData.PosW);
+            DirectionLight(brdfData, light, directionData, color);
+        }
+    }
+}
+
+/// <summary>
+/// TBNMatrixDot
+/// </summary>
+inline void TBNMatrixDot(inout DirectionData dirData, inout PBRData pbrData)
+{
+    float4 TtoW0                                                             = float4(dirData.T.x, dirData.B.x, dirData.N.x, dirData.PosW.x);
+    float4 TtoW1                                                             = float4(dirData.T.y, dirData.B.y, dirData.N.y, dirData.PosW.y);
+    float4 TtoW2                                                             = float4(dirData.T.z, dirData.B.z, dirData.N.z, dirData.PosW.z);
+
+    if(_UseNormalMap > 0.5)
+    {
+        pbrData.Normal                                                       = normalize(half3(dot(TtoW0, pbrData.Normal), dot(TtoW1, pbrData.Normal), dot(TtoW2, pbrData.Normal)));
+        pbrData.Normal.z                                                     = sqrt(1.0 - saturate(dot(pbrData.Normal.xy, pbrData.Normal.xy)));
+        dirData.N                                                            = pbrData.Normal;
+    }
 }
 #endif

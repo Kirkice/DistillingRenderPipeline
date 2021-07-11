@@ -52,6 +52,10 @@ namespace UnityEngine.Rendering.Distilling
         public static readonly string normalScale = "_NormalScale";
         
         //Parallax Settings
+        public static readonly string useHeightMap = "_UseHeightMap";
+        public static readonly string heightMap = "_HeightMap";
+        public static readonly string height = "_Height"; 
+        public static readonly string heightAmount = "_HeightAmount";
         
         //MatCap Settings
         public static readonly string useMatCap = "_UseMatCap";
@@ -76,7 +80,16 @@ namespace UnityEngine.Rendering.Distilling
         public static readonly string GIStrength = "_GIStrength";
 
         //Debug Settings
-
+        public static readonly string debugPosW = "_DebugPosW";
+        public static readonly string debugPosL = "_DebugPosL";
+        public static readonly string debugTangent = "_DebugTangent";
+        public static readonly string debugNormal = "_DebugNormal";
+        public static readonly string debugUVX = "_DebugUVX";
+        public static readonly string debugUVY = "_DebugUVY";
+        public static readonly string debugVColorR = "_DebugVColorR";
+        public static readonly string debugVColorG = "_DebugVColorG";
+        public static readonly string debugVColorB = "_DebugVColorB";
+        public static readonly string debugWireframe = "_DebugWireframe";
         #endregion
     }
     

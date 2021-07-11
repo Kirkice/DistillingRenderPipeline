@@ -79,7 +79,18 @@ uniform float                                               _UseNormalMap;
 uniform float                                               _NormalScale;
 uniform float                                               _OcclusionStrength;
 uniform float                                               _ReceiveShadows;
+uniform float                                               _UseHeightMap;
 
+uniform float                                               _DebugPosW;
+uniform float                                               _DebugPosL;
+uniform float                                               _DebugTangent;
+uniform float                                               _DebugNormal;
+uniform float                                               _DebugUVX;
+uniform float                                               _DebugUVY;
+uniform float                                               _DebugVColorR;
+uniform float                                               _DebugVColorG;
+uniform float                                               _DebugVColorB;
+uniform float                                               _DebugWireframe;
 /// <summary>
 /// FLOAT
 /// </summary>
@@ -87,6 +98,8 @@ uniform float                                               _IOR;
 uniform float                                               _ColorAdd;
 uniform float                                               _AbsorbIntensity;
 uniform float                                               _ColorMultiply;
+uniform float                                               _Height;
+uniform float                                               _HeightAmount;
 
 /// <summary>
 /// FLOAT3

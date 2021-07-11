@@ -21,8 +21,7 @@ public class DistillingShaderGUI : ShaderGUI
     public enum RenderingMode
     {
         Opaque,
-        CutOut,
-        Transparent
+        CutOut
     }
     
     public enum Rf0Type
@@ -62,6 +61,10 @@ public class DistillingShaderGUI : ShaderGUI
         
         normalMap = FindProperty(ShaderIDs.normalMap, props, false);
         normalScale = FindProperty(ShaderIDs.normalScale, props, false);
+        
+        parallaxMap = FindProperty(ShaderIDs.heightMap, props, false);
+        parallaxHeight = FindProperty(ShaderIDs.height, props, false);
+        parallaxHeightAmount = FindProperty(ShaderIDs.heightAmount, props, false);
         
         matCapMap = FindProperty(ShaderIDs.matMap, props, false);
         matCapColor = FindProperty(ShaderIDs.matMapColor, props, false);
@@ -106,6 +109,10 @@ public class DistillingShaderGUI : ShaderGUI
     private MaterialProperty normalMap = null;
     private MaterialProperty normalScale = null;
 
+    private MaterialProperty parallaxMap = null;
+    private MaterialProperty parallaxHeight = null;
+    private MaterialProperty parallaxHeightAmount = null;
+    
     private MaterialProperty matCapMap = null;
     private MaterialProperty matCapColor = null;
     
@@ -124,6 +131,7 @@ public class DistillingShaderGUI : ShaderGUI
         public static GUIContent RoughnessMapText = new GUIContent("RoughnessMap","Roughness Parames : Texture(sRGB) × Scale Default:0.5f");
         public static GUIContent OcclusionMapText = new GUIContent("OcclusionMap","Occlusion Parames : Texture(sRGB) × Scale Default:1f");
         public static GUIContent normalMapText = new GUIContent("NormalMap","NormalMap : Texture(bump)");
+        public static GUIContent parallaxMapText = new GUIContent("Parallax Map","ParallaxMap : Texture(White)");
         public static GUIContent matMapText = new GUIContent("MatMap","MatMap : Texture(white)");
         public static GUIContent emissionMapText = new GUIContent("EmissionMap","EmissionMap : Texture(white)");
     }
@@ -171,7 +179,7 @@ public class DistillingShaderGUI : ShaderGUI
         {
             EditorGUI.indentLevel++;
             GUI_BasicBRDFSettings(material);
-            GUI_SetRf0Mode(material);
+            // GUI_SetRf0Mode(material);
             EditorGUI.indentLevel--;
         }
         EditorGUILayout.Space();
@@ -201,7 +209,7 @@ public class DistillingShaderGUI : ShaderGUI
         if(_ParallaxSettings_Foldout)
         {
             EditorGUI.indentLevel++;
-
+            GUI_ParallaxSettings(material);
             EditorGUI.indentLevel--;
         }
         EditorGUILayout.Space();
@@ -241,7 +249,7 @@ public class DistillingShaderGUI : ShaderGUI
         if(_DebugSettings_Foldout)
         {
             EditorGUI.indentLevel++;
-
+            GUI_DebugSettings(material);
             EditorGUI.indentLevel--;
         }
         EditorGUILayout.Space();
@@ -356,10 +364,6 @@ public class DistillingShaderGUI : ShaderGUI
         else if((int)RenderingMode.CutOut == _RenderingMode_Setting)
         {
             renderingMode = RenderingMode.CutOut;
-        }
-        else
-        {
-            renderingMode = RenderingMode.Transparent;
         }
         renderingMode = (RenderingMode)EditorGUILayout.EnumPopup("Rendering Mode", renderingMode);
         if(renderingMode == RenderingMode.Opaque)
@@ -781,6 +785,37 @@ public class DistillingShaderGUI : ShaderGUI
     }
     #endregion
 
+    #region GUI_ParallaxSettings
+    void GUI_ParallaxSettings(Material material)
+    {
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Parallax Active");
+        if(material.GetFloat(ShaderIDs.useHeightMap) == 0){
+            if (GUILayout.Button("Off",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.useHeightMap,1);
+            }
+        }else{
+            if (GUILayout.Button("Active",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.useHeightMap,0);
+            }
+        }
+        GUILayout.Space(60);
+        EditorGUILayout.EndHorizontal();
+
+        if (material.GetFloat(ShaderIDs.useHeightMap) == 1)
+        {
+            EditorGUI.indentLevel++;
+            m_MaterialEditor.TexturePropertySingleLine(Styles.parallaxMapText, parallaxMap);
+            m_MaterialEditor.TextureScaleOffsetProperty(parallaxMap);
+            m_MaterialEditor.RangeProperty(parallaxHeight, "Parallax Height");
+            m_MaterialEditor.RangeProperty(parallaxHeightAmount, "Parallax HeightAmount");
+            EditorGUI.indentLevel--;
+        }
+    }
+    #endregion
+    
     #region GUI_MatCapSettings
     /// <summary>
     /// GUI_MatCapSettings
@@ -1006,6 +1041,175 @@ public class DistillingShaderGUI : ShaderGUI
             
             EditorGUI.indentLevel--;
         }
+    }
+    #endregion
+
+    #region GUI_DebugSettings
+        void GUI_DebugSettings(Material material)
+    {
+        EditorGUI.indentLevel++;
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Debug PosW");
+        if(material.GetFloat(ShaderIDs.debugPosW) == 0){
+            if (GUILayout.Button("Off",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugPosW,1);
+            }
+        }else{
+            if (GUILayout.Button("Active",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugPosW,0);
+            }
+        }
+        GUILayout.Space(60);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Debug PosL");
+        if(material.GetFloat(ShaderIDs.debugPosL) == 0){
+            if (GUILayout.Button("Off",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugPosL,1);
+            }
+        }else{
+            if (GUILayout.Button("Active",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugPosL,0);
+            }
+        }
+        GUILayout.Space(60);
+        EditorGUILayout.EndHorizontal();
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Debug TangentW");
+        if(material.GetFloat(ShaderIDs.debugTangent) == 0){
+            if (GUILayout.Button("Off",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugTangent,1);
+            }
+        }else{
+            if (GUILayout.Button("Active",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugTangent,0);
+            }
+        }
+        GUILayout.Space(60);
+        EditorGUILayout.EndHorizontal();
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Debug NormalW");
+        if(material.GetFloat(ShaderIDs.debugNormal) == 0){
+            if (GUILayout.Button("Off",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugNormal,1);
+            }
+        }else{
+            if (GUILayout.Button("Active",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugNormal,0);
+            }
+        }
+        GUILayout.Space(60);
+        EditorGUILayout.EndHorizontal();
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Debug UV(X)");
+        if(material.GetFloat(ShaderIDs.debugUVX) == 0){
+            if (GUILayout.Button("Off",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugUVX,1);
+            }
+        }else{
+            if (GUILayout.Button("Active",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugUVX,0);
+            }
+        }
+        GUILayout.Space(60);
+        EditorGUILayout.EndHorizontal();
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Debug UV(Y)");
+        if(material.GetFloat(ShaderIDs.debugUVY) == 0){
+            if (GUILayout.Button("Off",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugUVY,1);
+            }
+        }else{
+            if (GUILayout.Button("Active",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugUVY,0);
+            }
+        }
+        GUILayout.Space(60);
+        EditorGUILayout.EndHorizontal();
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Debug VColor(R)");
+        if(material.GetFloat(ShaderIDs.debugVColorR) == 0){
+            if (GUILayout.Button("Off",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugVColorR,1);
+            }
+        }else{
+            if (GUILayout.Button("Active",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugVColorR,0);
+            }
+        }
+        GUILayout.Space(60);
+        EditorGUILayout.EndHorizontal();
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Debug VColor(G)");
+        if(material.GetFloat(ShaderIDs.debugVColorG) == 0){
+            if (GUILayout.Button("Off",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugVColorG,1);
+            }
+        }else{
+            if (GUILayout.Button("Active",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugVColorG,0);
+            }
+        }
+        GUILayout.Space(60);
+        EditorGUILayout.EndHorizontal();
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Debug VColor(B)");
+        if(material.GetFloat(ShaderIDs.debugVColorB) == 0){
+            if (GUILayout.Button("Off",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugVColorB,1);
+            }
+        }else{
+            if (GUILayout.Button("Active",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugVColorB,0);
+            }
+        }
+        GUILayout.Space(60);
+        EditorGUILayout.EndHorizontal();
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Debug WireFrame");
+        if(material.GetFloat(ShaderIDs.debugWireframe) == 0){
+            if (GUILayout.Button("Off",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugWireframe,1);
+            }
+        }else{
+            if (GUILayout.Button("Active",shortButtonStyle))
+            {
+                material.SetFloat(ShaderIDs.debugWireframe,0);
+            }
+        }
+        GUILayout.Space(60);
+        EditorGUILayout.EndHorizontal();
+        
+        EditorGUI.indentLevel--;
     }
     #endregion
 }

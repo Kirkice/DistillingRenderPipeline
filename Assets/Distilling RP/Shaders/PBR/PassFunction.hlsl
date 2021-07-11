@@ -31,7 +31,8 @@ inline void InitPBRData(float2 uv, inout PBRData data)
     data.Metallic                                       = SAMPLE_TEXTURE2D(_MetallicMap,sampler_MetallicMap,uv).r;
     data.Roughness                                      = SAMPLE_TEXTURE2D(_RoughnessMap,sampler_RoughnessMap,uv).r;
     data.Occlusion                                      = SAMPLE_TEXTURE2D(_OcclusionMap,sampler_OcclusionMap,uv).r;
-    data.Normal                                         = SampleNormal(uv, TEXTURE2D_ARGS(_NormalMap, sampler_NormalMap), _NormalScale);
+    
+    data.Normal                                         = UnpackNormalScale(SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, uv), _NormalScale);
     data.Emission                                       = SAMPLE_TEXTURE2D(_EmissionMap,sampler_EmissionMap,uv);                         
 }
 
@@ -51,7 +52,7 @@ inline void SetPBRData(float3 N, inout PBRData data)
 /// <summary>
 /// SetDirectionData
 /// </summary>
-inline void SetDirectionData(inout DirectionData data, float3 N, float3 V, float4 PosL,float3 PosW, float4 PosS)
+inline void SetDirectionData(inout DirectionData data, float3 N, float3 V, float4 PosL,float3 PosW, float4 PosS, float3 T, float3 B, float4 fogFactorAndVertexLight)
 {
     data.N                                              = N;
     data.V                                              = V;
@@ -60,6 +61,10 @@ inline void SetDirectionData(inout DirectionData data, float3 N, float3 V, float
     data.PosS                                           = PosS;
     data.shadowCorrd                                    = TransformWorldToShadowCoord(PosW);
     data.L                                              = GetMainLight(data.shadowCorrd);
+    data.T                                              = T;
+    data.B                                              = B;
+    data.vertexLighting                                 = fogFactorAndVertexLight.yzw;
+    data.bakedGI                                        = 0.5;
 }
 
 /// <summary>
@@ -150,11 +155,11 @@ inline void GetInDirectLighting(float3 V, PBRData data, inout float4 outColor)
     float3 reflectVec                                   = reflect(-V, N);
     half mip                                            = mip_roughness * UNITY_SPECCUBE_LOD_STEPS;
     half4 rgbm                                          = SAMPLE_TEXTURECUBE_LOD(_GlobalCubeMap, sampler_GlobalCubeMap,reflectVec, mip);
-    float3 iblSpecular                                  = DecodeHDREnvironment(rgbm, _CubeMap_HDR);
+    float3 iblSpecular                                  = rgbm;
     float2 envBDRF                                      = SAMPLE_TEXTURE2D(_LUT, sampler_LUT,float2(lerp(0, 0.99, NdotV.x), lerp(0, 0.99, roughness))).rg; // LUT采样
     float3 iblSpecularResult                            = iblSpecular * (Flast * envBDRF.r + envBDRF.g);
     float3 IndirectResult                               = iblDiffuseResult + iblSpecularResult;
-    outColor.rgb                                        += IndirectResult;
+    outColor.rgb                                        = IndirectResult;
 }
 
 /// <summary>
@@ -171,4 +176,120 @@ inline void TransparentCut(float4 albedo)
     }
 }
 
+/// <summary>
+/// EmissionLight
+/// </summary>
+inline void EmissionLight(PBRData data, inout float3 color)
+{
+    color                                               += data.Emission;
+}
+
+/// <summary>
+/// MatCapColor
+/// </summary>
+inline void MatCapColor(float2 uv, inout float3 color)
+{
+    if(_UseMatCap)
+    {
+        color                                           += (SAMPLE_TEXTURE2D(_MatCapMap,sampler_MatCapMap,uv) * _MatCapColor);
+    }
+}
+
+/// <summary>
+/// Parallax Occlusion Mapping
+/// </summary>
+inline void ParallaxOcclusionMapping(DirectionData dirData, float3 V, inout float2 uv)
+{
+    if(_UseHeightMap)
+    {
+        float3x3 rotation                                   = float3x3( dirData.T.xyz, dirData.B, dirData.N);
+        V                                                   = mul(rotation, V);
+        float3 viewRay                                      = normalize(V * -1);
+        float fParallaxLimit                                = -length(viewRay.xy) / viewRay.z;
+        fParallaxLimit                                      *= _Height;
+        float2 vOffsetDir                                   = normalize(viewRay.xy);
+        float2 vMaxOffset                                   = vOffsetDir * fParallaxLimit;
+        int nNumSamples                                     = (int)_HeightAmount;
+        float fStepSize                                     = 1.0 / (float)nNumSamples;
+        
+        float2 dx                                           = ddx(uv);
+        float2 dy                                           = ddy(uv);
+        float fCurrRayHeight                                = 1.0;
+        float2 vCurrOffset                                  = float2(0, 0);
+        float2 vLastOffset                                  = float2(0, 0);
+                        
+        float fLastSampledHeight                            = 1;
+        float fCurrSampledHeight                            = 1;
+                        
+        int nCurrSample                                     = 0;
+        while (nCurrSample < nNumSamples)
+        {
+            fCurrSampledHeight                              = SAMPLE_TEXTURE2D_GRAD(_HeightMap, sampler_HeightMap,uv + vCurrOffset, dx, dy).x;
+            if (fCurrSampledHeight > fCurrRayHeight)
+            {
+                float delta1                                = fCurrSampledHeight - fCurrRayHeight;
+                float delta2                                = (fCurrRayHeight + fStepSize) - fLastSampledHeight;
+                float ratio                                 = delta1 / (delta1 + delta2);
+                vCurrOffset                                 = lerp(vCurrOffset, vLastOffset, ratio);
+                fLastSampledHeight                          = lerp(fCurrSampledHeight, fLastSampledHeight, ratio);
+                nCurrSample                                 = nNumSamples + 1;
+            }
+            else
+            {
+                nCurrSample++;
+                fCurrRayHeight                              -= fStepSize;
+                vLastOffset                                 = vCurrOffset;
+                vCurrOffset                                 += fStepSize * vMaxOffset;
+                fLastSampledHeight                          = fCurrSampledHeight;
+            }
+        }
+        uv                                                  += vCurrOffset;   
+    }
+}
+
+/// <summary>
+/// DebugFunction
+/// </summary>
+inline void DebugFunction(DirectionData dirData, float2 uv, float3 vColor, float3 dist, inout float3 color)
+{
+    if(_DebugPosW > 0.5)
+        color                                               = dirData.PosW;
+
+    if(_DebugPosL > 0.5)
+        color                                               = dirData.PosL;
+
+    if(_DebugTangent > 0.5)
+        color                                               = dirData.T;
+
+    if(_DebugTangent > 0.5)
+        color                                               = dirData.T;
+
+    if(_DebugNormal > 0.5)
+        color                                               = dirData.N;
+
+    if(_DebugUVX > 0.5)
+        color                                               = uv.x;
+
+    if(_DebugUVY > 0.5)
+        color                                               = uv.y;
+
+    if(_DebugVColorR > 0.5)
+        color                                               = vColor.r;
+
+    if(_DebugVColorG > 0.5)
+        color                                               = vColor.g;
+
+    if(_DebugVColorB > 0.5)
+        color                                               = vColor.b;
+
+    if(_DebugWireframe > 0.5)
+    {
+
+        float val                                           = min( dist.x, min( dist.y, dist.z));
+
+        val                                                 = exp2( -1/1 * val * val );
+
+        color                                               = lerp(color, float3(0,1,0.4), val);
+    }
+}
 #endif

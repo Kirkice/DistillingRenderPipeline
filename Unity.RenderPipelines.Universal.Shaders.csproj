@@ -83,6 +83,7 @@
      <None Include="Assets\Distilling RP\Shaders\Utils\Sampling.shader" />
      <None Include="Assets\Distilling RP\Shaders\Particles\ParticlesUnlit.shader" />
      <None Include="Assets\Distilling RP\Shaders\PBR\BRDFs.hlsl" />
+     <None Include="Assets\Distilling RP\Shaders\PBR\ShadowPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Utils\StencilDeferred.shader" />
      <None Include="Assets\Distilling RP\Shaders\Unity.RenderPipelines.Universal.Shaders.asmdef" />
      <None Include="Assets\Distilling RP\Shaders\Terrain\WavingGrassPasses.hlsl" />

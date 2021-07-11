@@ -34,8 +34,12 @@ struct DirectionData
     float4                                              PosS;
     float3                                              V;
     float3                                              N;
+    float3                                              B;
+    float3                                              T;
     Light                                               L;
     float4                                              shadowCorrd;
+    float3                                              vertexLighting;
+    float3                                              bakedGI; 
 };
 
 /// <summary>
