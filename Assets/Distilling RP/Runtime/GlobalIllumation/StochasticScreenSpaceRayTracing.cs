@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Distilling;
 public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
 {
     public SSRData _ssrData = null;
-    const string m_ProfilerTag = "ScreenSpaceRayTracingPass"; 
+    const string m_ProfilerTag = "ScreenSpaceRayTracingPass";  
     class StochasticScreenSpaceRayTracingPass : ScriptableRenderPass
     {
         private RenderTargetIdentifier source { get; set; }
@@ -15,50 +15,33 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
         RenderTargetHandle m_temporaryColorTexture;
         
         #region Private Parames
-        private ResolutionMode depthMode = ResolutionMode.halfRes;
-        private ResolutionMode rayMode = ResolutionMode.halfRes;
         private FilterMode rayFilterMode = FilterMode.Point;
         
-        private int mRayDistance = 70;
         private float mThickness = 0.1f;
-        private float mBRDFBias = 0.7f;
         private Texture m_NoiseTex;
         
-        private ResolutionMode resolveMode = ResolutionMode.fullRes;
-        private bool rayReuse = true;
-        private bool normalization = true;
-        private bool reduceFireflies = true;
-        private bool useMipMap = true;
         private int maxMipMap = 5;
-        private bool useTemporal = true;
-        private float scale = 2.0f;
-        private float response = 0.85f;
         private float minResponse = 0.85f;
         private float maxResponse = 0.95f;
-        private bool useUnityMotion;
-        private bool useFresnel = true;
-        private float screenFadeSize = 0.25f;
-        private float smoothnessRange = 1.0f;
-        private SSRDebugPass debugPass = SSRDebugPass.Combine;
-        
+
         private Matrix4x4 projectionMatrix;
         private Matrix4x4 viewProjectionMatrix;
         private Matrix4x4 inverseViewProjectionMatrix;
         private Matrix4x4 worldToCameraMatrix;
         private Matrix4x4 cameraToWorldMatrix;
         private Matrix4x4 prevViewProjectionMatrix;
-
-        private RenderTexture temporalBuffer;
+        
         private RenderTexture mainBuffer0, mainBuffer1;
         private RenderTexture mipMapBuffer0, mipMapBuffer1, mipMapBuffer2;
         
-        private RenderBuffer[] renderBuffer = new RenderBuffer[2];
+        private RenderTargetIdentifier[] renderBuffer = new RenderTargetIdentifier[2];
         private Vector4 project;
         private Vector2[] dirX = new Vector2[5];
         private Vector2[] dirY = new Vector2[5];
         private int[] mipLevel = new int[5] { 0, 2, 3, 4, 5 };
-        private Vector2 jitterSample;
+        public Vector2 jitterSample;
         private Material m_rendererMaterial = null;
+        private SSRData inSsrData;
         #endregion
 
         /// <summary>
@@ -68,25 +51,7 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
         #region StochasticScreenSpaceRayTracingPass
         public StochasticScreenSpaceRayTracingPass(SSRData ssrData)
         {
-            #region SetData
-            depthMode = ssrData.depthMode;
-            rayMode = ssrData.rayMode;
-            mRayDistance = ssrData.rayDistance;
-            mBRDFBias = ssrData.BRDFBias;
-            resolveMode = ssrData.resolveMode;
-            rayReuse = ssrData.rayReuse;
-            normalization = ssrData.normalization;
-            reduceFireflies = ssrData.reduceFireflies;
-            useMipMap = ssrData.useMipMap;
-            useTemporal = ssrData.useTemporal;
-            scale = ssrData.scale;
-            response = ssrData.response;
-            useUnityMotion = ssrData.useUnityMotion;
-            useFresnel = ssrData.useFresnel;
-            screenFadeSize = ssrData.screenFadeSize;
-            smoothnessRange = ssrData.smoothnessRange;
-            debugPass = ssrData.debugPass;
-            #endregion
+            inSsrData = ssrData;
             m_NoiseTex = AssetDatabase.LoadAssetAtPath<Texture2D>(ShaderIDs.BlueNoiseTexPath);
             m_rendererMaterial = new Material(Shader.Find("Hidden/Distilling RP/ScreenSpaceRayTracing"));
             m_temporaryColorTexture.Init("temporaryColorTexture");
@@ -121,11 +86,11 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
                 int width = cam.pixelWidth;
                 int height = cam.pixelHeight;
                 
-                int rayWidth = width / (int)rayMode;
-                int rayHeight = height / (int)rayMode;
+                int rayWidth = width / (int)inSsrData.rayMode;
+                int rayHeight = height / (int)inSsrData.rayMode;
             
-                int resolveWidth = width / (int)resolveMode;
-                int resolveHeight = height / (int)resolveMode;
+                int resolveWidth = width / (int)inSsrData.resolveMode;
+                int resolveHeight = height / (int)inSsrData.resolveMode;
                 
                 m_rendererMaterial.SetVector("_JitterSizeAndOffset",
                     new Vector4
@@ -149,21 +114,48 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
                 
                 RenderTexture rayCast = CreateTempBuffer(rayWidth, rayHeight, 0, RenderTextureFormat.ARGBHalf);
                 RenderTexture rayCastMask = CreateTempBuffer(rayWidth, rayHeight, 0, RenderTextureFormat.RHalf);
-                RenderTexture depthBuffer = CreateTempBuffer(width / (int)depthMode, height / (int)depthMode, 0, RenderTextureFormat.RFloat);
+                RenderTexture depthBuffer = CreateTempBuffer(width / (int)inSsrData.depthMode, height / (int)inSsrData.depthMode, 0, RenderTextureFormat.RFloat);
                 rayCast.filterMode = rayFilterMode;
                 depthBuffer.filterMode = FilterMode.Point;
-                
-                // Depth Buffer
-                Blit(cmd,source,depthBuffer,m_rendererMaterial,4);
-                ReleaseTempBuffer(depthBuffer);
-                
+
                 m_rendererMaterial.SetTexture("_RayCast", rayCast);
                 m_rendererMaterial.SetTexture("_RayCastMask", rayCastMask);
                 m_rendererMaterial.SetTexture("_CameraDepthBuffer", depthBuffer);
                 
-                RenderTexture resolvePass = CreateTempBuffer(resolveWidth, resolveHeight, 0, RenderTextureFormat.DefaultHDR);
+                // Depth Buffer
+                Blit(cmd,source,depthBuffer,m_rendererMaterial,4);
+                ReleaseTempBuffer(depthBuffer);
+
+                switch (inSsrData.debugPass)
+                {
+                    case SSRDebugPass.Reflection:
+                    case SSRDebugPass.Cubemap:
+                    case SSRDebugPass.CombineNoCubemap:
+                    case SSRDebugPass.RayCast:
+                    case SSRDebugPass.ReflectionAndCubemap:
+                    case SSRDebugPass.SSRMask:
+                    case SSRDebugPass.Jitter:
+                        Blit(cmd,source, mainBuffer0, m_rendererMaterial, 1);
+                        break;
+                    case SSRDebugPass.Combine:
+                        if (Application.isPlaying)
+                            Blit(cmd,source, mainBuffer0, m_rendererMaterial, 1);
+                        else
+                            Blit(cmd,source, mainBuffer0, m_rendererMaterial, 1);
+                        break;
+                }
                 
-                if (useMipMap)
+                renderBuffer[0] = rayCast.colorBuffer;
+                renderBuffer[1] = rayCastMask.colorBuffer;
+                cmd.SetRenderTarget(renderBuffer, rayCast.depthBuffer);
+                cmd.ClearRenderTarget(true, true, Color.clear, 1);
+                Blit(cmd,source,rayCast.depthBuffer,m_rendererMaterial,3);
+                
+                ReleaseTempBuffer(depthBuffer);
+                
+                RenderTexture resolvePass = CreateTempBuffer(resolveWidth, resolveHeight, 0, RenderTextureFormat.DefaultHDR);
+
+                if (inSsrData.useMipMap)
                 {
                     dirX[0] = new Vector2(width, 0.0f);
                     dirX[1] = new Vector2(dirX[0].x / 4.0f, 0.0f);
@@ -190,8 +182,8 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
                         m_rendererMaterial.SetVector("_GaussianDir", new Vector2(0.0f, 1.0f / dirY[i].y));
                         m_rendererMaterial.SetInt("_MipMapCount", mipLevel[i]);
                         Blit(cmd,mipMapBuffer1, mipMapBuffer0, m_rendererMaterial, 6);
+                        cmd.SetRenderTarget(mipMapBuffer2,i);
                     }
-                
                     Blit(cmd,mipMapBuffer2, resolvePass, m_rendererMaterial, 0);
                 }
                 else
@@ -203,29 +195,13 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
                 
                 ReleaseTempBuffer(rayCast);
                 ReleaseTempBuffer(rayCastMask);
-                
-                if (useTemporal && Application.isPlaying)
-                {
-                    m_rendererMaterial.SetFloat("_TScale", scale);
-                    m_rendererMaterial.SetFloat("_TResponse", response);
-                    m_rendererMaterial.SetFloat("_TMinResponse", minResponse);
-                    m_rendererMaterial.SetFloat("_TMaxResponse", maxResponse);
-                
-                    RenderTexture temporalBuffer0 = CreateTempBuffer(width, height, 0, RenderTextureFormat.DefaultHDR);
-                
-                    m_rendererMaterial.SetTexture("_PreviousBuffer", temporalBuffer);
-                    Blit(cmd,resolvePass, temporalBuffer0, m_rendererMaterial, 5);
-                    m_rendererMaterial.SetTexture("_ReflectionBuffer", temporalBuffer0);
-                    Blit(cmd,temporalBuffer0, temporalBuffer);
-                    ReleaseTempBuffer(temporalBuffer0);
-                }
-                
+
                 RenderTextureDescriptor opaqueDesc = renderingData.cameraData.cameraTargetDescriptor;
                 opaqueDesc.depthBufferBits = 0;
                 if (destination == RenderTargetHandle.CameraTarget)
                 {
                     cmd.GetTemporaryRT(m_temporaryColorTexture.id, opaqueDesc);
-                    switch (debugPass)
+                    switch (inSsrData.debugPass)
                     {
                         case SSRDebugPass.Reflection:
                         case SSRDebugPass.Cubemap:
@@ -237,8 +213,12 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
                             Blit(cmd,source,m_temporaryColorTexture.Identifier(),m_rendererMaterial, 2);
                             break;
                         case SSRDebugPass.Combine:
+                            RenderTexture tempSource = RenderTexture.GetTemporary(Screen.width,Screen.height,0,RenderTextureFormat.DefaultHDR);
+                            Blit(cmd,source,tempSource);
+                            m_rendererMaterial.SetTexture("_MainTex",tempSource);
                             Blit(cmd,source,mainBuffer1,m_rendererMaterial, 2);
                             Blit(cmd,mainBuffer1, source);
+                            RenderTexture.ReleaseTemporary(tempSource);
                             break;
                     }
                 }
@@ -289,13 +269,6 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
         #region ReleaseRenderTargets
         private void ReleaseRenderTargets()
         {
-
-            if (temporalBuffer != null)
-            {
-                temporalBuffer.Release();
-                temporalBuffer = null;
-            }
-
             if (mainBuffer0 != null || mainBuffer1 != null)
             {
                 mainBuffer0.Release();
@@ -320,16 +293,6 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
         #region UpdateRenderTargets
         private void UpdateRenderTargets(int width, int height)
         {
-            if (temporalBuffer != null && temporalBuffer.width != width)
-            {
-                ReleaseRenderTargets();
-            }
-
-            if (temporalBuffer == null || !temporalBuffer.IsCreated())
-            {
-                temporalBuffer = CreateRenderTexture(width, height, 0, RenderTextureFormat.DefaultHDR, false, false, FilterMode.Bilinear);
-            }
-
             if (mainBuffer0 == null || !mainBuffer0.IsCreated())
             {
                 mainBuffer0 = CreateRenderTexture(width, height, 0, RenderTextureFormat.DefaultHDR, false, false, FilterMode.Bilinear);
@@ -353,44 +316,34 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
         {
             m_rendererMaterial.SetTexture("_Noise", m_NoiseTex);
             m_rendererMaterial.SetVector("_NoiseSize", new Vector2(m_NoiseTex.width, m_NoiseTex.height));
-            m_rendererMaterial.SetFloat("_BRDFBias", mBRDFBias);
-            m_rendererMaterial.SetFloat("_SmoothnessRange", smoothnessRange);
-            m_rendererMaterial.SetFloat("_EdgeFactor", screenFadeSize);
-            m_rendererMaterial.SetInt("_NumSteps", mRayDistance);
-            m_rendererMaterial.SetFloat("_Thickness", mThickness);
+            m_rendererMaterial.SetFloat("_BRDFBias", inSsrData.BRDFBias);
+            m_rendererMaterial.SetFloat("_SmoothnessRange", inSsrData.smoothnessRange);
+            m_rendererMaterial.SetFloat("_EdgeFactor", inSsrData.screenFadeSize);
+            m_rendererMaterial.SetInt("_NumSteps", inSsrData.rayDistance);
+            m_rendererMaterial.SetFloat("_Thickness", inSsrData.thickness);
 
 
-            if (!rayReuse)
+            if (!inSsrData.rayReuse)
                 m_rendererMaterial.SetInt("_RayReuse", 0);
             else
                 m_rendererMaterial.SetInt("_RayReuse", 1);
 
-            if (!normalization)
+            if (!inSsrData.normalization)
                 m_rendererMaterial.SetInt("_UseNormalization", 0);
             else
                 m_rendererMaterial.SetInt("_UseNormalization", 1);
 
-            if (!useFresnel)
+            if (!inSsrData.useFresnel)
                 m_rendererMaterial.SetInt("_UseFresnel", 0);
             else
                 m_rendererMaterial.SetInt("_UseFresnel", 1);
 
-            if (!useTemporal)
-                m_rendererMaterial.SetInt("_UseTemporal", 0);
-            else if (useTemporal && Application.isPlaying)
-                m_rendererMaterial.SetInt("_UseTemporal", 1);
-
-            if (!useUnityMotion)
-                m_rendererMaterial.SetInt("_ReflectionVelocity", 1);
-            else if (useTemporal)
-                m_rendererMaterial.SetInt("_ReflectionVelocity", 0);
-
-            if (!reduceFireflies)
+            if (!inSsrData.reduceFireflies)
                 m_rendererMaterial.SetInt("_Fireflies", 0);
             else
                 m_rendererMaterial.SetInt("_Fireflies", 1);
 
-            switch (debugPass)
+            switch (inSsrData.debugPass)
             {
                 case SSRDebugPass.Combine:
                     m_rendererMaterial.SetInt("_DebugPass", 0);
@@ -507,7 +460,7 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
         }
         //
 
-        private void OnPreCull()
+        public void PreCull()
         {
             jitterSample = GenerateRandomOffset();
         }
@@ -542,6 +495,7 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
         
         public override void FrameCleanup(CommandBuffer cmd)
         {
+            PreCull();
             if (destination == RenderTargetHandle.CameraTarget)
                 cmd.ReleaseTemporaryRT(m_temporaryColorTexture.id);
         }

@@ -49,7 +49,7 @@ namespace UnityEngine.Rendering.Distilling
             [Reload("Shaders/Utils/CopyNormalWS.shader")]
             public Shader copyNormalWS;
             
-            [Reload("Shaders/Utils/StencilDeferred.shader")]
+            [Reload("Shaders/Utils/DRPStencilDeferred.shader")]
             public Shader stencilDeferredPS;
             
             [Reload("Shaders/Utils/FallbackError.shader")]

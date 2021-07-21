@@ -60,7 +60,7 @@ inline void SetDirectionData(inout DirectionData data, float3 N, float3 V, float
     data.PosW                                           = PosW;
     data.PosS                                           = PosS;
     data.shadowCorrd                                    = TransformWorldToShadowCoord(PosW);
-    data.L                                              = GetMainLight(data.shadowCorrd);
+    data.L                                              = GetMainLight(data.shadowCorrd, data.PosW, unity_ProbesOcclusion);
     data.T                                              = T;
     data.B                                              = B;
     data.vertexLighting                                 = fogFactorAndVertexLight.yzw;
@@ -83,6 +83,24 @@ inline void SetBRDFData(PBRData pbrData, out mBRDFData outBRDFData)
     outBRDFData.roughness2                              = outBRDFData.roughness * outBRDFData.roughness;
     outBRDFData.normalizationTerm                       = outBRDFData.roughness * 4.0h + 2.0h;
     outBRDFData.roughness2MinusOne                      = outBRDFData.roughness2 - 1.0h;
+}
+
+/// <summary>
+/// SetBRDFData
+/// </summary>
+inline void SetDeferredDirectionData(inout DirectionData data, float3 N, float3 V, float3 PosW, float3 PosS)
+{
+    data.N                                              = N;
+    data.V                                              = V;
+    data.PosL                                           = float4(0,0,0,0);
+    data.PosW                                           = PosW;
+    data.PosS                                           = float4(PosS,1);
+    data.shadowCorrd                                    = TransformWorldToShadowCoord(PosW);
+    data.L                                              = GetMainLight(data.shadowCorrd);
+    data.T                                              = float4(0,0,0,0);
+    data.B                                              = float4(0,0,0,0);
+    data.vertexLighting                                 = float4(0,0,0,0);
+    data.bakedGI                                        = 0.5;
 }
 
 /// <summary>
@@ -291,5 +309,76 @@ inline void DebugFunction(DirectionData dirData, float2 uv, float3 vColor, float
 
         color                                               = lerp(color, float3(0,1,0.4), val);
     }
+}
+
+/// <summary>
+/// InitmRDFDataDeferred
+/// </summary>
+inline void InitmRDFDataDeferred(half3 diffuse, half3 specular, half reflectivity, half oneMinusReflectivity, half smoothness, out mBRDFData outBRDFData)
+{
+    outBRDFData.diffuse                                     = diffuse;
+    outBRDFData.specular                                    = specular;
+
+    outBRDFData.perceptualRoughness                         = PerceptualSmoothnessToPerceptualRoughness(smoothness);
+    outBRDFData.roughness                                   = max(PerceptualRoughnessToRoughness(outBRDFData.perceptualRoughness), HALF_MIN_SQRT);
+    outBRDFData.roughness2                                  = max(outBRDFData.roughness * outBRDFData.roughness, HALF_MIN);
+    outBRDFData.grazingTerm                                 = saturate(smoothness + reflectivity);
+    outBRDFData.normalizationTerm                           = outBRDFData.roughness * 4.0h + 2.0h;
+    outBRDFData.roughness2MinusOne                          = outBRDFData.roughness2 - 1.0h;
+}
+
+/// <summary>
+/// mBRDFDataFromGbuffer
+/// </summary>
+mBRDFData mBRDFDataFromGbuffer(half4 gbuffer0, half4 gbuffer1, half4 gbuffer2)
+{
+    half3 diffuse                                           = gbuffer0.rgb;
+    uint materialFlags                                      = UnpackMaterialFlags(gbuffer0.a);
+    half3 specular                                          = gbuffer1.rgb;
+    half reflectivity                                       = gbuffer1.a;
+    half oneMinusReflectivity                               = 1.0h - reflectivity;
+    half smoothness                                         = UnpackSmoothness(gbuffer2.a, kLightingLit);
+
+    mBRDFData brdfData                                       = (mBRDFData)0;
+
+    InitmRDFDataDeferred(diffuse, specular, reflectivity, oneMinusReflectivity, smoothness, brdfData);
+
+    return brdfData;
+}
+
+/// <summary>
+/// UnityLightFromPunctualLightDataAndWorldSpacePosition
+/// </summary>
+Light UnityLightFromPunctualLightDataAndWorldSpacePosition(PunctualLightData punctualLightData, float3 positionWS, half4 shadowMask, int shadowLightIndex, bool materialFlagReceiveShadowsOff)
+{
+    half4 probesOcclusion                                   = shadowMask;
+    Light light;
+    float3 lightVector                                      = punctualLightData.posWS - positionWS.xyz;
+    float distanceSqr                                       = max(dot(lightVector, lightVector), HALF_MIN);
+    half3 lightDirection                                    = half3(lightVector * rsqrt(distanceSqr));
+
+    half attenuation                                        = DistanceAttenuation(distanceSqr, punctualLightData.attenuation.xy) * AngleAttenuation(punctualLightData.spotDirection.xyz, lightDirection, punctualLightData.attenuation.zw);
+
+    light.direction                                         = lightDirection;
+    light.color                                             = punctualLightData.color.rgb;
+
+    light.distanceAttenuation                               = attenuation;
+
+    [branch] if (materialFlagReceiveShadowsOff)
+        light.shadowAttenuation                             = 1;
+    else
+    {
+        light.shadowAttenuation                             = AdditionalLightShadow(shadowLightIndex, positionWS, lightDirection, shadowMask, punctualLightData.occlusionProbeInfo);
+    }
+    return light;
+}
+
+/// <summary>
+/// SetShadow
+/// </summary>
+inline void SetShadow(float2 uvPosS, inout float3 color)
+{
+    float shadow                                            = SAMPLE_TEXTURE2D(_CameraShadowMaskTexture,sampler_CameraShadowMaskTexture,uvPosS).r;
+    color                                                   = saturate(shadow + 0.3) * color;
 }
 #endif

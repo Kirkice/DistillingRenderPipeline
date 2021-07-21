@@ -87,6 +87,7 @@ Material:
     - _DebugVColorB: 0
     - _DebugVColorG: 0
     - _DebugVColorR: 0
+    - _DebugWireframe: 0
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _GIStrength: 1

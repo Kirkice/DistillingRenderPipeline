@@ -38,9 +38,7 @@ Shader "Hidden/Universal Render Pipeline/StencilDeferred"
     #define _ADDITIONAL_LIGHT_SHADOWS 1
     #endif
 
-    #include "Assets/Distilling RP/ShaderLibrary/Core.hlsl"
-    #include "Assets/Distilling RP/Shaders/Utils/Deferred.hlsl"
-    #include "Assets/Distilling RP/ShaderLibrary/Shadows.hlsl"
+    #include "Assets/Distilling RP/Shaders/PBR/PassFunction.hlsl"
 
     struct Attributes
     {
@@ -209,18 +207,11 @@ Shader "Hidden/Universal Render Pipeline/StencilDeferred"
 
         half3 color = half3(0,0,0);
 
-        #if defined(_LIT)       
-            BRDFData brdfData = BRDFDataFromGbuffer(gbuffer0, gbuffer1, gbuffer2);
-            color = LightingPhysicallyBased(brdfData, unityLight, inputData.normalWS, inputData.viewDirectionWS, materialSpecularHighlightsOff);
-        #elif defined(_SIMPLELIT)
-            SurfaceDataGBuffer surfaceData = SurfaceDataFromGbuffer(gbuffer0, gbuffer1, gbuffer2, kLightingSimpleLit);
-            half3 attenuatedLightColor = unityLight.color * (unityLight.distanceAttenuation * unityLight.shadowAttenuation);
-            half3 diffuseColor = LightingLambert(attenuatedLightColor, unityLight.direction, inputData.normalWS);
-            half3 specularColor = LightingSpecular(attenuatedLightColor, unityLight.direction, inputData.normalWS, inputData.viewDirectionWS, half4(surfaceData.specular, surfaceData.smoothness), surfaceData.smoothness);
-            // TODO: if !defined(_SPECGLOSSMAP) && !defined(_SPECULAR_COLOR), force specularColor to 0 in gbuffer code
-            color = diffuseColor * surfaceData.albedo + specularColor;
-        #endif
-
+        mBRDFData brdfData                                      = mBRDFDataFromGbuffer(gbuffer0, gbuffer1, gbuffer2);
+        DirectionData                                           dirData;
+        SetDeferredDirectionData(dirData, inputData.normalWS, inputData.viewDirectionWS, inputData.positionWS, inputData.positionWS);
+        DirectionLight(brdfData,unityLight,dirData,color.rgb);
+        SetShadow(screen_uv,color);
         return half4(color, 0.0);
     }
 

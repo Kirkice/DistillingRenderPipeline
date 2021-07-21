@@ -57,4 +57,17 @@ struct mBRDFData
     float                                               roughness2MinusOne;
 };
 
+/// <summary>
+/// PunctualLightData
+/// </summary>
+struct PunctualLightData
+{
+    float3 posWS;
+    float radius2;
+    float4 color;
+    float4 attenuation;
+    float3 spotDirection;
+    int flags;
+    float4 occlusionProbeInfo;
+};
 #endif

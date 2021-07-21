@@ -30,7 +30,7 @@ TEXTURE2D(_CameraReflectionsTexture);                   SAMPLER(sampler_CameraRe
 TEXTURE2D(_CameraNormalWSTexture);                      SAMPLER(sampler_CameraNormalWSTexture);
 
 TEXTURE2D(_CameraDepthBuffer);                          SAMPLER(sampler_CameraDepthBuffer);
-TEXTURE2D_HALF(_CameraMotionVectorsTexture);            SAMPLER(sampler_CameraMotionVectorsTexture);
+TEXTURE2D_HALF(_MotionVectorTexture );                  SAMPLER(sampler_MotionVectorTexture);
 
 
 uniform     float4                                      _RayCastSize;

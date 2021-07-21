@@ -78,6 +78,16 @@ Material:
     - _Cull: 2
     - _CullMode: 0
     - _Cutoff: 0.564
+    - _DebugNormal: 0
+    - _DebugPosL: 0
+    - _DebugPosW: 0
+    - _DebugTangent: 0
+    - _DebugUVX: 0
+    - _DebugUVY: 0
+    - _DebugVColorB: 0
+    - _DebugVColorG: 0
+    - _DebugVColorR: 0
+    - _DebugWireframe: 0
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _GIStrength: 1

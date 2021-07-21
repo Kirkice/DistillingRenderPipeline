@@ -16,13 +16,13 @@ MonoBehaviour:
   rayMode: 2
   rayDistance: 70
   thickness: 0.124
-  BRDFBias: 0.7
+  BRDFBias: 0.523
   resolveMode: 1
   rayReuse: 1
   normalization: 1
   reduceFireflies: 1
   useMipMap: 1
-  useTemporal: 1
+  useTemporal: 0
   scale: 2
   response: 0.85
   useUnityMotion: 0

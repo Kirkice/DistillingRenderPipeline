@@ -1,15 +1,16 @@
-/* $Header: /PBR/DistillingLitForwardPass.hlsl         6/26/21 20:55p KirkZhu $ */
+/* $Header: /PBR/DistillingLitDeferedPass.hlsl         7/13/21 20:55p KirkZhu $ */
 /*---------------------------------------------------------------------------------------------*
 *                                                                                             *
 *                 Project Name : DistillingRenderPipeline                                     *
 *                                                                                             *
-*                    File Name : DistillingLitForwardPass.hlsl                                *
+*                    File Name : DistillingLitDeferedPass.hlsl                                *
 *                                                                                             *
 *                   Programmer : Kirk Zhu                                                     *
 *                                                                                             *
 *---------------------------------------------------------------------------------------------*/
-#ifndef DistillingLitForwardPass_INCLUDE
-#define DistillingLitForwardPass_INCLUDE
+#ifndef DistillingLitDeferedPass_INCLUDE
+#define DistillingLitDeferedPass_INCLUDE
+
 #include "Assets/Distilling RP/Shaders/PBR/PassFunction.hlsl"
 
 struct Vertex_Input
@@ -25,7 +26,6 @@ struct Vertex_Input
 struct Vertex_Output
 {
     float4 PosH                                                         : SV_POSITION;
-    float3 NormalW                                                      : NORMAL;
     float3 TangentW                                                     : TEXCOORD0;
     float3 BitangentW                                                   : TEXCOORD1;
     float4 TexC                                                         : TEXCOORD2;
@@ -35,13 +35,13 @@ struct Vertex_Output
     float4 PosS                                                         : TEXCOORD6;
     float4 fogFactorAndVertexLight                                      : TEXCOORD7;
     float4 vColor                                                       : TEXCOORD8;
-    DECLARE_LIGHTMAP_OR_SH(lightmapUV, vertexSH, 9);
+    float3 NormalW                                                      : TEXCOORD9;
+    DECLARE_LIGHTMAP_OR_SH(lightmapUV, vertexSH, 10);
 };
             
 struct Geom_Output
 {
     float4 PosH                                                         : SV_POSITION;
-    float3 NormalW                                                      : NORMAL;
     float3 TangentW                                                     : TEXCOORD0;
     float3 BitangentW                                                   : TEXCOORD1;
     float4 TexC                                                         : TEXCOORD2;
@@ -53,13 +53,26 @@ struct Geom_Output
     float4 vColor                                                       : TEXCOORD8;
     DECLARE_LIGHTMAP_OR_SH(lightmapUV, vertexSH, 9);
     float3  dist                                                        : TEXCOORD10;
+    float3 NormalW                                                      : TEXCOORD11;
 };
 
-Vertex_Output Lit_VS(Vertex_Input vin)
+struct Pixel_Output
+{
+    half4 GBuffer0 : SV_Target0;
+    half4 GBuffer1 : SV_Target1;
+    half4 GBuffer2 : SV_Target2;
+    half4 GBuffer3 : SV_Target3; // Camera color attachment
+    #if OUTPUT_SHADOWMASK
+    half4 GBuffer4 : SV_Target4;
+    #endif
+};
+
+Vertex_Output Lit_VSGBuffer(Vertex_Input vin)
 {
     Vertex_Output vout;
     vout.PosH                                                           = TransformObjectToHClip(vin.PosL);
-    vout.NormalW                                                        = TransformObjectToWorldNormal(vin.NormalL);
+    VertexNormalInputs normalInput                                      = GetVertexNormalInputs(vin.NormalL, vin.TangentL);
+    vout.NormalW                                                        = normalInput.normalWS;
     vout.PosW                                                           = TransformObjectToWorld(vin.PosL);
     vout.V                                                              = normalize(_WorldSpaceCameraPos.xyz - vout.PosW.xyz);
     vout.PosS                                                           = ComputeScreenPos(vout.PosH);
@@ -78,7 +91,7 @@ Vertex_Output Lit_VS(Vertex_Input vin)
 }
 
 [maxvertexcount(3)]
-void Lit_GS(triangle Vertex_Output p[3], inout TriangleStream<Geom_Output> triStream)
+void Lit_GSGBuffer(triangle Vertex_Output p[3], inout TriangleStream<Geom_Output> triStream)
 {
     float2 p0                                                           = _ScreenParams.xy * p[0].PosH.xy / p[0].PosH.w;
     float2 p1                                                           = _ScreenParams.xy * p[1].PosH.xy / p[1].PosH.w;
@@ -145,11 +158,9 @@ void Lit_GS(triangle Vertex_Output p[3], inout TriangleStream<Geom_Output> triSt
     pIn.vertexSH                                                        = p[2].vertexSH;
     pIn.dist                                                            = float3(0,0,dist1);
     triStream.Append(pIn);
-    
 }
 
-//  L = L(e) + L(o) * f * V * w cos0 ;
-float4 Lit_PS(Geom_Output pin) : SV_Target
+Pixel_Output Lit_PSGBuffer(Geom_Output pin) : SV_Target
 {
     float4 shadowCoord                                                  = TransformWorldToShadowCoord(pin.PosW);
     float4 outColor                                                     = float4(0,0,0,1);
@@ -174,19 +185,23 @@ float4 Lit_PS(Geom_Output pin) : SV_Target
     TransparentCut(pbrData.Albedo);
     //获取间接光照
     InDirectionLight(brdfData, pbrData.Occlusion, dirData, outColor.rgb);
-    //获取直接光照
-    DirectionLight(brdfData,dirData.L,dirData,outColor.rgb);
-    //多光源
-    MultipleLight(brdfData, dirData, outColor.rgb);
-
-    SetShadow(dirData.PosS.xy / dirData.PosS.w, outColor.rgb);
     //自发光
     EmissionLight(pbrData, outColor.rgb);
     //MatCap
     MatCapColor(pin.TexC.zw, outColor.rgb);
-    //DebugPass
-    DebugFunction(dirData, pin.TexC.xy, pin.vColor, pin.dist,outColor.rgb);
-    return                                                              outColor;
+    //多光源
+    MultipleLight(brdfData, dirData, outColor.rgb);
+    half3 InDirectionColor                                  = outColor.rgb;
+
+    Pixel_Output                                            output;
+    output.GBuffer0                                         = half4(brdfData.diffuse.rgb, 1);
+    output.GBuffer1                                         = half4(brdfData.specular, 1);
+
+    dirData.N                                               = NormalizeNormalPerPixel(PackNormal(dirData.N));
+    output.GBuffer2                                         = half4(dirData.N * 0.5 + 0.5, pbrData.Roughness);
+    
+    output.GBuffer3                                         = half4(InDirectionColor, 1);
+    return                                                  output;
 }
 
 #endif

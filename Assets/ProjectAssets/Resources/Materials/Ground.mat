@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Ground
   m_Shader: {fileID: 4800000, guid: 68b169651a50b9742b5acc2aaa674a46, type: 3}
-  m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
+  m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -102,7 +102,7 @@ Material:
     - _OcclusionStrength: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RenderingMode: 2
+    - _RenderingMode: 0
     - _Rf0Mode: 8
     - _RoughnessStrength: 0.684
     - _Smoothness: 0.14

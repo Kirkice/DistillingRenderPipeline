@@ -322,4 +322,5 @@ inline void TBNMatrixDot(inout DirectionData dirData, inout PBRData pbrData)
         dirData.N                                                            = pbrData.Normal;
     }
 }
+
 #endif

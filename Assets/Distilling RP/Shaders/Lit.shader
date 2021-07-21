@@ -156,7 +156,7 @@ Shader "Universal Render Pipeline/Lit"
             ENDHLSL
         }
 
-                Pass
+        Pass
         {
             // Lightmode matches the ShaderPassName set in UniversalRenderPipeline.cs. SRPDefaultUnlit and passes with
             // no LightMode tag are also rendered by Universal Render Pipeline

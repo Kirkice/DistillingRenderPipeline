@@ -73,7 +73,9 @@ float GetRoughness (float smoothness)
 /// </summary>
 float4 GetNormal (float2 uv) 
 {
-    return                                                                                       SAMPLE_TEXTURE2D(_GBuffer2, sampler_GBuffer2, uv);
+    float4 normal                                                                               = SAMPLE_TEXTURE2D(_GBuffer2, sampler_GBuffer2, uv);
+    normal.rgb                                                                                  = normal.rgb * 2 - 1;
+    return                                                                                      normal;
 }
 
 /// <summary>
@@ -90,7 +92,7 @@ float4 GetRoughness (float2 uv)
 /// </summary>
 float4 GetVelocity(float2 uv)
 {
-    return SAMPLE_TEXTURE2D(_CameraMotionVectorsTexture, sampler_CameraMotionVectorsTexture, uv);
+    return SAMPLE_TEXTURE2D(_MotionVectorTexture , sampler_MotionVectorTexture , uv);
 }
 
 /// <summary>
@@ -320,7 +322,7 @@ float4 RayMarch(float4x4 _ProjectionMatrix, float3 viewDir, int NumSteps, float3
         0.0
     );
 
-    float linearDepth                                                                       =  LinearEyeDepth(SampleSceneDepth(screenUV.xy),_ZBufferParams);
+    float linearDepth                                                                       =  LinearEyeDepth(SAMPLE_TEXTURE2D(_CameraDepthTexture, sampler_CameraDepthTexture, screenUV.xy),_ZBufferParams);
 
     float3 ray                                                                              = viewPos / viewPos.z;
     float3 rayDir                                                                           = normalize(float3(viewDir.xy - ray * viewDir.z, viewDir.z / linearDepth) * dirProject);

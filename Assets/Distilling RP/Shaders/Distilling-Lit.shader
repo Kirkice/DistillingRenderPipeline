@@ -110,6 +110,20 @@
             #include "Assets/Distilling RP/Shaders/ShadowCasterPass.hlsl"
             ENDHLSL
         }
+
+        Pass
+        {
+
+            Cull [_CullMode]
+            Tags{"LightMode" = "UniversalGBuffer"}
+
+            HLSLPROGRAM
+            #include "Assets/Distilling RP/Shaders/PBR/DistillingLitDeferedPass.hlsl"
+            #pragma vertex      Lit_VSGBuffer
+            #pragma geometry    Lit_GSGBuffer
+            #pragma fragment    Lit_PSGBuffer
+            ENDHLSL
+        }
         
         Pass
         {
@@ -120,6 +134,24 @@
             #pragma fragment DepthOnlyFragment
             #include "Assets/Distilling RP/Shaders/LitInput.hlsl"
             #include "Assets/Distilling RP/Shaders/DepthOnlyPass.hlsl"
+            ENDHLSL
+        }
+
+        Pass
+        {
+            Name "DepthNormals"
+            Tags{"LightMode" = "DepthNormals"}
+
+            ZWrite On
+            Cull[_Cull]
+
+            HLSLPROGRAM
+            #pragma target 2.0
+            #pragma vertex DepthNormalsVertex
+            #pragma fragment DepthNormalsFragment
+
+            #include "Assets/Distilling RP/Shaders/LitInput.hlsl"
+            #include "Assets/Distilling RP/Shaders/DepthNormalsPass.hlsl"
             ENDHLSL
         }
     }
