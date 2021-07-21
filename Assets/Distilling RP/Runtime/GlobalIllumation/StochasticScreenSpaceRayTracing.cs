@@ -145,11 +145,11 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
                         break;
                 }
                 
-                renderBuffer[0] = rayCast.colorBuffer;
-                renderBuffer[1] = rayCastMask.colorBuffer;
-                cmd.SetRenderTarget(renderBuffer, rayCast.depthBuffer);
-                cmd.ClearRenderTarget(true, true, Color.clear, 1);
-                Blit(cmd,source,rayCast.depthBuffer,m_rendererMaterial,3);
+                // renderBuffer[0] = rayCast.colorBuffer;
+                // renderBuffer[1] = rayCastMask.colorBuffer;
+                // cmd.SetRenderTarget(renderBuffer, rayCast.depthBuffer);
+                // cmd.ClearRenderTarget(true, true, Color.clear, 1);
+                Blit(cmd,source,rayCast,m_rendererMaterial,3);
                 
                 ReleaseTempBuffer(depthBuffer);
                 

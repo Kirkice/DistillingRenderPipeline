@@ -363,7 +363,8 @@ float4 RayMarch(float4x4 _ProjectionMatrix, float3 viewDir, int NumSteps, float3
         samplePos                                                                           += rayDir * stepSize;
     }
 	
-    return                                                                                  float4(samplePos, mask);
+    // return                                                                                  float4(samplePos, mask);
+    return mask.xxxx;
 }
 
 /// <summary>

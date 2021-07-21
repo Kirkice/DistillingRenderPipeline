@@ -76,50 +76,54 @@ float4 PS_Resolve (VertexOutput pin) : SV_Target
     float weightSum                                                             = 0.0;
 
 	float2x2 offsetRotationMatrix												= GetOffsetRotationMatrix(blueNoise);
-	
-   for(int i = 0; i < NumResolve; i++)
-   {
-			float2 offsetUV														= offset[i] * (1.0 / _ResolveSize.xy);
-			offsetUV															=  mul(offsetRotationMatrix, offsetUV);
-			float2 neighborUv													= uv + offsetUV;
-     
-            float4 hitPacked													= SAMPLE_TEXTURE2D_LOD(_RayCast, sampler_RayCast,neighborUv,0);
-            float2 hitUv														= hitPacked.xy;
-            float hitZ															= hitPacked.z;
-            float hitPDF														= hitPacked.w;
-			float hitMask														= SAMPLE_TEXTURE2D_LOD(_RayCastMask, sampler_RayCastMask,neighborUv,0).r;
-   
-			float3 hitViewPos													= GetViewPos(GetScreenPos(hitUv, hitZ));
-			float weight														= 1.0;
-			if(_UseNormalization == 1)
-				 weight															=  BRDF_Unity_Weight(normalize(-V) /*V*/, normalize(hitViewPos - PosV) /*L*/, NormalV /*N*/, roughness) / max(1e-5, hitPDF);
-   
-			float intersectionCircleRadius										= coneTangent * length(hitUv - uv);
-			float mip															= clamp(log2(intersectionCircleRadius * max(_ResolveSize.x, _ResolveSize.y)), 0.0, maxMipLevel);
-   
-			float4 sampleColor													= float4(0.0,0.0,0.0,1.0);
-			sampleColor.rgb														= SAMPLE_TEXTURE2D_LOD(_MainTex, sampler_MainTex,hitUv,mip).rgb;
-			sampleColor.a														= RayAttenBorder (hitUv, _EdgeFactor) * hitMask;
-   
-			if(_Fireflies == 1)
-				sampleColor.rgb													/= 1 + Luminance(sampleColor.rgb);
-   
-            result																+= sampleColor * weight;
-            weightSum															+= weight;
-   }
-	result																		/= weightSum;
 
-	if(_Fireflies == 1)
-		result.rgb																/= 1 - Luminance(result.rgb);
-
+	float2 offsetUV																= offset[0] * (1.0 / _ResolveSize.xy);
+	offsetUV																	=  mul(offsetRotationMatrix, offsetUV);
+	float2 neighborUv															= uv + offsetUV;
+	float4 color															= SAMPLE_TEXTURE2D(_RayCast, sampler_RayCast,pin.TexC);
+ //   for(int i = 0; i < NumResolve; i++)
+ //   {
+	// 		float2 offsetUV														= offset[i] * (1.0 / _ResolveSize.xy);
+	// 		offsetUV															=  mul(offsetRotationMatrix, offsetUV);
+	// 		float2 neighborUv													= uv + offsetUV;
+ //     
+ //            float4 hitPacked													= SAMPLE_TEXTURE2D_LOD(_RayCast, sampler_RayCast,neighborUv,0);
+ //            float2 hitUv														= hitPacked.xy;
+ //            float hitZ															= hitPacked.z;
+ //            float hitPDF														= hitPacked.w;
+	// 		float hitMask														= SAMPLE_TEXTURE2D_LOD(_RayCastMask, sampler_RayCastMask,neighborUv,0).r;
+ //   
+	// 		float3 hitViewPos													= GetViewPos(GetScreenPos(hitUv, hitZ));
+	// 		float weight														= 1.0;
+	// 		if(_UseNormalization == 1)
+	// 			 weight															=  BRDF_Unity_Weight(normalize(-V) /*V*/, normalize(hitViewPos - PosV) /*L*/, NormalV /*N*/, roughness) / max(1e-5, hitPDF);
+ //   
+	// 		float intersectionCircleRadius										= coneTangent * length(hitUv - uv);
+	// 		float mip															= clamp(log2(intersectionCircleRadius * max(_ResolveSize.x, _ResolveSize.y)), 0.0, maxMipLevel);
+ //   
+	// 		float4 sampleColor													= float4(0.0,0.0,0.0,1.0);
+	// 		sampleColor.rgb														= SAMPLE_TEXTURE2D_LOD(_MainTex, sampler_MainTex,hitUv,mip).rgb;
+	// 		sampleColor.a														= RayAttenBorder (hitUv, _EdgeFactor) * hitMask;
+ //   
+	// 		if(_Fireflies == 1)
+	// 			sampleColor.rgb													/= 1 + Luminance(sampleColor.rgb);
+ //   
+ //            result																+= sampleColor * weight;
+ //            weightSum															+= weight;
+ //   }
+	// result																		/= weightSum;
+ //
+	// if(_Fireflies == 1)
+	// 	result.rgb																/= 1 - Luminance(result.rgb);
+ //
 	// return																		max(1e-5, result);
-	return float4(blueNoise,0,1);
+	return color;
 }
 
 /// <summary>
 /// PS_RayCast
 /// </summary>
-void PS_RayCast (VertexOutput pin, 	out half4 outRayCast : SV_Target0, out half4 outRayCastMask : SV_Target1) 
+float4 PS_RayCast (VertexOutput pin) : SV_Target
 {	
 	float2 uv																	= pin.TexC;
 	int2 pos																	= uv;
@@ -163,8 +167,8 @@ void PS_RayCast (VertexOutput pin, 	out half4 outRayCast : SV_Target0, out half4
 	rayPDF																		= H.w;
 	rayMask																		= rayTrace.w;
 
-	outRayCast																	= float4(float3(rayTraceHit, rayTraceZ), rayPDF);
-	outRayCastMask																= rayMask; 
+	// return																		float4(float3(rayTraceHit, rayTraceZ), rayPDF);
+	return																		rayTrace;
 }
 
 /// <summary>

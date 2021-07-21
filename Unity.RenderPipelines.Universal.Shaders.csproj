@@ -52,6 +52,7 @@
   <ItemGroup>
      <Compile Include="Assets\Distilling RP\Shaders\Shaders.cs" />
      <None Include="Assets\Distilling RP\Shaders\Utils\CopyPosW.shader" />
+     <None Include="Assets\Distilling RP\Shaders\Utils\DRPStencilDeferred.shader" />
      <None Include="Assets\Distilling RP\Shaders\Utils\Deferred.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\SimpleLitGBufferPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Particles\ParticlesSimpleLitForwardPass.hlsl" />
@@ -64,6 +65,7 @@
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\PaniniProjection.shader" />
      <None Include="Assets\Distilling RP\Shaders\Utils\Blit.shader" />
      <None Include="Assets\Distilling RP\Shaders\2D\Shadow2DRemoveSelf.shader" />
+     <None Include="Assets\Distilling RP\Shaders\PBR\DistillingLitDeferedPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\PBR\PassFunction.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\ProjectShaders\Common\Test.shader" />
      <None Include="Assets\Distilling RP\Shaders\2D\Sprite-Lit-Default.shader" />
