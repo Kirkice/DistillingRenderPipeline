@@ -20,7 +20,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9a913bffefc168b498852bf834f49ec2, type: 2}
   m_DefaultRendererIndex: 0
   m_RequireDepthTexture: 1
-  m_RequireOpaqueTexture: 0
+  m_RequireOpaqueTexture: 1
   m_RequireNormalWSTexture: 0
   m_RequirePosWSTexture: 0
   m_RequireTangentWSTexture: 0

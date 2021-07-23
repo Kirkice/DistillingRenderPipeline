@@ -80,44 +80,43 @@ float4 PS_Resolve (VertexOutput pin) : SV_Target
 	float2 offsetUV																= offset[0] * (1.0 / _ResolveSize.xy);
 	offsetUV																	=  mul(offsetRotationMatrix, offsetUV);
 	float2 neighborUv															= uv + offsetUV;
-	float4 color															= SAMPLE_TEXTURE2D(_RayCast, sampler_RayCast,pin.TexC);
- //   for(int i = 0; i < NumResolve; i++)
- //   {
-	// 		float2 offsetUV														= offset[i] * (1.0 / _ResolveSize.xy);
-	// 		offsetUV															=  mul(offsetRotationMatrix, offsetUV);
-	// 		float2 neighborUv													= uv + offsetUV;
- //     
- //            float4 hitPacked													= SAMPLE_TEXTURE2D_LOD(_RayCast, sampler_RayCast,neighborUv,0);
- //            float2 hitUv														= hitPacked.xy;
- //            float hitZ															= hitPacked.z;
- //            float hitPDF														= hitPacked.w;
-	// 		float hitMask														= SAMPLE_TEXTURE2D_LOD(_RayCastMask, sampler_RayCastMask,neighborUv,0).r;
- //   
-	// 		float3 hitViewPos													= GetViewPos(GetScreenPos(hitUv, hitZ));
-	// 		float weight														= 1.0;
-	// 		if(_UseNormalization == 1)
-	// 			 weight															=  BRDF_Unity_Weight(normalize(-V) /*V*/, normalize(hitViewPos - PosV) /*L*/, NormalV /*N*/, roughness) / max(1e-5, hitPDF);
- //   
-	// 		float intersectionCircleRadius										= coneTangent * length(hitUv - uv);
-	// 		float mip															= clamp(log2(intersectionCircleRadius * max(_ResolveSize.x, _ResolveSize.y)), 0.0, maxMipLevel);
- //   
-	// 		float4 sampleColor													= float4(0.0,0.0,0.0,1.0);
-	// 		sampleColor.rgb														= SAMPLE_TEXTURE2D_LOD(_MainTex, sampler_MainTex,hitUv,mip).rgb;
-	// 		sampleColor.a														= RayAttenBorder (hitUv, _EdgeFactor) * hitMask;
- //   
-	// 		if(_Fireflies == 1)
-	// 			sampleColor.rgb													/= 1 + Luminance(sampleColor.rgb);
- //   
- //            result																+= sampleColor * weight;
- //            weightSum															+= weight;
- //   }
-	// result																		/= weightSum;
- //
-	// if(_Fireflies == 1)
-	// 	result.rgb																/= 1 - Luminance(result.rgb);
- //
-	// return																		max(1e-5, result);
-	return color;
+	float4 color															= SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex,pin.TexC);
+   for(int i = 0; i < NumResolve; i++)
+   {
+			float2 offsetUV														= offset[i] * (1.0 / _ResolveSize.xy);
+			offsetUV															=  mul(offsetRotationMatrix, offsetUV);
+			float2 neighborUv													= uv + offsetUV;
+     
+            float4 hitPacked													= SAMPLE_TEXTURE2D_LOD(_RayCast, sampler_RayCast,neighborUv,0);
+            float2 hitUv														= hitPacked.xy;
+            float hitZ															= hitPacked.z;
+            float hitPDF														= hitPacked.w;
+			float hitMask														= SAMPLE_TEXTURE2D_LOD(_RayCastMask, sampler_RayCastMask,neighborUv,0).r;
+   
+			float3 hitViewPos													= GetViewPos(GetScreenPos(hitUv, hitZ));
+			float weight														= 1.0;
+			if(_UseNormalization == 1)
+				 weight															=  BRDF_Unity_Weight(normalize(-V) /*V*/, normalize(hitViewPos - PosV) /*L*/, NormalV /*N*/, roughness) / max(1e-5, hitPDF);
+   
+			float intersectionCircleRadius										= coneTangent * length(hitUv - uv);
+			float mip															= clamp(log2(intersectionCircleRadius * max(_ResolveSize.x, _ResolveSize.y)), 0.0, maxMipLevel);
+   
+			float4 sampleColor													= float4(0.0,0.0,0.0,1.0);
+			sampleColor.rgb														= SAMPLE_TEXTURE2D_LOD(_MainTex, sampler_MainTex,hitUv,mip).rgb;
+			sampleColor.a														= RayAttenBorder (hitUv, _EdgeFactor) * hitMask;
+   
+			if(_Fireflies == 1)
+				sampleColor.rgb													/= 1 + Luminance(sampleColor.rgb);
+   
+            result																+= sampleColor * weight;
+            weightSum															+= weight;
+   }
+	result																		/= weightSum;
+ 
+	if(_Fireflies == 1)
+		result.rgb																/= 1 - Luminance(result.rgb);
+ 
+	return																		max(1e-5, result);
 }
 
 /// <summary>
@@ -167,8 +166,7 @@ float4 PS_RayCast (VertexOutput pin) : SV_Target
 	rayPDF																		= H.w;
 	rayMask																		= rayTrace.w;
 
-	// return																		float4(float3(rayTraceHit, rayTraceZ), rayPDF);
-	return																		rayTrace;
+	return																		float4(float3(rayTraceHit, rayTraceZ), rayPDF);
 }
 
 /// <summary>
@@ -210,7 +208,6 @@ float4 PS_Combine( VertexOutput pin ) : SV_Target
 	float3 cubemap																= GetCubeMap (uv);
 	float4 worldNormal															= GetNormal (uv);
 	float4 diffuse																=  GetAlbedo(uv);
-	float occlusion																= 1 - diffuse.a;
 	float4 specular																= GetSpecular (uv);
 	float roughness																= GetRoughness(uv);
 	float4 sceneColor															= SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,  uv);
@@ -220,37 +217,8 @@ float4 PS_Combine( VertexOutput pin ) : SV_Target
 	float NdotV																	= saturate(dot(worldNormal, -viewDir));
 	float3 reflDir																= normalize( reflect( -viewDir, worldNormal ) );
 	float fade																	= saturate(dot(-viewDir, reflDir) * 2.0);
-	float mask																	= sqr(reflection.a) /* fade*/;
-	float oneMinusReflectivity;
-
-	BRDFData brdf_data;
-	InitializeBRDFData(diffuse, 0, specular, 0, 1, brdf_data);
-	// if(_UseFresnel == 1)													
-	// 	reflection.rgb															= EnvironmentBRDF(brdf_data,diffuse,specular,reflDir);
-	// reflection.rgb																*= occlusion;
-	// if(_DebugPass == 0)
-	// 	sceneColor.rgb															+= lerp(cubemap.rgb, reflection.rgb, mask); // Combine reflection and cubemap and add it to the scene color 
-	// else if(_DebugPass == 1)
-	// 	sceneColor.rgb															= reflection.rgb * mask;
-	// else if(_DebugPass == 2)
-	// 	sceneColor.rgb															= cubemap;
-	// else if(_DebugPass == 3)
-	// 	sceneColor.rgb															= lerp(cubemap.rgb, reflection.rgb, mask);
-	// else if(_DebugPass == 4)
-	// 	sceneColor																= mask;
-	// else if(_DebugPass == 5)
-	// 	sceneColor.rgb															+= lerp(0.0, reflection.rgb, mask);
-	// else if(_DebugPass == 6)
-	// 	sceneColor.rgb															= GetSampleColor(_RayCast, sampler_RayCast, uv);
-	// else if(_DebugPass == 7)
-	// {
-	// 	int2 pos = uv;
-	// 	float2 random = RandN2(pos, _SinTime.xx * _UseTemporal);
-	// 	float2 jitter = SAMPLE_TEXTURE2D_LOD(_Noise, sampler_Noise,float4((uv + random) * _RayCastSize.xy / _NoiseSize.xy, 0, -255),0); // Blue noise generated by https://github.com/bartwronski/BlueNoiseGenerator/
-	// 	sceneColor.rg = jitter;
-	// 	sceneColor.b = 0;
-	// }
-	return reflection;
+	sceneColor = sceneColor + reflection;
+	return sceneColor;
 }
 
 /// <summary>

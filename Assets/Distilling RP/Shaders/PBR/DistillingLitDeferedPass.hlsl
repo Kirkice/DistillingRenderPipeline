@@ -196,10 +196,7 @@ Pixel_Output Lit_PSGBuffer(Geom_Output pin) : SV_Target
     Pixel_Output                                            output;
     output.GBuffer0                                         = half4(brdfData.diffuse.rgb, 1);
     output.GBuffer1                                         = half4(brdfData.specular, 1);
-
-    dirData.N                                               = NormalizeNormalPerPixel(PackNormal(dirData.N));
     output.GBuffer2                                         = half4(dirData.N * 0.5 + 0.5, pbrData.Roughness);
-    
     output.GBuffer3                                         = half4(InDirectionColor, 1);
     return                                                  output;
 }

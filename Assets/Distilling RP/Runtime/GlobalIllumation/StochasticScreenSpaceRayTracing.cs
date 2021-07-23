@@ -184,7 +184,7 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
                         Blit(cmd,mipMapBuffer1, mipMapBuffer0, m_rendererMaterial, 6);
                         cmd.SetRenderTarget(mipMapBuffer2,i);
                     }
-                    Blit(cmd,mipMapBuffer2, resolvePass, m_rendererMaterial, 0);
+                    Blit(cmd,mainBuffer0, resolvePass, m_rendererMaterial, 0);
                 }
                 else
                 {
@@ -429,7 +429,7 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
         #region Unity TAA
         // From Unity TAA
         private int m_SampleIndex = 0;
-        private const int k_SampleCount = 64;
+        private const int k_SampleCount = 256;
 
         private float GetHaltonValue(int index, int radix)
         {
@@ -450,8 +450,8 @@ public class StochasticScreenSpaceRayTracing : ScriptableRendererFeature
         private Vector2 GenerateRandomOffset()
         {
             var offset = new Vector2(
-                GetHaltonValue(m_SampleIndex & 1023, 2),
-                GetHaltonValue(m_SampleIndex & 1023, 3));
+                GetHaltonValue(m_SampleIndex & 2047, 3),
+                GetHaltonValue(m_SampleIndex & 2047, 3));
 
             if (++m_SampleIndex >= k_SampleCount)
                 m_SampleIndex = 0;

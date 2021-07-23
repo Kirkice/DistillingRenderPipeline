@@ -26,6 +26,7 @@ TEXTURE2D(_GBuffer1);                                   SAMPLER(sampler_GBuffer1
 TEXTURE2D(_GBuffer2);                                   SAMPLER(sampler_GBuffer2);
 TEXTURE2D(_GBuffer3);                                   SAMPLER(sampler_GBuffer3);
 TEXTURE2D(_CameraReflectionsTexture);                   SAMPLER(sampler_CameraReflectionsTexture);
+TEXTURE2D(_CameraOpaqueTexture);                        SAMPLER(sampler_CameraOpaqueTexture);
 
 TEXTURE2D(_CameraNormalWSTexture);                      SAMPLER(sampler_CameraNormalWSTexture);
 

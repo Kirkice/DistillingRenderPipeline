@@ -49,7 +49,7 @@ float4 GetCubeMap (float2 uv)
 /// </summary>
 float4 GetAlbedo (float2 uv)
 {
-    return SAMPLE_TEXTURE2D(_GBuffer0, sampler_GBuffer0, uv);
+    return SAMPLE_TEXTURE2D(_CameraOpaqueTexture, sampler_CameraOpaqueTexture, uv);
 }
 
 /// <summary>
@@ -363,8 +363,7 @@ float4 RayMarch(float4x4 _ProjectionMatrix, float3 viewDir, int NumSteps, float3
         samplePos                                                                           += rayDir * stepSize;
     }
 	
-    // return                                                                                  float4(samplePos, mask);
-    return mask.xxxx;
+    return                                                                                  float4(samplePos, mask);
 }
 
 /// <summary>

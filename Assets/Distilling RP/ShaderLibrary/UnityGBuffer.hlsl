@@ -261,7 +261,7 @@ InputData InputDataFromGbufferAndWorldPosition(half4 gbuffer2, float3 wsPos)
     InputData inputData;
 
     inputData.positionWS = wsPos;
-    inputData.normalWS = normalize(UnpackNormal(gbuffer2.xyz)); // normalize() is required because terrain shaders use additive blending for normals (not unit-length anymore)
+    inputData.normalWS = normalize(gbuffer2.xyz * 2 - 1); // normalize() is required because terrain shaders use additive blending for normals (not unit-length anymore)
 
     inputData.viewDirectionWS = SafeNormalize(GetWorldSpaceViewDir(wsPos.xyz));
 

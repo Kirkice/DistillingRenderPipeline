@@ -105,7 +105,7 @@ Material:
     - _ReceiveShadows: 1
     - _RenderingMode: 0
     - _Rf0Mode: 8
-    - _RoughnessStrength: 0.15
+    - _RoughnessStrength: 0
     - _Shininess: 0
     - _Smoothness: 0.543
     - _SmoothnessSource: 0
