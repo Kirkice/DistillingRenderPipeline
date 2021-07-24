@@ -20,7 +20,7 @@ struct Vertex_Input
     float4 TangentL                                                     : TANGENT;
     float2 TexC                                                         : TEXCOORD0;
     float2 lightmapUV                                                   : TEXCOORD1;
-    float4 vColor                                                       : TEXCOORD2;
+    float4 vColor                                                       : COLOR;
 };
             
 struct Vertex_Output
@@ -36,7 +36,6 @@ struct Vertex_Output
     float4 fogFactorAndVertexLight                                      : TEXCOORD7;
     float4 vColor                                                       : TEXCOORD8;
     float3 NormalW                                                      : TEXCOORD9;
-    DECLARE_LIGHTMAP_OR_SH(lightmapUV, vertexSH, 10);
 };
             
 struct Geom_Output
@@ -51,9 +50,8 @@ struct Geom_Output
     float4 PosS                                                         : TEXCOORD6;
     float4 fogFactorAndVertexLight                                      : TEXCOORD7;
     float4 vColor                                                       : TEXCOORD8;
-    DECLARE_LIGHTMAP_OR_SH(lightmapUV, vertexSH, 9);
-    float3  dist                                                        : TEXCOORD10;
-    float3 NormalW                                                      : TEXCOORD11;
+    float3  dist                                                        : TEXCOORD9;
+    float3 NormalW                                                      : TEXCOORD10;
 };
 
 struct Pixel_Output
@@ -123,7 +121,6 @@ void Lit_GSGBuffer(triangle Vertex_Output p[3], inout TriangleStream<Geom_Output
     pIn.PosL                                                            = p[0].PosL;
     pIn.TexC                                                            = p[0].TexC;
     pIn.vColor                                                          = p[0].vColor;
-    pIn.vertexSH                                                        = p[0].vertexSH;
     pIn.dist                                                            = float3(dist0,0,0);
     triStream.Append(pIn);
 
@@ -139,7 +136,6 @@ void Lit_GSGBuffer(triangle Vertex_Output p[3], inout TriangleStream<Geom_Output
     pIn.PosL                                                            = p[1].PosL;
     pIn.TexC                                                            = p[1].TexC;
     pIn.vColor                                                          = p[1].vColor;
-    pIn.vertexSH                                                        = p[1].vertexSH;
     pIn.dist                                                            = float3(0,dist1,0);
     triStream.Append(pIn);
 
@@ -155,7 +151,6 @@ void Lit_GSGBuffer(triangle Vertex_Output p[3], inout TriangleStream<Geom_Output
     pIn.PosL                                                            = p[2].PosL;
     pIn.TexC                                                            = p[2].TexC;
     pIn.vColor                                                          = p[2].vColor;
-    pIn.vertexSH                                                        = p[2].vertexSH;
     pIn.dist                                                            = float3(0,0,dist1);
     triStream.Append(pIn);
 }
@@ -170,7 +165,7 @@ Pixel_Output Lit_PSGBuffer(Geom_Output pin) : SV_Target
     mBRDFData brdfData;
     //设置向量数据 
     SetDirectionData(dirData, pin.NormalW, pin.V, pin.PosL, pin.PosW, pin.PosS, pin.TangentW, pin.BitangentW, pin.fogFactorAndVertexLight);
-    dirData.bakedGI                                                     = SAMPLE_GI(pin.lightmapUV, pin.vertexSH, pin.PosW);
+    dirData.bakedGI                                                     = float3(0,0,0);
     //POM视差
     ParallaxOcclusionMapping(dirData,pin.V, pin.TexC.xy);
     //初始化PBR数据
