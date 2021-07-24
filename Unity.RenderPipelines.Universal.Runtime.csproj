@@ -94,6 +94,7 @@
      <Compile Include="Assets\Distilling RP\Runtime\ForwardRenderer.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\ForwardRendererData.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\PRTInit.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\RealTimeRayTracing.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\StochasticScreenSpaceRayTracing.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Overrides\Bloom.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Overrides\ChannelMixer.cs" />

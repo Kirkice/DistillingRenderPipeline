@@ -9,6 +9,22 @@ namespace UnityEngine.Rendering.Distilling
     {
         #region RenderPipeline
         public static readonly string BlueNoiseTexPath = "Assets/ProjectAssets/Resources/Textures/tex_BlueNoise_1024x1024_UNI.tga";
+        
+        public static readonly int OutputTargetShaderId = Shader.PropertyToID("_OutputTarget");
+        public static readonly int PRNGStatesShaderId = Shader.PropertyToID("_PRNGStates");
+        public static readonly int FrameIndexShaderId = Shader.PropertyToID("_FrameIndex");
+        
+        public static readonly int AccelerationStructureShaderId = Shader.PropertyToID("_AccelerationStructure");
+        public static readonly int WorldSpaceCameraPos = Shader.PropertyToID("_WorldSpaceCameraPos");
+        public static readonly int InvCameraViewProj = Shader.PropertyToID("_InvCameraViewProj");
+        public static readonly int CameraFarDistance = Shader.PropertyToID("_CameraFarDistance");
+        
+        public static readonly int FocusCameraLeftBottomCorner = Shader.PropertyToID("_FocusCameraLeftBottomCorner");
+        public static readonly int FocusCameraRight = Shader.PropertyToID("_FocusCameraRight");
+        public static readonly int FocusCameraUp = Shader.PropertyToID("_FocusCameraUp");
+        public static readonly int FocusCameraSize = Shader.PropertyToID("_FocusCameraSize");
+        public static readonly int FocusCameraHalfAperture = Shader.PropertyToID("_FocusCameraHalfAperture");
+        
         #endregion
 
         #region Distilling-Lit-Parames
