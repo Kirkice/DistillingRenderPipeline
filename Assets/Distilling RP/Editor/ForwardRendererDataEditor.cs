@@ -22,9 +22,7 @@ namespace UnityEditor.Rendering.Distilling
 
             public static readonly GUIContent GlobalIllumationLabel = new GUIContent("GlobalIllumation Settings", "Setting GlobalIllumation.");
             public static readonly GUIContent BoolScreenSpaceLabel = new GUIContent("Use Screen Space Ray Tracing", "Select use Screen Space Ray Tracing.");
-            public static readonly GUIContent BoolPRTLabel = new GUIContent("Use PRT", "Select use PRT.");
             public static readonly GUIContent SSRDataLabel = new GUIContent("SSR Data", "Set Screen Space Ray Tracing Data.");
-            public static readonly GUIContent GlobalCubeMapLabel = new GUIContent("Global CubeMap", "Set Global CubeMap.");
             public static readonly GUIContent accurateGbufferNormalsLabel = EditorGUIUtility.TrTextContent("G-buffer Depth Normals", "Normals in G-buffer use octahedron encoding/decoding. This improves visual quality but might reduce performance.");
             // public static readonly GUIContent tiledDeferredShadingLabel = EditorGUIUtility.TrTextContent("Tiled Deferred Shading (Experimental)", "Allows Tiled Deferred Shading on appropriate lights");
         }
@@ -39,11 +37,7 @@ namespace UnityEditor.Rendering.Distilling
         private SerializedProperty m_PostProcessData;
         private SerializedProperty m_Shaders;
         private SerializedProperty m_ShadowTransparentReceiveProp;
-        
-        
         private SerializedProperty m_BoolScreenSpaceRayTracing;
-        private SerializedProperty m_BoolPRTProp;
-        private SerializedProperty m_GlobalCubeMapProp;
 
         private void OnEnable()
         {
@@ -52,9 +46,6 @@ namespace UnityEditor.Rendering.Distilling
             m_RenderingMode = serializedObject.FindProperty("m_RenderingMode");
             
             m_BoolScreenSpaceRayTracing = serializedObject.FindProperty("m_BoolScreenSpaceRayTracing");
-            m_BoolPRTProp = serializedObject.FindProperty("m_BoolPRT");
-            m_GlobalCubeMapProp = serializedObject.FindProperty("m_GlobalCubeMap");
-            
             m_AccurateGbufferNormals = serializedObject.FindProperty("m_AccurateGbufferNormals");
             m_TiledDeferredShading = serializedObject.FindProperty("m_TiledDeferredShading");
             m_DefaultStencilState = serializedObject.FindProperty("m_DefaultStencilState");
@@ -101,14 +92,10 @@ namespace UnityEditor.Rendering.Distilling
             EditorGUILayout.PropertyField(m_BoolScreenSpaceRayTracing, Styles.BoolScreenSpaceLabel, true);
             if (m_BoolScreenSpaceRayTracing.boolValue)
             {
+                EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(m_screenSpaceRayTracingData, Styles.SSRDataLabel, true);
+                EditorGUI.indentLevel--;
             }
-            EditorGUILayout.PropertyField(m_BoolPRTProp, Styles.BoolPRTLabel, true);
-            if (m_BoolPRTProp.boolValue)
-            {
-                EditorGUILayout.PropertyField(m_GlobalCubeMapProp, Styles.GlobalCubeMapLabel, true);
-            }
-            EditorGUI.indentLevel--;
             EditorGUILayout.Space();
 
             EditorGUILayout.LabelField("Shadows Settings", EditorStyles.boldLabel);

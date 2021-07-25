@@ -69,9 +69,6 @@ namespace UnityEngine.Rendering.Distilling
         [SerializeField] bool m_ShadowTransparentReceive = true;
         
         [SerializeField] bool m_BoolScreenSpaceRayTracing = false;
-        [SerializeField] bool m_BoolPRT = false;
-        [SerializeField] Cubemap m_GlobalCubeMap;
-            
         [SerializeField] RenderingMode m_RenderingMode = RenderingMode.Forward;
         [SerializeField] bool m_AccurateGbufferNormals = false;
         [SerializeField] bool m_TiledDeferredShading = false;
@@ -159,28 +156,7 @@ namespace UnityEngine.Rendering.Distilling
                 m_BoolScreenSpaceRayTracing = false;
             }
         }
-        /// <summary>
-        /// PRT
-        /// </summary>
-        public bool BoolPRT
-        {
-            get => m_BoolPRT;
-            set
-            {
-                SetDirty();
-                m_BoolPRT = false;
-            }
-        }
 
-        public Cubemap GlobalCubeMapProp
-        {
-            get => m_GlobalCubeMap;
-            set
-            {
-                SetDirty();
-                m_GlobalCubeMap = value;
-            }
-        }
         /// <summary>
         /// Rendering mode.
         /// </summary>

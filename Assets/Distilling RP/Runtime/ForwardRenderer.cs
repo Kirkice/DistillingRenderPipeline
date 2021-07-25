@@ -11,7 +11,9 @@ namespace UnityEngine.Rendering.Distilling
         /// <summary>Render all objects and lighting in one pass, with a hard limit on the number of lights that can be applied on an object.</summary>
         Forward,
         /// <summary>Render all objects first in a g-buffer pass, then apply all lighting in a separate pass using deferred shading.</summary>
-        Deferred
+        Deferred,
+        
+        RTXRayTracing,
     };
     /// <summary>
     /// Default renderer for Universal RP.
@@ -41,8 +43,8 @@ namespace UnityEngine.Rendering.Distilling
         internal RenderingMode actualRenderingMode { get { return GL.wireframe || m_DeferredLights == null || !m_DeferredLights.IsRuntimeSupportedThisFrame()  ? RenderingMode.Forward : this.renderingMode; } }
         internal bool accurateGbufferNormals { get { return m_DeferredLights != null ? m_DeferredLights.AccurateGbufferNormals : false; } }
 
+        RealTimeRayTracing m_RealTimeRayTracing;
         StochasticScreenSpaceRayTracing m_SSR;
-        PRTInit m_PRT;
         DepthOnlyPass m_DepthPrepass;
         DepthNormalOnlyPass m_DepthNormalPrepass;
         MainLightShadowCasterPass m_MainLightShadowCasterPass;
@@ -128,7 +130,6 @@ namespace UnityEngine.Rendering.Distilling
             m_ForwardLights = new ForwardLights();
             this.m_RenderingMode = data.renderingMode;
             this.m_BoolScreenSpaceRayTracing = data.BoolScreenSpaceRayTracing;
-            this.m_BoolPRT = data.BoolPRT;
             m_MainLightShadowCasterPass = new MainLightShadowCasterPass(RenderPassEvent.BeforeRenderingShadows);
             m_AdditionalLightsShadowCasterPass = new AdditionalLightsShadowCasterPass(RenderPassEvent.BeforeRenderingShadows);
             
@@ -158,6 +159,9 @@ namespace UnityEngine.Rendering.Distilling
                 m_TileDepthRangeExtraPass = new TileDepthRangePass(RenderPassEvent.BeforeRenderingOpaques + 4, m_DeferredLights, 1);
                 m_DeferredPass = new DeferredPass(RenderPassEvent.BeforeRenderingOpaques + 5, m_DeferredLights);
             }
+            
+            if(this.renderingMode == RenderingMode.RTXRayTracing)
+                m_RealTimeRayTracing = new RealTimeRayTracing();
                         
             m_ColorGradingLutPass = new ColorGradingLutPass(RenderPassEvent.BeforeRenderingPrepasses, data.postProcessData);
             m_RenderOpaqueForwardPass = new DrawObjectsPass("Render Opaques", true, RenderPassEvent.BeforeRenderingOpaques, RenderQueueRange.opaque, data.opaqueLayerMask, m_DefaultStencilState, stencilData.stencilReference);
@@ -166,7 +170,6 @@ namespace UnityEngine.Rendering.Distilling
             m_CopyColorPass = new CopyColorPass(RenderPassEvent.AfterRenderingSkybox, m_SamplingMaterial);
 
             m_SSR = new StochasticScreenSpaceRayTracing(data.m_SSRData);
-            m_PRT = new PRTInit(data.GlobalCubeMapProp);
             m_CopyNormalWPass = new CopyNormalWFeature();
             m_CopyPosWPass = new CopyPosWFeature();
             m_CopyTangentPass = new CopyTangentFeature();
@@ -420,14 +423,13 @@ namespace UnityEngine.Rendering.Distilling
                 m_DepthNormalPrepass.Setup(cameraTargetDescriptor, m_DepthTexture, m_NormalsTexture);
                 EnqueuePass(m_DepthNormalPrepass);
             }
-
             if (m_BoolScreenSpaceRayTracing)
             {
                 m_SSR.AddRenderPasses(this, ref renderingData);
             }
-            if (m_BoolPRT)
+            if (renderingMode == RenderingMode.RTXRayTracing)
             {
-                m_PRT.AddRenderPasses(this,ref renderingData);
+                m_RealTimeRayTracing.AddRenderPasses(this, ref renderingData);
             }
             if (requireNormalWSTexture)
             {

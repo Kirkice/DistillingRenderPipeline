@@ -9,6 +9,9 @@ namespace UnityEngine.Rendering.Distilling
     {
         #region RenderPipeline
         public static readonly string BlueNoiseTexPath = "Assets/ProjectAssets/Resources/Textures/tex_BlueNoise_1024x1024_UNI.tga";
+        public static readonly string RayTracingShaderPath = "Assets/Distilling RP/Runtime/GlobalIllumation/RTRT/OutputColorTutorial.raytrace";
+        public static readonly string FinalBlitMatPath = "Assets/Distilling RP/Runtime/GlobalIllumation/RTRT/Unlit_FinalBlit.mat";
+        public static readonly string DenoiseMatPath = "Assets/Distilling RP/Runtime/GlobalIllumation/RTRT/Hidden_QuickDenoise.mat";
         
         public static readonly int OutputTargetShaderId = Shader.PropertyToID("_OutputTarget");
         public static readonly int PRNGStatesShaderId = Shader.PropertyToID("_PRNGStates");
@@ -25,9 +28,6 @@ namespace UnityEngine.Rendering.Distilling
         public static readonly int FocusCameraSize = Shader.PropertyToID("_FocusCameraSize");
         public static readonly int FocusCameraHalfAperture = Shader.PropertyToID("_FocusCameraHalfAperture");
         
-        
-        public static readonly int RTRT_Texture = Shader.PropertyToID("_RTRT_Texture");
-        public static readonly int SSGI_Texture = Shader.PropertyToID("_SSGI_Texture");
         #endregion
 
         #region Distilling-Lit-Parames

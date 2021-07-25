@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Distilling;
 using UnityEngine.Experimental.Rendering;
@@ -69,9 +70,9 @@ public class RealTimeRayTracing : ScriptableRendererFeature
         public Material denoiseMat;
         public float DenoiseStrength;
     
-        public RayTracingPass(RayTracingShader _shader,ref RayTracingAccelerationStructure accStruct)
+        public RayTracingPass(ref RayTracingAccelerationStructure accStruct)
         {
-            rayTracingShader = _shader;
+            rayTracingShader = AssetDatabase.LoadAssetAtPath<RayTracingShader>(ShaderIDs.RayTracingShaderPath);
             _maccelerationStructure = accStruct;
         }
         static  RayTracingShader rayTracingShader;
@@ -192,7 +193,6 @@ public class RealTimeRayTracing : ScriptableRendererFeature
                             cmd.Blit(outputTarget, source, FinalBlitMat);
                             cmd.SetGlobalFloat("_DenoiseStrength", DenoiseStrength * 0.1f);
                             cmd.Blit(source, TempDenoise, denoiseMat, 0);
-                            cmd.SetGlobalTexture(ShaderIDs.RTRT_Texture, TempDenoise);
                             cmd.Blit(TempDenoise, source);
                             RenderTexture.ReleaseTemporary(sourceTemp);
                         }
@@ -232,26 +232,18 @@ public class RealTimeRayTracing : ScriptableRendererFeature
             }
         }
     }
-    
-    [System.Serializable]
-    public class RayTraceSettings
-    {
-        public RayTracingShader _shader ;
-        public RenderPassEvent mrenderPassEvent = RenderPassEvent.AfterRendering;
-        [Range(0,10)]
-        public float focusDistance, aperture;
-        public  Material FinalBlitMat;
-        public Material denoiseMat;
-        [Range(0.01f,5)]
-        public float DenoiseStrength;
-    }
-    public RayTraceSettings settings = new RayTraceSettings();
+
     RayTracingPass mRayTracingPass;
     RayTracingAccelerationStructure _accelerationStructure;
     
+    public RealTimeRayTracing()
+    {
+        Create();
+    }
+    
     public override void Create()
     {
-        if (_accelerationStructure!=null)
+        if (_accelerationStructure!=null) 
         {
             _accelerationStructure.Dispose();
             _accelerationStructure.Release();
@@ -261,20 +253,16 @@ public class RealTimeRayTracing : ScriptableRendererFeature
         _accelerationStructure = new RayTracingAccelerationStructure(setting);
         _accelerationStructure.Build();
 
-        mRayTracingPass = new RayTracingPass(settings._shader,ref  _accelerationStructure);
-        mRayTracingPass.FinalBlitMat = settings.FinalBlitMat; ;
-        mRayTracingPass.denoiseMat = settings.denoiseMat;
-        mRayTracingPass.DenoiseStrength = settings.DenoiseStrength;
-        mRayTracingPass.renderPassEvent = settings.mrenderPassEvent;
+        mRayTracingPass = new RayTracingPass(ref  _accelerationStructure);
+        mRayTracingPass.FinalBlitMat = AssetDatabase.LoadAssetAtPath<Material>(ShaderIDs.FinalBlitMatPath);
+        mRayTracingPass.denoiseMat = AssetDatabase.LoadAssetAtPath<Material>(ShaderIDs.DenoiseMatPath);
+        mRayTracingPass.DenoiseStrength = 0.3f;
+        mRayTracingPass.renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
     }
     
-    // Here you can inject one or multiple render passes in the renderer.
-    // This method is called when setting up the renderer once per-camera.
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
-        //renderer.cameraColorTarget 是当前相机拍摄的东西，无论任何queue都直接生效
-        // RenderTargetHandle.CameraTarget则是一张在renderpass后的rt,只会在指定rtpss后让相机生效
-        mRayTracingPass.Setup(renderer.cameraColorTarget, RenderTargetHandle.CameraTarget,renderingData.cameraData.camera,new Vector2(settings.focusDistance,settings.aperture));
+        mRayTracingPass.Setup(renderer.cameraColorTarget, RenderTargetHandle.CameraTarget,renderingData.cameraData.camera,new Vector2(0.6f,0));
         renderer.EnqueuePass(mRayTracingPass);
     }
 }
