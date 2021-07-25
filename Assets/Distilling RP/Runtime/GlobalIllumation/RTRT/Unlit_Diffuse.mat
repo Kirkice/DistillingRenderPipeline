@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit_Diffuse
+  m_Shader: {fileID: 4800000, guid: 68b169651a50b9742b5acc2aaa674a46, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HeightMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: a06da852441f94b4aa2f41a91260b7de, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MatCapMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RoughnessMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _CullMode: 2
+    - _Cutoff: 0.5
+    - _DebugNormal: 0
+    - _DebugPosL: 0
+    - _DebugPosW: 0
+    - _DebugTangent: 0
+    - _DebugUVX: 0
+    - _DebugUVY: 0
+    - _DebugVColorB: 0
+    - _DebugVColorG: 0
+    - _DebugVColorR: 0
+    - _DebugWireframe: 0
+    - _Fuzz: 0.1
+    - _GIStrength: 1
+    - _Height: 0.01
+    - _HeightAmount: 1
+    - _MetallicStrength: 1
+    - _NormalScale: 1
+    - _OcclusionStrength: 1
+    - _ReceiveShadows: 1
+    - _RenderingMode: 2
+    - _Rf0Mode: 8
+    - _RoughnessStrength: 0.5
+    - _UseDDGI: 0
+    - _UseDRPLight: 0
+    - _UseDRPShadow: 0
+    - _UseEmission: 0
+    - _UseGI: 0
+    - _UseHeightMap: 0
+    - _UseLPV: 0
+    - _UseMatCap: 0
+    - _UseMetallic: 1
+    - _UseMultipleLight: 1
+    - _UseNormalMap: 0
+    - _UsePCFShadow: 0
+    - _UsePCSSShadow: 0
+    - _UsePRT: 0
+    - _UsePathTracing: 0
+    - _UsePlanerShadow: 0
+    - _UseRSM: 0
+    - _UseRealTimeAreaLight: 0
+    - _UseRoughness: 1
+    - _UseSDFShadow: 0
+    - _UseSSDO: 0
+    - _UseSSR: 0
+    - _UseVSMShadow: 0
+    - _UseVoxel: 0
+    - _UseVoxelGI: 0
+    m_Colors:
+    - _AlbeodColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Rf0: {r: 0.8, g: 0.8, b: 0.8, a: 0}

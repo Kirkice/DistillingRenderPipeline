@@ -154,6 +154,17 @@
             #include "Assets/Distilling RP/Shaders/DepthNormalsPass.hlsl"
             ENDHLSL
         }
+        
+        Pass
+        {
+            Name "RayTracing"
+            Tags { "LightMode" = "RayTracing" }
+            
+            HLSLPROGRAM
+            #pragma raytracing test
+            #include "Assets/Distilling RP/Shaders/PBR/DistillingLitRayTracing.hlsl"
+            ENDHLSL
+        }
     }
     CustomEditor "DistillingShaderGUI"
 }

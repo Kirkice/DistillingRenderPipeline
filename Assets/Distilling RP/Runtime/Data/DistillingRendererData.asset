@@ -39,9 +39,9 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 0
-  m_BoolScreenSpaceRayTracing: 0
+  m_BoolScreenSpaceRayTracing: 1
   m_BoolPRT: 0
   m_GlobalCubeMap: {fileID: 0}
-  m_RenderingMode: 1
+  m_RenderingMode: 0
   m_AccurateGbufferNormals: 0
   m_TiledDeferredShading: 0

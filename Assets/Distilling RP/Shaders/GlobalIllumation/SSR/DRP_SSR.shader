@@ -94,5 +94,15 @@
             #pragma fragment PS_Recursive
             ENDHLSL
         }
+        
+        Pass    //9
+        {
+            HLSLPROGRAM
+            #include "Assets/Distilling RP/ShaderLibrary/Core.hlsl"
+            #include "ScreenSpaceRayTracingPass.hlsl"
+            #pragma vertex VS
+            #pragma fragment PS_RayCastMask
+            ENDHLSL
+        }
     }
 }

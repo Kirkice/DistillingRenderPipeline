@@ -25,6 +25,9 @@ namespace UnityEngine.Rendering.Distilling
         public static readonly int FocusCameraSize = Shader.PropertyToID("_FocusCameraSize");
         public static readonly int FocusCameraHalfAperture = Shader.PropertyToID("_FocusCameraHalfAperture");
         
+        
+        public static readonly int RTRT_Texture = Shader.PropertyToID("_RTRT_Texture");
+        public static readonly int SSGI_Texture = Shader.PropertyToID("_SSGI_Texture");
         #endregion
 
         #region Distilling-Lit-Parames

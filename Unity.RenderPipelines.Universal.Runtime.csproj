@@ -93,9 +93,9 @@
      <Compile Include="Assets\Distilling RP\Runtime\ForwardLights.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\ForwardRenderer.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\ForwardRendererData.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\PRTInit.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\RealTimeRayTracing.cs" />
-     <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\StochasticScreenSpaceRayTracing.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\IBL\PRTInit.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\RealTimeRayTracing.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\SSGI\StochasticScreenSpaceRayTracing.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Overrides\Bloom.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Overrides\ChannelMixer.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Overrides\ChromaticAberration.cs" />
@@ -135,6 +135,14 @@
      <Compile Include="Assets\Distilling RP\Runtime\Passes\ScriptableRenderPass.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Passes\TileDepthRangePass.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Passes\TransparentSettingsPass.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\Plugins\MT\Imt19937.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\Plugins\MT\Imt19937_64.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\Plugins\MT\mt19937_64_opt_t.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\Plugins\MT\mt19937_64_t.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\Plugins\MT\mt19937ar_cok_opt_t.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\Plugins\MT\mt19937ar_cok_t.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\Plugins\MT\mt19937ar_t.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\Plugins\MT\mt_base_t.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\PostProcessUtils.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\RenderTargetHandle.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\RendererFeatures\CopyNormalWFeature.cs" />
@@ -154,8 +162,21 @@
      <Compile Include="Assets\Distilling RP\Runtime\ShaderUtils.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\ShadowUtils.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\StencilUsage.cs" />
+     <None Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\RTGlass.shader" />
+     <None Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\ONB.hlsl" />
      <None Include="Assets\Distilling RP\Runtime\Unity.RenderPipelines.Universal.Runtime.asmdef" />
      <None Include="Assets\Distilling RP\Runtime\External\LibTessDotNet\LICENSE.txt" />
+     <None Include="Assets\Distilling RP\Runtime\Plugins\MT\LICENSE-mt19937ar-cok.txt" />
+     <None Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\FinalBlit.shader" />
+     <None Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\PRNG.hlsl" />
+     <None Include="Assets\Distilling RP\Runtime\Plugins\MT\LICENSE-mt19937ar.txt" />
+     <None Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\RTSky.hlsl" />
+     <None Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\RTDiffuse.shader" />
+     <None Include="Assets\Distilling RP\Runtime\Plugins\MT\LICENSE-mt19937-64.txt" />
+     <None Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\Common.hlsl" />
+     <None Include="Assets\Distilling RP\Runtime\Plugins\MT\LICENSE.txt" />
+     <None Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\QuickDenoise.shader" />
+     <None Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\OutputColorTutorial.raytrace" />
  <Reference Include="Unity.Mathematics">
  <HintPath>E:/DistillingRenderPipeline/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
  </Reference>

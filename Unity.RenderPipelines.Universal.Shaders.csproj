@@ -91,6 +91,7 @@
      <None Include="Assets\Distilling RP\Shaders\Terrain\WavingGrassPasses.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\FinalPost.shader" />
      <None Include="Assets\Distilling RP\Shaders\LitInput.hlsl" />
+     <None Include="Assets\Distilling RP\Shaders\PBR\DistillingLitRayTracing.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Nature\SpeedTree7CommonInput.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Unlit.shader" />
      <None Include="Assets\Distilling RP\Shaders\PostProcessing\LutBuilderLdr.shader" />

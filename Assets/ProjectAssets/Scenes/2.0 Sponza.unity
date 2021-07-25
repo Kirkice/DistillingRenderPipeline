@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.375
   m_CustomReflection: {fileID: 8900000, guid: 5581294e56592d84f8bd5d8dc5e50a3a, type: 3}
   m_Sun: {fileID: 1424271368}
-  m_IndirectSpecularColor: {r: 0.56007653, g: 0.57468987, b: 0.5752121, a: 0.375}
+  m_IndirectSpecularColor: {r: 0.26891327, g: 0.28517482, b: 0.28544706, a: 0.375}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -300,13 +300,13 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 3
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -356,13 +356,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1424271367}
-  m_LocalRotation: {x: 0.53616685, y: -0.28142613, z: 0.22700149, w: 0.7627548}
+  m_LocalRotation: {x: 0.39072528, y: 0.3927835, z: -0.13117343, w: 0.82210004}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 71.031006, y: -34.883003, z: 7.8700004}
+  m_LocalEulerAnglesHint: {x: 48.2, y: 54.6, z: 7.8700004}
 --- !u!1001 &5414331007318746449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -370,6 +370,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5414331005731627032, guid: 0094b9928d8664841a1a7b09186f3845,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5414331005731627034, guid: 0094b9928d8664841a1a7b09186f3845,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5414331005731627104, guid: 0094b9928d8664841a1a7b09186f3845,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5414331005731627108, guid: 0094b9928d8664841a1a7b09186f3845,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5414331005731627108, guid: 0094b9928d8664841a1a7b09186f3845,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0169bc154b8ade344aa1bb8f2c923505, type: 2}
+    - target: {fileID: 5414331005731627108, guid: 0094b9928d8664841a1a7b09186f3845,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0169bc154b8ade344aa1bb8f2c923505, type: 2}
+    - target: {fileID: 5414331005731627110, guid: 0094b9928d8664841a1a7b09186f3845,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5414331005731627116, guid: 0094b9928d8664841a1a7b09186f3845,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5414331005731627118, guid: 0094b9928d8664841a1a7b09186f3845,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5414331005731627716, guid: 0094b9928d8664841a1a7b09186f3845,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5414331005733527590, guid: 0094b9928d8664841a1a7b09186f3845,
         type: 3}
       propertyPath: m_RootOrder
@@ -424,6 +474,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5414331005733893062, guid: 0094b9928d8664841a1a7b09186f3845,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5414331005733895174, guid: 0094b9928d8664841a1a7b09186f3845,
         type: 3}

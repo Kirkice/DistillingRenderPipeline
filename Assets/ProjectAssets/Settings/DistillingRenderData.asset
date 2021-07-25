@@ -1,5 +1,27 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8918223525725455464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e385c32de2d09d44fa2c35ebcc110513, type: 3}
+  m_Name: RealTimeRayTracing
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    _shader: {fileID: 4807578003741378534, guid: 6d95d774094b2c94d88edba5e7fa059c,
+      type: 3}
+    mrenderPassEvent: 550
+    focusDistance: 0.6
+    aperture: 0
+    FinalBlitMat: {fileID: 2100000, guid: f13ee3706865bf44ca716467dd1d9eec, type: 2}
+    denoiseMat: {fileID: 2100000, guid: 1818e2437fd8f404691bea4e283def29, type: 2}
+    DenoiseStrength: 0.3
 --- !u!114 &-8391872715349847858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25,8 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de640fe3d0db1804a85f9fc8f5cadab6, type: 3}
   m_Name: DistillingRenderData
   m_EditorClassIdentifier: 
-  m_RendererFeatures: []
-  m_RendererFeatureMap: 
+  m_RendererFeatures:
+  - {fileID: -8918223525725455464}
+  m_RendererFeatureMap: 983b9a41f41a3c84
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   m_SSRData: {fileID: 11400000, guid: 2c59ccb6819dca44984e9d188be81923, type: 2}
   shaders:

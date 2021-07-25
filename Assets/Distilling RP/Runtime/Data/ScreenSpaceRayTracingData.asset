@@ -14,19 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime:UnityEngine.Rendering.Distilling:SSRData
   depthMode: 1
   rayMode: 1
-  rayDistance: 500
-  thickness: 0.197
-  BRDFBias: 0.125
+  rayDistance: 100
+  thickness: 0.284
+  BRDFBias: 0.317
   resolveMode: 1
   rayReuse: 1
   normalization: 1
   reduceFireflies: 1
-  useMipMap: 1
-  useTemporal: 0
+  useMipMap: 0
+  useTemporal: 1
   scale: 2
-  response: 0.803
+  response: 0.903
   useUnityMotion: 0
   useFresnel: 1
-  screenFadeSize: 0.25
+  screenFadeSize: 0.513
   smoothnessRange: 1
   debugPass: 0
