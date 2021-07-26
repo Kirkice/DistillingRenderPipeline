@@ -236,14 +236,14 @@ public class RealTimeRayTracing : ScriptableRendererFeature
     RayTracingPass mRayTracingPass;
     RayTracingAccelerationStructure _accelerationStructure;
     
-    public RealTimeRayTracing()
-    {
-        Create();
-    }
+    // public RealTimeRayTracing()
+    // {
+    //     Create();
+    // }
     
     public override void Create()
     {
-        if (_accelerationStructure!=null) 
+        if (_accelerationStructure!=null)
         {
             _accelerationStructure.Dispose();
             _accelerationStructure.Release();

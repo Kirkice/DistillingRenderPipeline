@@ -1,2 +1,112 @@
 Base path: 'D:/Unity2019.4.26/Unity/Editor/Data', plugins path 'D:/Unity2019.4.26/Unity/Editor/Data/PlaybackEngines'
 Cmd: initializeCompiler
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocessRayTracingShader
+Cmd: compileRayTracingShader
+  api=4 insize=4153 outsize=7940 ok=1
+Cmd: preprocessRayTracingShader
+Cmd: compileRayTracingShader
+  api=4 insize=4140 outsize=7928 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6152 outsize=4912 ok=1
+Cmd: preprocess
+  insize=6286 outsize=4994 ok=1
+Cmd: preprocess
+  insize=6286 outsize=4994 ok=1
+Cmd: preprocess
+  insize=6286 outsize=4994 ok=1
+Cmd: preprocess
+  insize=6286 outsize=4994 ok=1
+Cmd: preprocess
+  insize=6286 outsize=4994 ok=1
+Cmd: preprocess
+  insize=6286 outsize=4994 ok=1
+Cmd: preprocess
+  insize=6286 outsize=4994 ok=1
+Cmd: preprocess
+  insize=6286 outsize=4994 ok=1
+Cmd: preprocess
+  insize=6286 outsize=4994 ok=1
+Cmd: preprocess
+  insize=9941 outsize=722 ok=1
+Cmd: preprocessRayTracingShader
+Cmd: compileRayTracingShader
+  api=4 insize=4146 outsize=10029 ok=1
+Cmd: preprocessRayTracingShader
+Cmd: preprocessRayTracingShader
+Cmd: preprocess
+  insize=9947 outsize=722 ok=1
+Cmd: preprocess
+  insize=9943 outsize=722 ok=1
+Cmd: preprocessRayTracingShader
+Cmd: preprocessRayTracingShader
+Cmd: shutdown

@@ -27,6 +27,7 @@
         //Basic BRDF Settings
         [Enum(Water,0,Glass,1,Plastic,2,Gem,3,Diamond,4,Au,5,Ag,6,Cu,7,Fe,8,Al,9)]_Rf0Mode("Rf0 Mode",int) = 8
         _Rf0("Rf0",vector) = (0.8,0.8,0.8,0)
+        [Toggle(RTX_TRANSPARENT)] _RTX_TRANSPARENT("RTX TRANSPARENT", Float) = 0
         _Albedo("Base Map",2D) = "white"{}
         _AlbeodColor("Base Color",Color) = (1,1,1,1)
         _UseMetallic("Use Metallic",float) = 0
@@ -161,6 +162,7 @@
             Tags { "LightMode" = "RayTracing" }
             
             HLSLPROGRAM
+            #pragma shader_feature RTX_TRANSPARENT
             #pragma raytracing test
             #include "Assets/Distilling RP/Shaders/PBR/DistillingLitRayTracing.hlsl"
             ENDHLSL

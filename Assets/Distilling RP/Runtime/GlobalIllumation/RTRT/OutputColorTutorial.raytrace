@@ -109,6 +109,9 @@ void OutputColorRayGenShader()
 [shader("miss")]
 void MissShader(inout RayIntersection rayIntersection : SV_RayPayload)
 {
-   SkyLight(rayIntersection);
+  // float3 origin = WorldRayOrigin();
+  // float3 direction = WorldRayDirection();
+  // rayIntersection.color = float4(0,0,0,1);
+  SkyLight(rayIntersection);
 }
 

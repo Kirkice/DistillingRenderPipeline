@@ -273,7 +273,6 @@ namespace UnityEngine.Rendering.Distilling
             {
                 if (feature == null)
                     continue;
-
                 feature.Create();
                 m_RendererFeatures.Add(feature);
             }

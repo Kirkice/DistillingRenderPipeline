@@ -116,16 +116,17 @@ Material:
     - _Height: 0.01
     - _HeightAmount: 1
     - _Metallic: 0.5
-    - _MetallicStrength: 1
+    - _MetallicStrength: 0
     - _Mode: 0
     - _NormalScale: 0.818
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueOffset: 0
+    - _RTX_TRANSPARENT: 0
     - _ReceiveShadows: 1
     - _RenderingMode: 0
     - _Rf0Mode: 8
-    - _RoughnessStrength: 1
+    - _RoughnessStrength: 0
     - _Shininess: 0
     - _Smoothness: 0.509
     - _SmoothnessSource: 0

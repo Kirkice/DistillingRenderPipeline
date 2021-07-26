@@ -75,6 +75,7 @@ Material:
     - _MetallicStrength: 1
     - _NormalScale: 1
     - _OcclusionStrength: 1
+    - _RTX_TRANSPARENT: 0
     - _ReceiveShadows: 1
     - _RenderingMode: 2
     - _Rf0Mode: 8
