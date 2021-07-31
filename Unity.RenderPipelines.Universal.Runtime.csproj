@@ -169,6 +169,7 @@
      <Compile Include="Assets\Distilling RP\Runtime\ShaderUtils.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\ShadowUtils.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\StencilUsage.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\VoxelGIDataCreature.cs" />
      <None Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\RTGlass.shader" />
      <None Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\ONB.hlsl" />
      <None Include="Assets\Distilling RP\Runtime\Unity.RenderPipelines.Universal.Runtime.asmdef" />
