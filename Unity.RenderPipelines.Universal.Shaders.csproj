@@ -54,6 +54,7 @@
      <None Include="Assets\Distilling RP\Shaders\Utils\CopyPosW.shader" />
      <None Include="Assets\Distilling RP\Shaders\Utils\DRPStencilDeferred.shader" />
      <None Include="Assets\Distilling RP\Shaders\Utils\Deferred.hlsl" />
+     <None Include="Assets\Distilling RP\Shaders\Compute\VoxelShader.compute" />
      <None Include="Assets\Distilling RP\Shaders\SimpleLitGBufferPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Particles\ParticlesSimpleLitForwardPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Terrain\TerrainLitMetaPass.hlsl" />
@@ -103,6 +104,7 @@
      <None Include="Assets\Distilling RP\Shaders\Utils\CopyDepth.shader" />
      <None Include="Assets\Distilling RP\Shaders\Utils\FallbackError.shader" />
      <None Include="Assets\Distilling RP\Shaders\Terrain\TerrainDetailLit.shader" />
+     <None Include="Assets\Distilling RP\Shaders\Compute\Parameterizer.compute" />
      <None Include="Assets\Distilling RP\Shaders\Utils\Universal2D.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Utils\CopyDepthPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Particles\ParticlesLit.shader" />
@@ -112,6 +114,7 @@
      <None Include="Assets\Distilling RP\Shaders\UnlitInput.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\2D\Include\CombinedShapeLightShared.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Distilling-Lit.shader" />
+     <None Include="Assets\Distilling RP\Shaders\Compute\Mipmapper.compute" />
      <None Include="Assets\Distilling RP\Shaders\Particles\ParticlesLitForwardPass.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\Terrain\TerrainLitInput.hlsl" />
      <None Include="Assets\Distilling RP\Shaders\LitGBufferPass.hlsl" />

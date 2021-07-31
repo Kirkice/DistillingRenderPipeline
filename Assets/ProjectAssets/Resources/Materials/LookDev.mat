@@ -119,7 +119,7 @@ Material:
     - _RenderingMode: 2
     - _Rf0Mode: 8
     - _RoughnessStrength: 0.181
-    - _Smoothness: 0.5
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

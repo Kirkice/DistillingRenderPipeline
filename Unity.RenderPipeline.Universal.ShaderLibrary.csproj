@@ -52,9 +52,15 @@
   <ItemGroup>
      <Compile Include="Assets\Distilling RP\ShaderLibrary\ShaderTypes.cs" />
      <None Include="Assets\Distilling RP\ShaderLibrary\UnityGBuffer.hlsl" />
+     <None Include="Assets\Distilling RP\ShaderLibrary\Radiances\Pixel.cginc" />
+     <None Include="Assets\Distilling RP\ShaderLibrary\Radiances\Voxel.cginc" />
+     <None Include="Assets\Distilling RP\ShaderLibrary\Radiances\Sampler.cginc" />
      <None Include="Assets\Distilling RP\ShaderLibrary\Input.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\Core.hlsl" />
+     <None Include="Assets\Distilling RP\ShaderLibrary\Structs\VoxelLightingData.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\SurfaceInput.hlsl" />
+     <None Include="Assets\Distilling RP\ShaderLibrary\Structs\VoxelData.cginc" />
+     <None Include="Assets\Distilling RP\ShaderLibrary\Visibility.cginc" />
      <None Include="Assets\Distilling RP\ShaderLibrary\UnityInput.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\Lighting.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\ShaderVariablesFunctions.hlsl" />
@@ -62,10 +68,14 @@
      <None Include="Assets\Distilling RP\ShaderLibrary\Deprecated.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\DeclareOpaqueTexture.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\ShaderGraphFunctions.hlsl" />
+     <None Include="Assets\Distilling RP\ShaderLibrary\Variables.cginc" />
      <None Include="Assets\Distilling RP\ShaderLibrary\ShaderTypes.cs.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\Unity.RenderPipelines.Universal.ShaderLibrary.asmdef" />
+     <None Include="Assets\Distilling RP\ShaderLibrary\Structs\LightSource.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\Shadows.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\MetaInput.hlsl" />
+     <None Include="Assets\Distilling RP\ShaderLibrary\Utilities.cginc" />
+     <None Include="Assets\Distilling RP\ShaderLibrary\Structs\LightingData.cginc" />
      <None Include="Assets\Distilling RP\ShaderLibrary\SurfaceData.hlsl" />
      <None Include="Assets\Distilling RP\ShaderLibrary\DeclareDepthTexture.hlsl" />
  <Reference Include="UnityEditor.UI">

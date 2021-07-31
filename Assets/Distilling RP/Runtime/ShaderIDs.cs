@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.ComponentModel;
 using UnityEngine.Scripting.APIUpdating;
@@ -7,11 +8,28 @@ namespace UnityEngine.Rendering.Distilling
 {
     public class ShaderIDs
     {
+        internal static readonly Collection<int> Radiance = new Collection<int>(new [] {
+            Shader.PropertyToID("Radiance0"),
+            Shader.PropertyToID("Radiance1"),
+            Shader.PropertyToID("Radiance2"),
+            Shader.PropertyToID("Radiance3"),
+            Shader.PropertyToID("Radiance4"),
+            Shader.PropertyToID("Radiance5"),
+            Shader.PropertyToID("Radiance6"),
+            Shader.PropertyToID("Radiance7"),
+            Shader.PropertyToID("Radiance8"),
+            Shader.PropertyToID("Radiance9"),
+        });
+        
         #region RenderPipeline
         public static readonly string BlueNoiseTexPath = "Assets/ProjectAssets/Resources/Textures/tex_BlueNoise_1024x1024_UNI.tga";
         public static readonly string RayTracingShaderPath = "Assets/Distilling RP/Runtime/GlobalIllumation/RTRT/OutputColorTutorial.raytrace";
         public static readonly string FinalBlitMatPath = "Assets/Distilling RP/Runtime/GlobalIllumation/RTRT/Unlit_FinalBlit.mat";
         public static readonly string DenoiseMatPath = "Assets/Distilling RP/Runtime/GlobalIllumation/RTRT/Hidden_QuickDenoise.mat";
+
+        public static readonly string MipmapperCSPath = "Assets/Distilling RP/Shaders/Compute/Mipmapper.compute";
+        public static readonly string ParameterizerCSPath = "Assets/Distilling RP/Shaders/Compute/Parameterizer.compute";
+        public static readonly string VoxelShaderCSPath = "Assets/Distilling RP/Shaders/Compute/VoxelShader.compute";
         
         public static readonly int OutputTargetShaderId = Shader.PropertyToID("_OutputTarget");
         public static readonly int PRNGStatesShaderId = Shader.PropertyToID("_PRNGStates");
@@ -28,6 +46,19 @@ namespace UnityEngine.Rendering.Distilling
         public static readonly int FocusCameraSize = Shader.PropertyToID("_FocusCameraSize");
         public static readonly int FocusCameraHalfAperture = Shader.PropertyToID("_FocusCameraHalfAperture");
         
+        internal static readonly int NumThreads = Shader.PropertyToID("NumThreads");
+        internal static readonly int Arguments = Shader.PropertyToID("Arguments");
+        internal static readonly int Dummy = Shader.PropertyToID("Dummy");
+        internal static readonly int Resolution = Shader.PropertyToID("Resolution");
+        internal static readonly int RadianceBA = Shader.PropertyToID("RadianceBA");
+        internal static readonly int RadianceRG = Shader.PropertyToID("RadianceRG");
+        internal static readonly int RadianceCount = Shader.PropertyToID("RadianceCount");
+        internal static readonly int VoxelBuffer = Shader.PropertyToID("VoxelBuffer");
+        internal static readonly int VoxelToWorld = Shader.PropertyToID("VoxelToWorld");
+        internal static readonly int WorldToVoxel = Shader.PropertyToID("WorldToVoxel");
+        internal static readonly int LightCount = Shader.PropertyToID("LightCount");
+        internal static readonly int LightSources = Shader.PropertyToID("LightSources");
+        internal static readonly int Target = Shader.PropertyToID("Target");
         #endregion
 
         #region Distilling-Lit-Parames

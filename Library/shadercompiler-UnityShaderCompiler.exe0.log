@@ -1,112 +1,36 @@
 Base path: 'D:/Unity2019.4.26/Unity/Editor/Data', plugins path 'D:/Unity2019.4.26/Unity/Editor/Data/PlaybackEngines'
 Cmd: initializeCompiler
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocessRayTracingShader
-Cmd: compileRayTracingShader
-  api=4 insize=4153 outsize=7940 ok=1
-Cmd: preprocessRayTracingShader
-Cmd: compileRayTracingShader
-  api=4 insize=4140 outsize=7928 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6152 outsize=4912 ok=1
-Cmd: preprocess
-  insize=6286 outsize=4994 ok=1
-Cmd: preprocess
-  insize=6286 outsize=4994 ok=1
-Cmd: preprocess
-  insize=6286 outsize=4994 ok=1
-Cmd: preprocess
-  insize=6286 outsize=4994 ok=1
-Cmd: preprocess
-  insize=6286 outsize=4994 ok=1
-Cmd: preprocess
-  insize=6286 outsize=4994 ok=1
-Cmd: preprocess
-  insize=6286 outsize=4994 ok=1
-Cmd: preprocess
-  insize=6286 outsize=4994 ok=1
-Cmd: preprocess
-  insize=6286 outsize=4994 ok=1
-Cmd: preprocess
-  insize=9941 outsize=722 ok=1
-Cmd: preprocessRayTracingShader
-Cmd: compileRayTracingShader
-  api=4 insize=4146 outsize=10029 ok=1
-Cmd: preprocessRayTracingShader
-Cmd: preprocessRayTracingShader
-Cmd: preprocess
-  insize=9947 outsize=722 ok=1
-Cmd: preprocess
-  insize=9943 outsize=722 ok=1
-Cmd: preprocessRayTracingShader
-Cmd: preprocessRayTracingShader
-Cmd: shutdown
+Cmd: preprocessCompute
+  insize=2362 outsize=2367 ok=1
+Cmd: compileComputeKernel
+  error: 2 plat 4 at VoxelShader.compute(6): failed to open source file: 'Assets/KirkRenderPipeline/ShaderLibrary/Structs/VoxelData.cginc'
+  api=4 insize=2367 outsize=0 ok=0
+Cmd: compileComputeKernel
+  error: 2 plat 4 at VoxelShader.compute(6): failed to open source file: 'Assets/KirkRenderPipeline/ShaderLibrary/Structs/VoxelData.cginc'
+  api=4 insize=2367 outsize=0 ok=0
+Cmd: compileComputeKernel
+  error: 2 plat 4 at VoxelShader.compute(6): failed to open source file: 'Assets/KirkRenderPipeline/ShaderLibrary/Structs/VoxelData.cginc'
+  api=4 insize=2367 outsize=0 ok=0
+Cmd: preprocessCompute
+  insize=402 outsize=404 ok=1
+Cmd: compileComputeKernel
+  api=4 insize=404 outsize=1138 ok=1
+Cmd: preprocessCompute
+  insize=4128 outsize=4139 ok=1
+Cmd: compileComputeKernel
+  api=4 insize=4139 outsize=1461 ok=1
+Cmd: compileComputeKernel
+  api=4 insize=4139 outsize=48275 ok=1
+Cmd: preprocessCompute
+  insize=2347 outsize=2352 ok=1
+Cmd: compileComputeKernel
+  error: 2 plat 4 at VoxelShader.compute(6): failed to open source file: 'Assets/Distilling RP/ShaderLibrary/Structs/VoxelData.cginc'
+  api=4 insize=2352 outsize=0 ok=0
+Cmd: compileComputeKernel
+  error: 2 plat 4 at VoxelShader.compute(6): failed to open source file: 'Assets/Distilling RP/ShaderLibrary/Structs/VoxelData.cginc'
+  api=4 insize=2352 outsize=0 ok=0
+Cmd: preprocessCompute
+  insize=2348 outsize=2353 ok=1
+Cmd: compileComputeKernel
+  error: 1 plat 4 at RP/ShaderLibrary/Visibility.cginc(14): implicit truncation of vector type
+  api=4 insize=2353 outsize=1173 ok=1
