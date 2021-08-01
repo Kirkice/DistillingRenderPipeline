@@ -242,10 +242,7 @@ half3 EnvBRDF(mBRDFData brdfData, half3 indirectDiffuse, half3 indirectSpecular,
 /// InDirectionLight
 /// </summary>
 inline void InDirectionLight(mBRDFData brdfData, half occlusion, DirectionData directionData, inout float3 color)
-{
-    if(_UsePRT < 0.5)
-        return;
-    
+{   
     float3 reflectVector                                                    = reflect(- directionData.V, directionData.N);
     float fresnelTerm                                                       = Pow4(1.0 - saturate(dot(directionData.N, directionData.V)));
     float3 indirectDiffuse                                                  = occlusion * directionData.bakedGI;
@@ -323,4 +320,87 @@ inline void TBNMatrixDot(inout DirectionData dirData, inout PBRData pbrData)
     }
 }
 
+/// <summary>
+/// SH
+/// </summary>
+inline float Y0(float3 v)
+{
+    return (1.0 / 2.0) * sqrt(1.0 / PI);
+}
+
+inline float Y1(float3 v)
+{
+				
+    return sqrt(3.0 / (4.0 * PI)) * v.z;
+}
+
+inline float Y2(float3 v)
+{
+    return sqrt(3.0 / (4.0 * PI)) * v.y;
+}
+
+inline float Y3(float3 v)
+{
+    return sqrt(3.0 / (4.0 * PI)) * v.x;
+}
+
+inline float Y4(float3 v)
+{
+    return 1.0 / 2.0 * sqrt(15.0 / PI) * v.x * v.z;
+}
+
+inline float Y5(float3 v)
+{
+    return 1.0 / 2.0 * sqrt(15.0 / PI) * v.z * v.y;
+}
+
+inline float Y6(float3 v)
+{
+    return 1.0 / 4.0 * sqrt(5.0 / PI) * (-v.x * v.x - v.z * v.z + 2 * v.y * v.y);
+}
+
+inline float Y7(float3 v)
+{
+    return 1.0 / 2.0 * sqrt(15.0 / PI) * v.y * v.x;
+}
+
+inline float Y8(float3 v)
+{
+    return 1.0 / 4.0 * sqrt(15.0 / PI) * (v.x * v.x - v.z * v.z);
+}
+
+inline float Y9(float3 v)
+{
+    return 1.0f / 4.0f * sqrt(35.0f / (2.0f * PI)) * (3 * v.x * v.x - v.z * v.z) * v.z;
+}
+
+inline float Y10(float3 v)
+{
+    return 1.0f / 2.0f * sqrt(105.0f / PI) * v.x * v.z * v.y;
+}
+
+inline float Y11(float3 v)
+{
+    return 1.0f / 4.0f * sqrt(21.0f / (2.0f * PI)) * v.z * (4 * v.y * v.y - v.x * v.x - v.z * v.z);
+}
+
+inline float Y12(float3 v)
+{
+    return 1.0f / 4.0f * sqrt(7.0f / PI) * v.y * (2 * v.y * v.y - 3 * v.x * v.x - 3 * v.z * v.z);
+}
+
+inline float Y13(float3 v)
+{
+    return 1.0f / 4.0f * sqrt(21.0f / (2.0f * PI)) * v.x * (4 * v.y * v.y - v.x * v.x - v.z * v.z);
+}
+
+inline float Y14(float3 v)
+{
+    return 1.0f / 4.0f * sqrt(105.0f / PI) * (v.x * v.x - v.z * v.z) * v.y;
+}
+
+inline float Y15(float3 v)
+{
+    return 1.0f / 4.0f * sqrt(35.0f / (2 * PI)) * (v.x * v.x - 3 * v.z * v.z) * v.x;
+}
 #endif

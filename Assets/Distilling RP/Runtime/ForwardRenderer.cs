@@ -23,14 +23,10 @@ namespace UnityEngine.Rendering.Distilling
     public sealed class ForwardRenderer : ScriptableRenderer
     {
         const int k_DepthStencilBufferBits = 32;
-        /// <summary>
-        /// 使用SSR
-        /// </summary>
+        // 使用SSR
         private bool m_BoolScreenSpaceRayTracing;
-        /// <summary>
-        /// 使用PRT
-        /// </summary>
-        private bool m_BoolPRT;
+        // 使用VXGI
+        private bool m_BoolVoxelGI;
         private static class Profiling
         {
             private const string k_Name = nameof(ForwardRenderer);
@@ -43,8 +39,10 @@ namespace UnityEngine.Rendering.Distilling
         internal RenderingMode actualRenderingMode { get { return GL.wireframe || m_DeferredLights == null || !m_DeferredLights.IsRuntimeSupportedThisFrame()  ? RenderingMode.Forward : this.renderingMode; } }
         internal bool accurateGbufferNormals { get { return m_DeferredLights != null ? m_DeferredLights.AccurateGbufferNormals : false; } }
 
+        SphericalHarmonics m_SphericalHarmonics;
         RealTimeRayTracing m_RealTimeRayTracing;
-        StochasticScreenSpaceRayTracing m_SSR;
+        StochasticScreenSpaceRayTracing m_SSR; 
+        VoxelGI m_VoxelGI;
         DepthOnlyPass m_DepthPrepass;
         DepthNormalOnlyPass m_DepthNormalPrepass;
         MainLightShadowCasterPass m_MainLightShadowCasterPass;
@@ -130,6 +128,7 @@ namespace UnityEngine.Rendering.Distilling
             m_ForwardLights = new ForwardLights();
             this.m_RenderingMode = data.renderingMode;
             this.m_BoolScreenSpaceRayTracing = data.BoolScreenSpaceRayTracing;
+            this.m_BoolVoxelGI = data.BoolVoxelGI;
             m_MainLightShadowCasterPass = new MainLightShadowCasterPass(RenderPassEvent.BeforeRenderingShadows);
             m_AdditionalLightsShadowCasterPass = new AdditionalLightsShadowCasterPass(RenderPassEvent.BeforeRenderingShadows);
             
@@ -168,8 +167,10 @@ namespace UnityEngine.Rendering.Distilling
             m_CopyDepthPass = new CopyDepthPass(RenderPassEvent.AfterRenderingSkybox, m_CopyDepthMaterial);
             m_DrawSkyboxPass = new DrawSkyboxPass(RenderPassEvent.BeforeRenderingSkybox);
             m_CopyColorPass = new CopyColorPass(RenderPassEvent.AfterRenderingSkybox, m_SamplingMaterial);
+            m_SphericalHarmonics = new SphericalHarmonics(RenderPassEvent.AfterRenderingSkybox, (int)data.SphericalHarmonicsDegree);
 
             m_SSR = new StochasticScreenSpaceRayTracing(data.m_SSRData);
+            m_VoxelGI = new VoxelGI(data.m_VXGIData);
             m_CopyNormalWPass = new CopyNormalWFeature();
             m_CopyPosWPass = new CopyPosWFeature();
             m_CopyTangentPass = new CopyTangentFeature();
@@ -413,6 +414,9 @@ namespace UnityEngine.Rendering.Distilling
             if (additionalLightShadows)
                 EnqueuePass(m_AdditionalLightsShadowCasterPass);
 
+            //SH
+            EnqueuePass(m_SphericalHarmonics);
+            
             if (requiresDepthPrepass)
             {
                 m_DepthPrepass.Setup(cameraTargetDescriptor, m_DepthTexture);
@@ -426,6 +430,10 @@ namespace UnityEngine.Rendering.Distilling
             if (m_BoolScreenSpaceRayTracing)
             {
                 m_SSR.AddRenderPasses(this, ref renderingData);
+            }
+            if (m_BoolVoxelGI)
+            {
+                //TODO
             }
             if (renderingMode == RenderingMode.RTXRayTracing)
             {
@@ -497,6 +505,7 @@ namespace UnityEngine.Rendering.Distilling
                 EnqueuePass(m_CopyColorPass);
             }
 
+            
 #if ADAPTIVE_PERFORMANCE_2_1_0_OR_NEWER
             if (needTransparencyPass)
 #endif

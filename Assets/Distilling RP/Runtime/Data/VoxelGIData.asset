@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e70be5549ee6746bfac29b87bf10b0, type: 3}
+  m_Name: VoxelGIData
+  m_EditorClassIdentifier: 
+  followCamera: 0
+  center: {x: 0, y: 0, z: 0}
+  bound: 10
+  resolution: 64
+  antiAliasing: 1
+  mipmapFilterMode: 0
+  limitRefreshRate: 0
+  refreshRate: 30
+  indirectDiffuseModifier: 1
+  indirectSpecularModifier: 1
+  diffuseResolutionScale: 1

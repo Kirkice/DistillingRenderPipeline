@@ -16,7 +16,7 @@ MonoBehaviour:
   rayMode: 1
   rayDistance: 100
   thickness: 0.284
-  BRDFBias: 0.317
+  BRDFBias: 0.58
   resolveMode: 1
   rayReuse: 1
   normalization: 1
@@ -24,7 +24,7 @@ MonoBehaviour:
   useMipMap: 0
   useTemporal: 1
   scale: 2
-  response: 0.903
+  response: 1
   useUnityMotion: 0
   useFresnel: 1
   screenFadeSize: 0.513

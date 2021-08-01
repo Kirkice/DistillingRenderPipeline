@@ -381,4 +381,13 @@ inline void SetShadow(float2 uvPosS, inout float3 color)
     float shadow                                            = SAMPLE_TEXTURE2D(_CameraShadowMaskTexture,sampler_CameraShadowMaskTexture,uvPosS).r;
     color                                                   = saturate(shadow + 0.3) * color;
 }
+
+/// <summary>
+/// SetShadow
+/// </summary>
+inline float4 GetSphericalHarmonic(float3 v)
+{
+    float4 approx                                           = c0 * Y0(v) + c1 * Y1(v) + c2 * Y2(v) + c3 * Y3(v) + c4 * Y4(v) + c5 * Y5(v) + c6 * Y6(v) + c7 * Y7(v) + c8 * Y8(v) + c9 * Y9(v) + c10 * Y10(v) + c11 * Y11(v) + c12 * Y12(v) + c13 * Y13(v) + c14 * Y14(v) + c15 * Y15(v);
+    return                                                  approx; 
+}
 #endif

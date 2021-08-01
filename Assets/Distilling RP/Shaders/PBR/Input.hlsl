@@ -87,7 +87,6 @@ uniform float                                               _UseSDFShadow;
 uniform float                                               _UseMatCap;
 
 uniform float                                               _UseGI;
-uniform float                                               _UsePRT;
 uniform float                                               _UseRSM;
 uniform float                                               _UseSSDO;
 uniform float                                               _UseSSR;
@@ -140,6 +139,26 @@ uniform float4                                              _AlbeodColor;
 uniform float4                                              _EmissionColor;
 uniform float4                                              _MatCapColor;
 uniform float4                                              _CubeMap_HDR;
+
+/// <summary>
+/// SH
+/// </summary>
+uniform float4                                              c0;
+uniform float4                                              c1;
+uniform float4                                              c2;
+uniform float4                                              c3;
+uniform float4                                              c4;
+uniform float4                                              c5;
+uniform float4                                              c6;
+uniform float4                                              c7;
+uniform float4                                              c8;
+uniform float4                                              c9;
+uniform float4                                              c10;
+uniform float4                                              c11;
+uniform float4                                              c12;
+uniform float4                                              c13;
+uniform float4                                              c14;
+uniform float4                                              c15;
 
 CBUFFER_END
 

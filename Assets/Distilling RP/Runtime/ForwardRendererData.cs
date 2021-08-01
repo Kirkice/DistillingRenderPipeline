@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEditor.ProjectWindowCallback;
 #endif
 using System;
+using UnityEngine.Rendering.Distilling.Internal;
 using UnityEngine.Scripting.APIUpdating;
 
 namespace UnityEngine.Rendering.Distilling
@@ -61,6 +62,10 @@ namespace UnityEngine.Rendering.Distilling
 
         [Reload("Runtime/Data/ScreenSpaceRayTracingData.asset")]
         public SSRData m_SSRData = null;
+        
+        [Reload("Runtime/Data/VoxelGIData.asset")]
+        public VoxelGIData m_VXGIData = null;
+        
         public ShaderResources shaders = null;
 
         [SerializeField] LayerMask m_OpaqueLayerMask = -1;
@@ -69,7 +74,9 @@ namespace UnityEngine.Rendering.Distilling
         [SerializeField] bool m_ShadowTransparentReceive = true;
         
         [SerializeField] bool m_BoolScreenSpaceRayTracing = false;
+        [SerializeField] bool m_BoolVoxelGI = false;
         [SerializeField] RenderingMode m_RenderingMode = RenderingMode.Forward;
+        [SerializeField] SphericalHarmonicsDegree m_SphericalHarmonicsDegree = SphericalHarmonicsDegree.Three;
         [SerializeField] bool m_AccurateGbufferNormals = false;
         [SerializeField] bool m_TiledDeferredShading = false;
         
@@ -81,6 +88,7 @@ namespace UnityEngine.Rendering.Distilling
                 ResourceReloader.TryReloadAllNullIn(this, "Assets/Distilling RP");
                 ResourceReloader.TryReloadAllNullIn(postProcessData, "Assets/Distilling RP");
                 ResourceReloader.TryReloadAllNullIn(m_SSRData, "Assets/Distilling RP");
+                ResourceReloader.TryReloadAllNullIn(m_VXGIData, "Assets/Distilling RP");
             }
 #endif
             return new ForwardRenderer(this);
@@ -131,6 +139,17 @@ namespace UnityEngine.Rendering.Distilling
                 m_SSRData = value;
             }
         }
+        
+        public VoxelGIData VXGIData
+        {
+            get => m_VXGIData;
+            set
+            {
+                SetDirty();
+                m_VXGIData = value;
+            }
+        }
+        
         /// <summary>
         /// True if transparent objects receive shadows.
         /// </summary>
@@ -157,6 +176,16 @@ namespace UnityEngine.Rendering.Distilling
             }
         }
 
+        //VXGI
+        public bool BoolVoxelGI
+        {
+            get => m_BoolVoxelGI;
+            set
+            {
+                SetDirty();
+                m_BoolVoxelGI = value;
+            }
+        }
         /// <summary>
         /// Rendering mode.
         /// </summary>
@@ -169,7 +198,19 @@ namespace UnityEngine.Rendering.Distilling
                 m_RenderingMode = value;
             }
         }
-        
+
+        /// <summary>
+        /// SphericalHarmonicsDegree.
+        /// </summary>
+        public SphericalHarmonicsDegree SphericalHarmonicsDegree
+        {
+            get => m_SphericalHarmonicsDegree;
+            set
+            {
+                SetDirty();
+                m_SphericalHarmonicsDegree = value;
+            }
+        }
         /// <summary>
         /// Use Octaedron Octahedron normal vector encoding for gbuffer normals.
         /// The overhead is negligible from desktop GPUs, while it should be avoided for mobile GPUs.
@@ -208,6 +249,7 @@ namespace UnityEngine.Rendering.Distilling
             ResourceReloader.TryReloadAllNullIn(this, DistillingRenderPipelineAsset.packagePath);
             ResourceReloader.TryReloadAllNullIn(postProcessData, DistillingRenderPipelineAsset.packagePath);
             ResourceReloader.TryReloadAllNullIn(m_SSRData, DistillingRenderPipelineAsset.packagePath);
+            ResourceReloader.TryReloadAllNullIn(m_VXGIData, DistillingRenderPipelineAsset.packagePath);
 #endif
         }
     }

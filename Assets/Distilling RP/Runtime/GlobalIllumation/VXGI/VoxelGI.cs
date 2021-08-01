@@ -16,8 +16,10 @@ public class VoxelGI : ScriptableRendererFeature
 
     class VoxelGIPass : ScriptableRenderPass
     {
-        public VoxelGIPass()
+        private VoxelGIData passData;
+        public VoxelGIPass(VoxelGIData data)
         {
+            passData = data;
         }
         
         public override void Configure(CommandBuffer cmd, RenderTextureDescriptor cameraTextureDescriptor)
@@ -44,7 +46,7 @@ public class VoxelGI : ScriptableRendererFeature
     {
         if (vxgiData != null)
         {
-            m_VoxelGIPass = new VoxelGIPass();
+            m_VoxelGIPass = new VoxelGIPass(vxgiData);
             m_VoxelGIPass.renderPassEvent = RenderPassEvent.AfterRenderingTransparents;   
         }
     }

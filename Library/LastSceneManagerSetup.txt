@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/ProjectAssets/Demo/GlobalIllumation/VXGI/1.0 CornellBox-VXGI.unity
+- path: Assets/ProjectAssets/Demo/GlobalIllumation/SH/1.0 SH.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

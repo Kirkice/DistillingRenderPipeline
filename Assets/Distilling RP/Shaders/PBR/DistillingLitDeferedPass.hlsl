@@ -165,7 +165,7 @@ Pixel_Output Lit_PSGBuffer(Geom_Output pin) : SV_Target
     mBRDFData brdfData;
     //设置向量数据 
     SetDirectionData(dirData, pin.NormalW, pin.V, pin.PosL, pin.PosW, pin.PosS, pin.TangentW, pin.BitangentW, pin.fogFactorAndVertexLight);
-    dirData.bakedGI                                                     = float3(0,0,0);
+    dirData.bakedGI                                                     = GetSphericalHarmonic(pin.NormalW);
     //POM视差
     ParallaxOcclusionMapping(dirData,pin.V, pin.TexC.xy);
     //初始化PBR数据

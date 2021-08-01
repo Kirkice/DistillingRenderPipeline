@@ -94,6 +94,7 @@
      <Compile Include="Assets\Distilling RP\Runtime\ForwardRenderer.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\ForwardRendererData.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\RTRT\RealTimeRayTracing.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\SH\SphericalHarmonics.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\SSGI\StochasticScreenSpaceRayTracing.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\VXGI\LightSource.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\VXGI\Mipmapper.cs" />

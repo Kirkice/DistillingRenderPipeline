@@ -110,7 +110,7 @@ Material:
     - _Height: 0.01
     - _HeightAmount: 1
     - _Metallic: 0
-    - _MetallicStrength: 0
+    - _MetallicStrength: 0.31
     - _NormalScale: 1
     - _OcclusionStrength: 1
     - _QueueOffset: 0
@@ -118,7 +118,7 @@ Material:
     - _ReceiveShadows: 1
     - _RenderingMode: 0
     - _Rf0Mode: 8
-    - _RoughnessStrength: 0
+    - _RoughnessStrength: 0.75
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
