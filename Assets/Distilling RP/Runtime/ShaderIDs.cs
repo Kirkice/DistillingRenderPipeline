@@ -59,6 +59,10 @@ namespace UnityEngine.Rendering.Distilling
         internal static readonly int LightCount = Shader.PropertyToID("LightCount");
         internal static readonly int LightSources = Shader.PropertyToID("LightSources");
         internal static readonly int Target = Shader.PropertyToID("Target");
+        internal static readonly int Source = Shader.PropertyToID("Source");
+        internal static readonly int Displacement = Shader.PropertyToID("Displacement");
+        internal static readonly int IndirectDiffuseModifier = Shader.PropertyToID("IndirectDiffuseModifier");
+        internal static readonly int IndirectSpecularModifier = Shader.PropertyToID("IndirectSpecular`Modifier");
         #endregion
 
         #region Distilling-Lit-Parames

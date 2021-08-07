@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace UnityEngine.Rendering.Distilling
 {
+    
     //抗锯齿
     [System.Serializable]
     public enum Antiliasing
@@ -43,6 +45,8 @@ namespace UnityEngine.Rendering.Distilling
         [SerializeField] [Min(0f), Tooltip("How strong the specular cone tracing can affect the scene.")] public float indirectSpecularModifier = 1f;
         [SerializeField] [Range(.1f, 1f), Tooltip("Downscale the diffuse cone tracing pass.")] public float diffuseResolutionScale = 1f;
         
+        public readonly static ReadOnlyCollection<LightType> supportedLightTypes =
+            new ReadOnlyCollection<LightType>(new[] {LightType.Point, LightType.Directional, LightType.Spot});
         public bool resolutionPlusOne
         {
             get { return mipmapFilterMode == Mipmapper.Mode.Gaussian3x3x3; }
@@ -106,18 +110,17 @@ namespace UnityEngine.Rendering.Distilling
             get { return _voxelizer; }
         }
         
-        private int _resolution = 0;
-        private float _previousRefresh = 0f;
-        private CommandBuffer _command;
-        private ComputeBuffer _lightSources;
-        private ComputeBuffer _voxelBuffer;
-        private List<LightSource> _lights;
-        private Mipmapper _mipmapper;
-        private Parameterizer _parameterizer;
-        private RenderTexture[] _radiances;
-        private RenderTextureDescriptor _radianceDescriptor;
-        private Vector3 _lastVoxelSpaceCenter;
-        private Voxelizer _voxelizer;
-        private VoxelShader _voxelShader;
+        public int _resolution = 0;
+        public float _previousRefresh = 0f;
+        public ComputeBuffer _lightSources;
+        public ComputeBuffer _voxelBuffer;
+        public List<LightSource> _lights;
+        public Mipmapper _mipmapper;
+        public Parameterizer _parameterizer;
+        public RenderTexture[] _radiances;
+        public RenderTextureDescriptor _radianceDescriptor;
+        public Vector3 _lastVoxelSpaceCenter;
+        public Voxelizer _voxelizer;
+        public VoxelShader _voxelShader;
     }
 }

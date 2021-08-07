@@ -12,9 +12,9 @@ public class Voxelizer : System.IDisposable
     private FilteringSettings _filteringSettings;
     private RenderTextureDescriptor _cameraDescriptor;
     private ScriptableCullingParameters _cullingParameters;
-    private VoxelGI voxelgi;
+    private VoxelGIPass voxelgi;
     
-    public Voxelizer(VoxelGI vxgi) 
+    public Voxelizer(VoxelGIPass vxgi) 
     {
         voxelgi = vxgi;
         _command = new CommandBuffer { name = "vxgi.Voxelizer" };
@@ -34,7 +34,7 @@ public class Voxelizer : System.IDisposable
     
     void CreateCamera()
     {
-        var gameObject = new GameObject("__" + voxelgi.name + "_VOXELIZER__") { hideFlags = HideFlags.HideAndDontSave };
+        var gameObject = new GameObject("__" + voxelgi.passData.name + "_VOXELIZER__") { hideFlags = HideFlags.HideAndDontSave };
         gameObject.SetActive(false);
 
         _camera = gameObject.AddComponent<Camera>();
@@ -55,15 +55,16 @@ public class Voxelizer : System.IDisposable
         };
     }
 
-    public void Voxelize(ScriptableRenderContext renderContext, ForwardRenderer renderer) {
+    public void Voxelize(ScriptableRenderContext renderContext) 
+    {
         if (!_camera.TryGetCullingParameters(out _cullingParameters)) return;
         var cullingResults = renderContext.Cull(ref _cullingParameters);
 
-        voxelgi.vxgiData.lights.Clear();
+        voxelgi.passData.lights.Clear();
 
         foreach (var light in cullingResults.visibleLights) {
-            if (VoxelGI.supportedLightTypes.Contains(light.lightType) && light.finalColor.maxColorComponent > 0f) {
-                voxelgi.vxgiData.lights.Add(new LightSource(light, voxelgi.vxgiData.worldToVoxel));
+            if (VoxelGIData.supportedLightTypes.Contains(light.lightType) && light.finalColor.maxColorComponent > 0f) {
+                voxelgi.passData.lights.Add(new LightSource(light, voxelgi.passData.worldToVoxel));
             }
         }
 
@@ -73,7 +74,7 @@ public class Voxelizer : System.IDisposable
         _command.GetTemporaryRT(ShaderIDs.Dummy, _cameraDescriptor);
         _command.SetRenderTarget(ShaderIDs.Dummy, RenderBufferLoadAction.DontCare, RenderBufferStoreAction.DontCare);
         _command.SetGlobalInt(ShaderIDs.Resolution, _resolution);
-        _command.SetRandomWriteTarget(1, voxelgi.vxgiData.voxelBuffer, false);
+        _command.SetRandomWriteTarget(1, voxelgi.passData.voxelBuffer, false);
         _command.SetViewProjectionMatrices(_camera.worldToCameraMatrix, _camera.projectionMatrix);
         renderContext.ExecuteCommandBuffer(_command);
         renderContext.DrawRenderers(cullingResults, ref _drawingSettings, ref _filteringSettings);
@@ -94,22 +95,22 @@ public class Voxelizer : System.IDisposable
 
     void UpdateCamera()
     {
-        if (_antiAliasing != (int)voxelgi.vxgiData.antiAliasing)
+        if (_antiAliasing != (int)voxelgi.passData.antiAliasing)
         {
-            _antiAliasing = (int)voxelgi.vxgiData.antiAliasing;
+            _antiAliasing = (int)voxelgi.passData.antiAliasing;
             _cameraDescriptor.msaaSamples = _antiAliasing;
         }
 
-        if (_resolution != (int)voxelgi.vxgiData.resolution)
+        if (_resolution != (int)voxelgi.passData.resolution)
         {
-            _resolution = (int)voxelgi.vxgiData.resolution;
+            _resolution = (int)voxelgi.passData.resolution;
             _cameraDescriptor.height = _cameraDescriptor.width = _resolution;
         }
 
-        _camera.farClipPlane = .5f * voxelgi.vxgiData.bound;
-        _camera.nearClipPlane = -.5f * voxelgi.vxgiData.bound;
-        _camera.orthographicSize = .5f * voxelgi.vxgiData.bound;
-        _camera.transform.position = voxelgi.vxgiData.voxelSpaceCenter;
+        _camera.farClipPlane = .5f * voxelgi.passData.bound;
+        _camera.nearClipPlane = -.5f * voxelgi.passData.bound;
+        _camera.orthographicSize = .5f * voxelgi.passData.bound;
+        _camera.transform.position = voxelgi.passData.voxelSpaceCenter;
     }
     
 }

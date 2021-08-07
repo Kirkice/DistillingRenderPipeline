@@ -433,7 +433,7 @@ namespace UnityEngine.Rendering.Distilling
             }
             if (m_BoolVoxelGI)
             {
-                //TODO
+                m_VoxelGI.AddRenderPasses(this,ref renderingData);
             }
             if (renderingMode == RenderingMode.RTXRayTracing)
             {

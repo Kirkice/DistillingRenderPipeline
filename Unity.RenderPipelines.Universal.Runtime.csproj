@@ -100,8 +100,10 @@
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\VXGI\Mipmapper.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\VXGI\NumThreads.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\VXGI\Parameterizer.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\VXGI\VoxelData.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\VXGI\VoxelGI.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\VXGI\VoxelGIData.cs" />
+     <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\VXGI\VoxelGIPass.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\VXGI\VoxelShader.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\GlobalIllumation\VXGI\Voxelizer.cs" />
      <Compile Include="Assets\Distilling RP\Runtime\Overrides\Bloom.cs" />

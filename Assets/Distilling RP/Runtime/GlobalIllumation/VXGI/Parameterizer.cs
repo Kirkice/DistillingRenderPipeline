@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Distilling;
 
 public class Parameterizer : System.IDisposable {
     int _kernelParameterize;
     ComputeBuffer _arguments = new ComputeBuffer(3, sizeof(int), ComputeBufferType.IndirectArguments);
-    ComputeShader _compute = (ComputeShader)Resources.Load(ShaderIDs.ParameterizerCSPath);
+    private ComputeShader _compute = AssetDatabase.LoadAssetAtPath<ComputeShader>(ShaderIDs.ParameterizerCSPath);
 
     public Parameterizer() {
         _kernelParameterize = _compute.FindKernel("CSParameterize");

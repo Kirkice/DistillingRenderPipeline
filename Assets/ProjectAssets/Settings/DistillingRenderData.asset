@@ -65,10 +65,10 @@ MonoBehaviour:
     passOperation: 2
     failOperation: 2
     zFailOperation: 2
-  m_ShadowTransparentReceive: 1
+  m_ShadowTransparentReceive: 0
   m_BoolScreenSpaceRayTracing: 0
   m_BoolVoxelGI: 0
-  m_RenderingMode: 0
+  m_RenderingMode: 1
   m_SphericalHarmonicsDegree: 3
   m_AccurateGbufferNormals: 0
   m_TiledDeferredShading: 0

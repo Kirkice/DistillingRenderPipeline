@@ -97,7 +97,7 @@ Material:
     - _Height: 0.251
     - _HeightAmount: 0.824
     - _Metallic: 0
-    - _MetallicStrength: 0
+    - _MetallicStrength: 0.56
     - _NormalScale: 0.986
     - _OcclusionStrength: 1
     - _QueueOffset: 0
@@ -106,7 +106,7 @@ Material:
     - _RenderingMode: 0
     - _Rf0Mode: 5
     - _RoughnessMap: 0.5
-    - _RoughnessStrength: 0
+    - _RoughnessStrength: 0.922
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -141,10 +141,10 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _AlbeodColor: {r: 0, g: 0, b: 0, a: 1}
+    - _AlbeodColor: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0.7529412, b: 2.9960785, a: 1}
+    - _EmissionColor: {r: 0.62264156, g: 1.4714018, b: 4, a: 1}
     - _MatCapColor: {r: 0, g: 0, b: 0, a: 1}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Rf0: {r: 1, g: 0.71, b: 0.29, a: 0}
