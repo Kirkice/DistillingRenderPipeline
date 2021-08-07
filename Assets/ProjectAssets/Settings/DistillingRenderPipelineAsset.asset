@@ -26,7 +26,7 @@ MonoBehaviour:
   m_RequireTangentWSTexture: 0
   m_RequireObjectIDTexture: 0
   m_RequireTransparentColor: 0
-  m_RequireShadowMaskTexture: 1
+  m_RequireShadowMaskTexture: 0
   m_OpaqueDownsampling: 0
   m_SupportsTerrainHoles: 1
   m_SupportsHDR: 1

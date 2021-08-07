@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e70be5549ee6746bfac29b87bf10b0, type: 3}
   m_Name: VoxelGIData
   m_EditorClassIdentifier: 
-  followCamera: 0
-  center: {x: 0, y: 0, z: 0}
+  followCamera: 1
+  center: {x: -33.28, y: 16.5, z: 0}
   bound: 10
   resolution: 64
   antiAliasing: 1
@@ -23,3 +23,13 @@ MonoBehaviour:
   indirectDiffuseModifier: 1
   indirectSpecularModifier: 1
   diffuseResolutionScale: 1
+  _resolution: 64
+  _previousRefresh: 13335.659
+  _radiances:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _lastVoxelSpaceCenter: {x: -33.28125, y: 16.40625, z: 0}
